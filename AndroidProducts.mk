@@ -18,3 +18,13 @@ PRODUCT_MAKEFILES := \
     $(LOCAL_DIR)/full_quill.mk \
     $(LOCAL_DIR)/lineage_quill.mk \
     $(LOCAL_DIR)/twrp_quill.mk
+
+COMMON_LUNCH_CHOICES := \
+    full_quill-eng \
+    full_quill-user \
+    full_quill-userdebug \
+    lineage_quill-eng \
+    lineage_quill-user \
+    lineage_quill-userdebug \
+    twrp_quill-eng \
+    twrp_quill-userdebug
