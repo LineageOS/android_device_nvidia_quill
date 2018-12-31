@@ -56,5 +56,10 @@ TARGET_RECOVERY_FSTAB    := device/nvidia/quill/initfiles/fstab.quill
 # Security Patch Level
 VENDOR_SECURITY_PATCH := 2019-07-05
 
+# TWRP Support
+ifeq ($(WITH_TWRP),true)
+include device/nvidia/quill/twrp/twrp.mk
+endif
+
 include device/nvidia/t186-common/BoardConfigCommon.mk
 include vendor/nvidia/quill/BoardConfigVendor.mk
