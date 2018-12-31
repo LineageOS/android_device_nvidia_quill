@@ -30,6 +30,9 @@ TARGET_TEGRA_WIFI     ?= bcm
 
 $(call inherit-product, device/nvidia/t186-common/t186.mk)
 
+# System properties
+include $(LOCAL_PATH)/system_prop.mk
+
 PRODUCT_CHARACTERISTICS  := tv
 PRODUCT_AAPT_CONFIG      := xlarge large
 PRODUCT_AAPT_PREF_CONFIG := xxhdpi
