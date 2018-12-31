@@ -54,3 +54,4 @@ endif
 TARGET_RECOVERY_FSTAB    := device/nvidia/quill/initfiles/fstab.quill
 
 include device/nvidia/t186-common/BoardConfigCommon.mk
+include vendor/nvidia/quill/BoardConfigVendor.mk
