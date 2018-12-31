@@ -81,3 +81,9 @@ PRODUCT_PACKAGES += \
     media_codecs_performance.xml \
     media_profiles.xml
 endif
+
+# Thermal
+PRODUCT_PACKAGES += \
+    android.hardware.thermal@1.0-service-nvidia \
+    thermalhal.quill.xml \
+    thermalhal.storm.xml
