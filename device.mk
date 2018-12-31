@@ -14,6 +14,11 @@
 # limitations under the License.
 #
 
+# Only include Shield apps for first party targets
+ifneq ($(filter $(word 2,$(subst _, ,$(TARGET_PRODUCT))), quill quill_tab),)
+$(call inherit-product, device/nvidia/shield-common/shield.mk)
+endif
+
 TARGET_REFERENCE_DEVICE ?= quill
 TARGET_TEGRA_VARIANT    ?= common
 
