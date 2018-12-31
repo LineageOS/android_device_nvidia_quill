@@ -33,6 +33,12 @@ BOARD_AVB_MAKE_VBMETA_IMAGE_ARGS += --flags 2
 # Assert
 TARGET_OTA_ASSERT_DEVICE := quill,asg
 
+# Bluetooth
+ifeq ($(TARGET_TEGRA_BT),bcm)
+BOARD_CUSTOM_BT_CONFIG := device/nvidia/quill/comms/vnd_quill.txt
+BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/nvidia/quill/comms
+endif
+
 # Kernel
 ifneq ($(TARGET_PREBUILT_KERNEL),)
 BOARD_VENDOR_KERNEL_MODULES += $(wildcard $(dir $(TARGET_PREBUILT_KERNEL))/*.ko)
