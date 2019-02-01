@@ -1,4 +1,4 @@
-# Copyright (C) 2019 The LineageOS Project
+# Copyright (C) 2020 The LineageOS Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,12 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Inherit some common lineage stuff.
-$(call inherit-product, vendor/lineage/config/common_full_tv.mk)
-
-# Inherit device configuration for quill.
-$(call inherit-product, device/nvidia/quill/lineage.mk)
-$(call inherit-product, device/nvidia/quill/full_quill.mk)
-
-PRODUCT_NAME := lineage_quill
-PRODUCT_DEVICE := quill
+# Unified device support
+TARGET_INIT_VENDOR_LIB := libinit_quill
+PRODUCT_VENDOR_PROPERTY_BLACKLIST := \
+    ro.product.vendor.device \
+    ro.product.vendor.model \
+    ro.product.vendor.name \
+    ro.vendor.build.fingerprint
+PRODUCT_PACKAGES += \
+    init_tegra

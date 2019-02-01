@@ -12,12 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Inherit some common lineage stuff.
-$(call inherit-product, vendor/lineage/config/common_full_tv.mk)
+import /vendor/etc/init/hw/init.tegra.rc
+import /vendor/etc/init/hw/init.t18x.rc
+import /vendor/etc/init/hw/init.quill_common.rc
 
-# Inherit device configuration for quill.
-$(call inherit-product, device/nvidia/quill/lineage.mk)
-$(call inherit-product, device/nvidia/quill/full_quill.mk)
-
-PRODUCT_NAME := lineage_quill
-PRODUCT_DEVICE := quill
+on fs
+    mount_all /vendor/etc/fstab.quill
+    swapon_all /vendor/etc/fstab.quill

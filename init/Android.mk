@@ -1,3 +1,4 @@
+#
 # Copyright (C) 2019 The LineageOS Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -11,13 +12,20 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+#
 
-# Inherit some common lineage stuff.
-$(call inherit-product, vendor/lineage/config/common_full_tv.mk)
+LOCAL_PATH := $(call my-dir)
 
-# Inherit device configuration for quill.
-$(call inherit-product, device/nvidia/quill/lineage.mk)
-$(call inherit-product, device/nvidia/quill/full_quill.mk)
+include $(CLEAR_VARS)
+LOCAL_MODULE                 := libinit_quill
+LOCAL_C_INCLUDES             := device/nvidia/tegra-common/init
+LOCAL_SRC_FILES              := init_quill.cpp
+LOCAL_WHOLE_STATIC_LIBRARIES := libinit_tegra
+include $(BUILD_STATIC_LIBRARY)
 
-PRODUCT_NAME := lineage_quill
-PRODUCT_DEVICE := quill
+include $(CLEAR_VARS)
+LOCAL_MODULE        := libinit_quill_vendor
+LOCAL_C_INCLUDES    := device/nvidia/tegra-common/init
+LOCAL_SRC_FILES     := init_quill.cpp
+LOCAL_VENDOR_MODULE := true
+include $(BUILD_STATIC_LIBRARY)
