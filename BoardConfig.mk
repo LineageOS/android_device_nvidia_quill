@@ -50,6 +50,9 @@ TARGET_KERNEL_CONFIG    := tegra_android_defconfig
 BOARD_KERNEL_IMAGE_NAME := zImage
 endif
 
+# Manifest
+DEVICE_MANIFEST_FILE := device/nvidia/quill/manifest.xml
+
 # Recovery
 TARGET_RECOVERY_FSTAB    := device/nvidia/quill/initfiles/fstab.quill
 
