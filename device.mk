@@ -51,6 +51,9 @@ $(call inherit-product, frameworks/native/build/tablet-10in-xhdpi-2048-dalvik-he
 
 $(call inherit-product, vendor/nvidia/quill/quill-vendor.mk)
 
+# Soong namespaces
+PRODUCT_SOONG_NAMESPACES += device/nvidia/quill
+
 # Init related
 PRODUCT_PACKAGES += \
     fstab.lanai \
