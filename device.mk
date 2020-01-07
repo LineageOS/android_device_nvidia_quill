@@ -29,13 +29,17 @@ $(call inherit-product, frameworks/native/build/tablet-10in-xhdpi-2048-dalvik-he
 
 # Init related
 PRODUCT_PACKAGES += \
+    fstab.lightning \
     fstab.quill \
     fstab.storm \
+    init.lightning.rc \
     init.quill.rc \
     init.storm.rc \
     init.quill_common.rc \
+    init.recovery.lightning.rc \
     init.recovery.quill.rc \
     init.recovery.storm.rc \
+    power.lightning.rc \
     power.quill.rc \
     power.storm.rc
 
