@@ -30,10 +30,14 @@ $(call inherit-product, frameworks/native/build/tablet-10in-xhdpi-2048-dalvik-he
 # Init related
 PRODUCT_PACKAGES += \
     fstab.quill \
+    fstab.storm \
     init.quill.rc \
+    init.storm.rc \
     init.quill_common.rc \
     init.recovery.quill.rc \
-    power.quill.rc
+    init.recovery.storm.rc \
+    power.quill.rc \
+    power.storm.rc
 
 # Kernel
 ifneq ($(TARGET_PREBUILT_KERNEL),)

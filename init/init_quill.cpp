@@ -62,7 +62,8 @@ void vendor_set_usb_product_ids(tegra_init *ti)
 void vendor_load_properties()
 {
 	//                                              device     name       model          id    sku   boot device type                 api dpi
-	std::vector<tegra_init::devices> devices = { { "quill",    "quill",   "Jetson TX2",  3310,    0, tegra_init::boot_dev_type::EMMC, 28, 320 } };
+	std::vector<tegra_init::devices> devices = { { "quill",    "quill",   "Jetson TX2",  3310,    0, tegra_init::boot_dev_type::EMMC, 28, 320 },
+	                                             { "quill",    "storm",   "Jetson TX2i", 3489,    0, tegra_init::boot_dev_type::EMMC, 28, 320 } };
 	tegra_init::build_version tav = { "9", "PPR1.180610.011", "4199485_1739.5219" };
 
 	tegra_init ti(devices);
