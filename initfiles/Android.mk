@@ -8,6 +8,13 @@ LOCAL_VENDOR_MODULE := true
 include $(BUILD_PREBUILT)
 
 include $(CLEAR_VARS)
+LOCAL_MODULE        := fstab.orbitty
+LOCAL_MODULE_CLASS  := ETC
+LOCAL_SRC_FILES     := fstab.quill
+LOCAL_VENDOR_MODULE := true
+include $(BUILD_PREBUILT)
+
+include $(CLEAR_VARS)
 LOCAL_MODULE        := fstab.quill
 LOCAL_MODULE_CLASS  := ETC
 LOCAL_SRC_FILES     := fstab.quill
@@ -25,6 +32,14 @@ include $(CLEAR_VARS)
 LOCAL_MODULE               := init.lightning.rc
 LOCAL_MODULE_CLASS         := ETC
 LOCAL_SRC_FILES            := init.lightning.rc
+LOCAL_VENDOR_MODULE        := true
+LOCAL_MODULE_RELATIVE_PATH := init/hw
+include $(BUILD_PREBUILT)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE               := init.orbitty.rc
+LOCAL_MODULE_CLASS         := ETC
+LOCAL_SRC_FILES            := init.quill.rc
 LOCAL_VENDOR_MODULE        := true
 LOCAL_MODULE_RELATIVE_PATH := init/hw
 include $(BUILD_PREBUILT)
@@ -61,6 +76,13 @@ LOCAL_MODULE_PATH  := $(TARGET_ROOT_OUT)
 include $(BUILD_PREBUILT)
 
 include $(CLEAR_VARS)
+LOCAL_MODULE       := init.recovery.orbitty.rc
+LOCAL_MODULE_CLASS := ETC
+LOCAL_SRC_FILES    := init.recovery.quill.rc
+LOCAL_MODULE_PATH  := $(TARGET_ROOT_OUT)
+include $(BUILD_PREBUILT)
+
+include $(CLEAR_VARS)
 LOCAL_MODULE       := init.recovery.quill.rc
 LOCAL_MODULE_CLASS := ETC
 LOCAL_SRC_FILES    := init.recovery.quill.rc
@@ -76,6 +98,13 @@ include $(BUILD_PREBUILT)
 
 include $(CLEAR_VARS)
 LOCAL_MODULE       := power.lightning.rc
+LOCAL_MODULE_CLASS := ETC
+LOCAL_ODM_MODULE   := true
+LOCAL_SRC_FILES    := power.quill.rc
+include $(BUILD_PREBUILT)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE       := power.orbitty.rc
 LOCAL_MODULE_CLASS := ETC
 LOCAL_ODM_MODULE   := true
 LOCAL_SRC_FILES    := power.quill.rc
