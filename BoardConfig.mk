@@ -68,4 +68,3 @@ include device/nvidia/quill/twrp/twrp.mk
 endif
 
 include device/nvidia/t186-common/BoardConfigCommon.mk
-include vendor/nvidia/quill/BoardConfigVendor.mk
