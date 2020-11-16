@@ -1,4 +1,4 @@
-# Copyright (C) 2019 The LineageOS Project
+# Copyright (C) 2020 The LineageOS Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,12 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Inherit some common lineage stuff.
-$(call inherit-product, vendor/lineage/config/common_full_tv.mk)
+LOCAL_PATH := $(call my-dir)
+COMMON_BUILD_PATH := device/nvidia/tegra-common/vendor/build
 
-# Inherit device configuration for quill.
-include device/nvidia/quill/lineage.mk
-$(call inherit-product, device/nvidia/quill/full_quill.mk)
-
-PRODUCT_NAME := lineage_quill
-PRODUCT_DEVICE := quill
+include $(COMMON_BUILD_PATH)/macros.mk
+include $(call all-makefiles-under,$(LOCAL_PATH))
