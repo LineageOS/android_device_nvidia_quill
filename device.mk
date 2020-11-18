@@ -36,6 +36,8 @@ TARGET_TEGRA_WIDEVINE ?= true
 TARGET_TEGRA_WIFI     ?= bcm
 TARGET_TEGRA_WIREGUARD ?= compat
 
+AB_OTA_UPDATER := true
+
 include device/nvidia/t186-common/t186.mk
 
 # System properties
@@ -145,7 +147,6 @@ PRODUCT_PACKAGES += \
     vendor.lineage.trust@1.0-service
 
 # Updater
-AB_OTA_UPDATER := true
 AB_OTA_PARTITIONS += \
     boot \
     system \
