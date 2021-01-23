@@ -48,7 +48,6 @@
         <module name="primary" halVersion="2.0">
             <attachedDevices>
                 <item>DummySpeaker</item>
-                <item>Built-In Mic</item>
             </attachedDevices>
             <defaultOutputDevice>DummySpeaker</defaultOutputDevice>
 
@@ -67,7 +66,7 @@
                        sources="primary_output"/>
                 <!-- Capture routes -->
                 <route type="mix" sink="primary_input"
-                       sources="Built-In Mic,Digital Dock HS Mic"/>
+                       sources="Digital Dock HS Mic"/>
             </routes>
 
         </module>
