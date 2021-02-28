@@ -53,19 +53,23 @@ $(call inherit-product, vendor/nvidia/quill/quill-vendor.mk)
 
 # Init related
 PRODUCT_PACKAGES += \
+    fstab.lanai \
     fstab.lightning \
     fstab.orbitty \
     fstab.quill \
     fstab.storm \
+    init.lanai.rc \
     init.lightning.rc \
     init.orbitty.rc \
     init.quill.rc \
     init.storm.rc \
     init.quill_common.rc \
+    init.recovery.lanai.rc \
     init.recovery.lightning.rc \
     init.recovery.orbitty.rc \
     init.recovery.quill.rc \
     init.recovery.storm.rc \
+    power.lanai.rc \
     power.lightning.rc \
     power.orbitty.rc \
     power.quill.rc \
@@ -129,6 +133,7 @@ endif
 # Thermal
 PRODUCT_PACKAGES += \
     android.hardware.thermal@1.0-service-nvidia \
+    thermalhal.lanai.xml \
     thermalhal.quill.xml \
     thermalhal.storm.xml
 
