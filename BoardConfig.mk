@@ -58,6 +58,7 @@ DEVICE_MANIFEST_FILE := device/nvidia/quill/manifest.xml
 
 # Recovery
 TARGET_RECOVERY_FSTAB    := device/nvidia/quill/initfiles/fstab.quill
+TARGET_RECOVERY_PIXEL_FORMAT := BGRA_8888
 
 # Security Patch Level
 VENDOR_SECURITY_PATCH := 2020-07-05
