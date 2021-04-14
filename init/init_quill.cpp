@@ -78,8 +78,11 @@ void vendor_load_properties()
 		ti.property_set("ro.product.vendor.manufacturer", ti.property_get("ro.product.manufacturer"));
 	}
 
-	if (ti.vendor_context() || ti.recovery_context())
+	if (ti.vendor_context() || ti.recovery_context()) {
 		vendor_set_usb_product_ids(&ti);
+
+		ti.property_set("vendor.tegra.ota.boot_device", "/dev/block/platform/3460000.sdhci/mmcblk0boot0");
+	}
 
 	// AB updates require set paths for certain partitions
 	if (!ti.vendor_context()) {
