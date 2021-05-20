@@ -1,5 +1,4 @@
-#
-# Copyright (C) 2019 The LineageOS Project
+# Copyright (C) 2021 The LineageOS Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,9 +11,13 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-#
 
-PRODUCT_MAKEFILES := \
-    $(LOCAL_DIR)/full_quill.mk \
-    $(LOCAL_DIR)/lineage_quill.mk \
-    $(LOCAL_DIR)/lineage_omni.mk
+# Inherit some common omni stuff.
+$(call inherit-product, vendor/omni/config/common.mk)
+
+# Inherit device configuration for quill.
+include device/nvidia/quill/omni.mk
+$(call inherit-product, device/nvidia/quill/full_quill.mk)
+
+PRODUCT_NAME := omni_quill
+PRODUCT_DEVICE := quill

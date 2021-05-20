@@ -1,5 +1,4 @@
-#
-# Copyright (C) 2019 The LineageOS Project
+# Copyright (C) 2021 The LineageOS Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,9 +11,13 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-#
 
-PRODUCT_MAKEFILES := \
-    $(LOCAL_DIR)/full_quill.mk \
-    $(LOCAL_DIR)/lineage_quill.mk \
-    $(LOCAL_DIR)/lineage_omni.mk
+# Unified device support
+TARGET_INIT_VENDOR_LIB := //device/nvidia/quill:libinit_quill
+PRODUCT_VENDOR_PROPERTY_BLACKLIST := \
+    ro.product.vendor.device \
+    ro.product.vendor.model \
+    ro.product.vendor.name \
+    ro.vendor.build.fingerprint
+PRODUCT_PACKAGES += \
+    init_tegra
