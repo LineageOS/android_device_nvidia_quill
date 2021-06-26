@@ -34,7 +34,7 @@ BOARD_AVB_MAKE_VBMETA_IMAGE_ARGS += --set_hashtree_disabled_flag
 BOARD_AVB_MAKE_VBMETA_IMAGE_ARGS += --flags 2
 
 # Assert
-TARGET_OTA_ASSERT_DEVICE := quill,asg
+TARGET_OTA_ASSERT_DEVICE := quill,asg,lanai
 
 # Bluetooth
 ifeq ($(TARGET_TEGRA_BT),bcm)
