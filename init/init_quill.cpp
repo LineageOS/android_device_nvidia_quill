@@ -65,7 +65,7 @@ void vendor_load_properties()
 	std::vector<tegra_init::devices> devices = { { "quill",    "quill",    "Jetson TX2",    3310,    0, tegra_init::boot_dev_type::EMMC, 28, 320 },
 	                                             { "quill",    "storm",    "Jetson TX2i",   3489,    0, tegra_init::boot_dev_type::EMMC, 28, 320 },
 	                                             { "quill",    "lighting", "Jetson TX2",    3489,  888, tegra_init::boot_dev_type::EMMC, 28, 320 },
-	                                             { "lanai",    "lanai",    "Jetson TX2 NX", 3686,    1, tegra_init::boot_dev_type::EMMC, 28, 320 },
+	                                             { "lanai",    "lanai",    "Jetson TX2 NX", 3636,    1, tegra_init::boot_dev_type::EMMC, 28, 320 },
 	                                             { "asg",      "orbitty",  "Orbitty",          3,    0, tegra_init::boot_dev_type::EMMC, 28, 320 } };
 	tegra_init::build_version tav = { "9", "PPR1.180610.011", "4199485_1739.5219" };
 
