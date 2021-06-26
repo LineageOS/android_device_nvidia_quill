@@ -23,7 +23,3 @@ on fs
 service vendor.bluetooth-1-0 /vendor/bin/hw/android.hardware.bluetooth@1.0-service
     override
     disabled
-
-service vendor.wifi_hal_legacy /vendor/bin/hw/android.hardware.wifi@1.0-service
-    override
-    disabled
