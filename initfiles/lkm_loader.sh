@@ -51,10 +51,15 @@ if [ "`cat /proc/device-tree/brcmfmac_pcie_wlan/status`" = "okay" ]; then
         do_insmod /vendor/lib/modules/cy_cfg80211.ko
         do_insmod /vendor/lib/modules/brcmutil.ko
         do_insmod /vendor/lib/modules/brcmfmac.ko
-else
+elif [ "`cat /proc/device-tree/bcmdhd_wlan/status`" = "okay" ]; then
         /vendor/bin/log -t "wifiloader" -p i " Loading bcmdhd driver for wlan"
         do_insmod /vendor/lib/modules/cfg80211.ko
         do_insmod /vendor/lib/modules/bcmdhd.ko
+else
+        /vendor/bin/log -t "wifiloader" -p i " Loading rtl8822ce driver for wlan"
+        do_insmod /vendor/lib/modules/rtk_btusb.ko
+        do_insmod /vendor/lib/modules/cfg80211.ko
+        do_insmod /vendor/lib/modules/rtl8822ce.ko
 fi
 
 # USB-to-serial driver
