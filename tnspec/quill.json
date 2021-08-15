@@ -1,0 +1,68 @@
+{
+    "copyright" : "Copyright (C) 2021 The LineageOS Project.  Apache 2.0.",
+    "family" : "T186/Quill",
+    "version" : "2.1",
+    "hw" : {
+        "#" : "'.' indicates the corresponding keys do not get copied when based",
+        "." : ["desc"],
+        "#" : "--------- Quill Platforms ---------",
+        "p2771-0000-devkit-c03" : {
+            "base" : "&uuid",
+            "desc" : "Jetson Devkit",
+            "id" : "P2771-0000-DEVKIT-C03",
+            "config" : "default",
+            "sn" : "",
+            "proc" : {
+                "id" : "3310",
+                "sku" : "1000",
+                "fab" : "0xc03"
+            },
+            "pmu" : {
+                "id" : "3310"
+            },
+            "hide" : false,
+            "cm" : "0",
+            "lbh" : "1",
+            "factory_mode" : "0",
+            "dbgport" : "0"
+        },
+        "p2771-0000-devkit-c04" : {
+            "base" : "p2771-0000-devkit-c03",
+            "id" : "P2771-0000-DEVKIT-C04",
+            "proc" : {
+                "fab" : "0xc04"
+            }
+        },
+        "asg003-devkit-c03" : {
+            "base" : "p2771-0000-devkit-c03",
+            "id" : "ASG003-DEVKIT-C03"
+        },
+        "asg003-devkit-c04" : {
+            "base" : "p2771-0000-devkit-c04",
+            "id" : "ASG003-DEVKIT-C04"
+        },
+        "#" : "--------- Lanai Platforms ---------",
+        "p3636-0001-p3509" : {
+            "base" : "&uuid",
+            "desc" : "Jetson TX2 Nano Devkit",
+            "id" : "P3636-0001-P3509",
+            "config" : "default",
+            "sn" : "",
+            "proc" : {
+                "id" : "3636",
+                "sku" : "0001"
+            },
+            "hide" : false,
+            "cm" : "0",
+            "lbh" : "1",
+            "factory_mode" : "0",
+            "dbgport" : "0"
+        },
+        "#references" : "##################################",
+        "&uuid" : {
+            "uuid" : {
+                "use_tags" : true
+            }
+        }
+    }
+}
