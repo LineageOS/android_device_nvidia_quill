@@ -108,7 +108,7 @@ $(_quill_c04_br_bct): $(TOYBOX_HOST) $(INSTALLED_CBOOT_TARGET) $(INSTALLED_KERNE
 
 $(_quill_blob): $(_lanai_br_bct) $(_quill_c03_br_bct) $(_quill_c04_br_bct) $(INSTALLED_KERNEL_TARGET)
 	@mkdir -p $(dir $@)
-	OUT=$(dir $@) python2 $(TEGRAFLASH_PATH)/BUP_generator.py -t update -e \
+	OUT=$(dir $@) TOP=$(BUILD_TOP) python2 $(TEGRAFLASH_PATH)/BUP_generator.py -t update -e \
 		"$(QUILL_C04_SIGNED_PATH)/spe_sigheader.bin.encrypt spe-fw 2 0 common; \
 		 $(QUILL_C04_SIGNED_PATH)/nvtboot_sigheader.bin.encrypt mb2 2 0 common; \
 		 $(QUILL_C04_SIGNED_PATH)/cboot_sigheader.bin.encrypt cpu-bootloader 2 0 common; \
