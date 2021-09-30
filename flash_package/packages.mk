@@ -28,6 +28,7 @@ INSTALLED_BMP_BLOB_TARGET      := $(PRODUCT_OUT)/bmp.blob
 INSTALLED_CBOOT_TARGET         := $(PRODUCT_OUT)/cboot.bin
 INSTALLED_KERNEL_TARGET        := $(PRODUCT_OUT)/kernel
 INSTALLED_RECOVERYIMAGE_TARGET := $(PRODUCT_OUT)/recovery.img
+INSTALLED_TOS_TARGET           := $(PRODUCT_OUT)/tos-mon-only.img
 
 TOYBOX_HOST  := $(HOST_OUT_EXECUTABLES)/toybox
 AWK_HOST     := $(HOST_OUT_EXECUTABLES)/one-true-awk
@@ -43,7 +44,7 @@ LOCAL_MODULE_PATH   := $(PRODUCT_OUT)
 _p2771_package_intermediates := $(call intermediates-dir-for,$(LOCAL_MODULE_CLASS),$(LOCAL_MODULE))
 _p2771_package_archive := $(_p2771_package_intermediates)/$(LOCAL_MODULE)$(LOCAL_MODULE_SUFFIX)
 
-$(_p2771_package_archive): $(INSTALLED_BMP_BLOB_TARGET) $(INSTALLED_CBOOT_TARGET) $(INSTALLED_KERNEL_TARGET) $(INSTALLED_RECOVERYIMAGE_TARGET) $(AWK_HOST) $(TOYBOX_HOST) $(AVBTOOL_HOST) $(SMD_GEN_HOST)
+$(_p2771_package_archive): $(INSTALLED_BMP_BLOB_TARGET) $(INSTALLED_CBOOT_TARGET) $(INSTALLED_KERNEL_TARGET) $(INSTALLED_RECOVERYIMAGE_TARGET) $(INSTALLED_TOS_TARGET) $(AWK_HOST) $(TOYBOX_HOST) $(AVBTOOL_HOST) $(SMD_GEN_HOST)
 	@mkdir -p $(dir $@)/tegraflash
 	@mkdir -p $(dir $@)/scripts
 	@cp $(TEGRAFLASH_PATH)/tegraflash* $(dir $@)/tegraflash/
@@ -53,6 +54,8 @@ $(_p2771_package_archive): $(INSTALLED_BMP_BLOB_TARGET) $(INSTALLED_CBOOT_TARGET
 	@cp $(QUILL_FLASH)/p2771.sh $(dir $@)/flash.sh
 	@cp $(QUILL_FLASH)/flash_android_t186.xml $(dir $@)/
 	@cp $(T186_BL)/* $(dir $@)/
+	@rm $(dir $@)/tos-mon-only.img
+	@cp $(INSTALLED_TOS_TARGET) $(dir $@)/
 	@cp $(T186_FW)/xusb/tegra18x_xusb_firmware $(dir $@)/xusb_sil_rel_fw
 	@python2 $(TNSPEC_PY) nct new p2771-0000-devkit-c03 -o $(dir $@)/p2771-0000-devkit-c03.bin --spec $(QUILL_TNSPEC)
 	@python2 $(TNSPEC_PY) nct new p2771-0000-devkit-c04 -o $(dir $@)/p2771-0000-devkit-c04.bin --spec $(QUILL_TNSPEC)
@@ -85,7 +88,7 @@ LOCAL_MODULE_PATH   := $(PRODUCT_OUT)
 _p3636-p3509_package_intermediates := $(call intermediates-dir-for,$(LOCAL_MODULE_CLASS),$(LOCAL_MODULE))
 _p3636-p3509_package_archive := $(_p3636-p3509_package_intermediates)/$(LOCAL_MODULE)$(LOCAL_MODULE_SUFFIX)
 
-$(_p3636-p3509_package_archive): $(INSTALLED_BMP_BLOB_TARGET) $(INSTALLED_CBOOT_TARGET) $(INSTALLED_KERNEL_TARGET) $(INSTALLED_RECOVERYIMAGE_TARGET) $(AWK_HOST) $(TOYBOX_HOST) $(AVBTOOL_HOST) $(SMD_GEN_HOST)
+$(_p3636-p3509_package_archive): $(INSTALLED_BMP_BLOB_TARGET) $(INSTALLED_CBOOT_TARGET) $(INSTALLED_KERNEL_TARGET) $(INSTALLED_RECOVERYIMAGE_TARGET) $(INSTALLED_TOS_TARGET) $(AWK_HOST) $(TOYBOX_HOST) $(AVBTOOL_HOST) $(SMD_GEN_HOST)
 	@mkdir -p $(dir $@)/tegraflash
 	@mkdir -p $(dir $@)/scripts
 	@cp $(TEGRAFLASH_PATH)/tegraflash* $(dir $@)/tegraflash/
@@ -95,6 +98,8 @@ $(_p3636-p3509_package_archive): $(INSTALLED_BMP_BLOB_TARGET) $(INSTALLED_CBOOT_
 	@cp $(QUILL_FLASH)/p3636-p3509.sh $(dir $@)/flash.sh
 	@cp $(QUILL_FLASH)/flash_android_t186_p3636.xml $(dir $@)/
 	@cp $(T186_BL)/* $(dir $@)/
+	@rm $(dir $@)/tos-mon-only.img
+	@cp $(INSTALLED_TOS_TARGET) $(dir $@)/
 	@cp $(T186_FW)/xusb/tegra18x_xusb_firmware $(dir $@)/xusb_sil_rel_fw
 	@python2 $(TNSPEC_PY) nct new p3636-0001-p3509 -o $(dir $@)/p3636-0001-p3509.bin --spec $(QUILL_TNSPEC)
 	@cp $(INSTALLED_BMP_BLOB_TARGET) $(dir $@)/

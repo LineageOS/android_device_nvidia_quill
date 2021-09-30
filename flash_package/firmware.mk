@@ -21,6 +21,7 @@ QUILL_FLASH     := $(BUILD_TOP)/device/nvidia/quill/flash_package
 
 INSTALLED_CBOOT_TARGET  := $(PRODUCT_OUT)/cboot.bin
 INSTALLED_KERNEL_TARGET := $(PRODUCT_OUT)/kernel
+INSTALLED_TOS_TARGET    := $(PRODUCT_OUT)/tos-mon-only.img
 
 TOYBOX_HOST := $(HOST_OUT_EXECUTABLES)/toybox
 
@@ -40,10 +41,12 @@ _lanai_br_bct     := $(LANAI_SIGNED_PATH)/br_bct_BR.bct
 _quill_c03_br_bct := $(QUILL_C03_SIGNED_PATH)/br_bct_BR.bct
 _quill_c04_br_bct := $(QUILL_C04_SIGNED_PATH)/br_bct_BR.bct
 
-$(_lanai_br_bct): $(TOYBOX_HOST) $(INSTALLED_CBOOT_TARGET) $(INSTALLED_KERNEL_TARGET)
+$(_lanai_br_bct): $(TOYBOX_HOST) $(INSTALLED_CBOOT_TARGET) $(INSTALLED_KERNEL_TARGET) $(INSTALLED_TOS_TARGET)
 	@mkdir -p $(dir $@)
 	@cp $(QUILL_FLASH)/flash_android_t186_p3636.xml $(dir $@)/flash_android_t186.xml.tmp
 	@cp $(T186_BL)/* $(dir $@)/
+	@rm $(dir $@)/tos-mon-only.img
+	@cp $(INSTALLED_TOS_TARGET) $(dir $@)/
 	@cp $(INSTALLED_CBOOT_TARGET) $(dir $@)/cboot.bin
 	@cp $(QUILL_BCT)/tegra186-bpmp-p3636-0001-a00-00.dtb $(dir $@)/
 	@cp $(KERNEL_OUT)/arch/arm64/boot/dts/tegra186-p3636-0001-p3509-0000-a01-android.dtb $(dir $@)/
@@ -65,11 +68,13 @@ $(_lanai_br_bct): $(TOYBOX_HOST) $(INSTALLED_CBOOT_TARGET) $(INSTALLED_KERNEL_TA
 	cd $(dir $@); $(TEGRAFLASH_PATH)/tegraflash.py --chip 0x18 --cmd "sign mb1_cold_boot_bct_MB1.bct"
 	cd $(dir $@); $(TEGRAFLASH_PATH)/tegrahost_v2 --chip 0x18 0 --partitionlayout flash_android_t186.xml.bin --updatesig images_list_signed.xml
 
-$(_quill_c03_br_bct): $(TOYBOX_HOST) $(INSTALLED_CBOOT_TARGET) $(INSTALLED_KERNEL_TARGET)
+$(_quill_c03_br_bct): $(TOYBOX_HOST) $(INSTALLED_CBOOT_TARGET) $(INSTALLED_KERNEL_TARGET) $(INSTALLED_TOS_TARGET)
 	@mkdir -p $(dir $@)
 	@cp $(QUILL_FLASH)/flash_android_t186.xml $(dir $@)/flash_android_t186.xml.tmp
 	@cp $(T186_BL)/* $(dir $@)/
 	@cp $(INSTALLED_CBOOT_TARGET) $(dir $@)/cboot.bin
+	@rm $(dir $@)/tos-mon-only.img
+	@cp $(INSTALLED_TOS_TARGET) $(dir $@)/
 	@cp $(QUILL_BCT)/tegra186-a02-bpmp-quill-p3310-1000-c01-00-te770d-ucm2.dtb $(dir $@)/tegra186-a02-bpmp-quill-p3310-1000.dtb
 	@cp $(KERNEL_OUT)/arch/arm64/boot/dts/tegra186-quill-p3310-1000-c03-00-base.dtb $(dir $@)/
 	@$(TOYBOX_HOST) dd if=/dev/zero of=$(dir $@)/badpage_dummy.bin bs=4096 count=1
@@ -81,11 +86,13 @@ $(_quill_c03_br_bct): $(TOYBOX_HOST) $(INSTALLED_CBOOT_TARGET) $(INSTALLED_KERNE
 	cd $(dir $@); $(TEGRAFLASH_PATH)/tegrabct_v2 --chip 0x18 --mb1bct mb1_cold_boot_bct_MB1.bct --updatestorageinfo flash_android_t186.xml.bin
 	cd $(dir $@); $(TEGRAFLASH_PATH)/tegraflash.py --chip 0x18 --cmd "sign mb1_cold_boot_bct_MB1.bct"
 
-$(_quill_c04_br_bct): $(TOYBOX_HOST) $(INSTALLED_CBOOT_TARGET) $(INSTALLED_KERNEL_TARGET)
+$(_quill_c04_br_bct): $(TOYBOX_HOST) $(INSTALLED_CBOOT_TARGET) $(INSTALLED_KERNEL_TARGET) $(INSTALLED_TOS_TARGET)
 	@mkdir -p $(dir $@)
 	@cp $(QUILL_FLASH)/flash_android_t186.xml $(dir $@)/flash_android_t186.xml.tmp
 	@cp $(T186_BL)/* $(dir $@)/
 	@cp $(INSTALLED_CBOOT_TARGET) $(dir $@)/cboot.bin
+	@rm $(dir $@)/tos-mon-only.img
+	@cp $(INSTALLED_TOS_TARGET) $(dir $@)/
 	@cp $(QUILL_BCT)/tegra186-a02-bpmp-quill-p3310-1000-c04-00-te770d-ucm2.dtb $(dir $@)/tegra186-a02-bpmp-quill-p3310-1000.dtb
 	@cp $(KERNEL_OUT)/arch/arm64/boot/dts/tegra186-quill-p3310-1000-c03-00-base.dtb $(dir $@)/
 	@$(TOYBOX_HOST) dd if=/dev/zero of=$(dir $@)/badpage_dummy.bin bs=4096 count=1
