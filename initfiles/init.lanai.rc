@@ -17,12 +17,12 @@ import /vendor/etc/init/hw/init.t18x.rc
 import /vendor/etc/init/hw/init.quill_common.rc
 
 on init
-    enable btlinux-1.0
+    enable btlinux-1.1
 
 on fs
     mount_all /vendor/etc/fstab.lanai
     swapon_all /vendor/etc/fstab.lanai
 
-service vendor.bluetooth-1-0 /vendor/bin/hw/android.hardware.bluetooth@1.0-service
+service vendor.bluetooth-1-1 /vendor/bin/hw/android.hardware.bluetooth@1.1-service
     override
     disabled
