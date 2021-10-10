@@ -153,7 +153,9 @@ PRODUCT_PACKAGES += \
     bmp_update_payload
 AB_OTA_PARTITIONS += \
     boot \
+    recovery \
     system \
+    vbmeta \
     vendor \
     odm
 AB_OTA_POSTINSTALL_CONFIG += \
