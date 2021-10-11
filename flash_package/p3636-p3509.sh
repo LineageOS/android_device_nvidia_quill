@@ -22,7 +22,7 @@ TARGET_CARRIER_ID=3509;
 
 source $(pwd)/scripts/helpers.sh;
 
-declare -a FLASH_CMD_BASIC=(
+declare -a FLASH_CMD_EEPROM=(
   --applet mb1_recovery_prod.bin
   --chip 0x18);
 
@@ -30,13 +30,18 @@ if ! get_interfaces; then
   exit -1;
 fi;
 
-if ! check_module_compatibility ${TARGET_MODULE_ID}; then
-  echo "No Jetson TX2 NX module found";
+if ! check_compatibility ${TARGET_MODULE_ID} ${TARGET_CARRIER_ID}; then
+  echo "No Jetson TX2 NX + Xavier NX carrier found";
   exit -1;
 fi;
 
-declare -a FLASH_CMD_FULL=(
-  ${FLASH_CMD_BASIC[@]}
+if [ ! ${MODULEINFO[sku]} -eq 1 ]; then
+  echo "Unsupported TX2 NX module sku: ${MODULEINFO[sku]}";
+  exit -1;
+fi;
+
+declare -a FLASH_CMD_FLASH=(
+  ${FLASH_CMD_EEPROM[@]}
   --bl nvtboot_recovery_cpu.bin
   --sdram_config tegra186-mb1-bct-memcfg-p3636-0001-a01.cfg
   --odmdata 0x2090000
@@ -51,13 +56,8 @@ declare -a FLASH_CMD_FULL=(
   --dev_params emmc.cfg
   --bins "mb2_bootloader nvtboot_recovery.bin; mts_preboot preboot_d15_prod_cr.bin; mts_bootpack mce_mts_d15_prod_cr.bin; bpmp_fw bpmp.bin; bpmp_fw_dtb tegra186-bpmp-p3636-0001-a00-00.dtb; tlk tos-mon-only.img; bootloader_dtb tegra186-p3636-0001-p3509-0000-a01-android.dtb");
 
-if ! check_carrier_compatibility ${TARGET_CARRIER_ID}; then
-  echo "No NX Devkit Carrier with Jetson TX2 NX found";
-  exit -1;
-fi;
-
 tegraflash.py \
-  "${FLASH_CMD_FULL[@]}" \
+  "${FLASH_CMD_FLASH[@]}" \
   --instance ${INTERFACE} \
   --cfg flash_android_t186_p3636.xml \
   --cmd "flash; reboot"
