@@ -22,7 +22,7 @@ TARGET_CARRIER_ID=2597;
 
 source $(pwd)/scripts/helpers.sh;
 
-declare -a FLASH_CMD_BASIC=(
+declare -a FLASH_CMD_EEPROM=(
   --applet mb1_recovery_prod.bin
   --chip 0x18);
 
@@ -30,8 +30,8 @@ if ! get_interfaces; then
   exit -1;
 fi;
 
-if ! check_module_compatibility ${TARGET_MODULE_ID}; then
-  echo "No Jetson TX2 module found";
+if ! check_compatibility ${TARGET_MODULE_ID} ${TARGET_CARRIER_ID}; then
+  echo "No Jetson TX2 Devkit found";
   exit -1;
 fi;
 
@@ -51,8 +51,8 @@ else
   exit -1;
 fi;
 
-declare -a FLASH_CMD_FULL=(
-  ${FLASH_CMD_BASIC[@]}
+declare -a FLASH_CMD_FLASH=(
+  ${FLASH_CMD_EEPROM[@]}
   --bl nvtboot_recovery_cpu.bin
   --sdram_config P3310_A00_8GB_lpddr4_A02_l4t.cfg
   --odmdata 0x1098000
@@ -67,16 +67,11 @@ declare -a FLASH_CMD_FULL=(
   --dev_params emmc.cfg
   --bins "mb2_bootloader nvtboot_recovery.bin; mts_preboot preboot_d15_prod_cr.bin; mts_bootpack mce_mts_d15_prod_cr.bin; bpmp_fw bpmp.bin; bpmp_fw_dtb tegra186-a02-bpmp-quill-p3310-1000-${BPF_DTB_VER}-00-te770d-ucm2.dtb; tlk tos-mon-only.img; bootloader_dtb tegra186-quill-p3310-1000-c03-00-base.dtb");
 
-if ! check_carrier_compatibility ${TARGET_CARRIER_ID}; then
-  echo "No Jetson TX2 Devkit found";
-  exit -1;
-fi;
-
 cp ${NCT} p2771-0000-devkit.bin;
 cp tegra186-a02-bpmp-quill-p3310-1000-${BPF_DTB_VER}-00-te770d-ucm2.dtb tegra186-a02-bpmp-quill-p3310-1000.dtb
 
 tegraflash.py \
-  "${FLASH_CMD_FULL[@]}" \
+  "${FLASH_CMD_FLASH[@]}" \
   --instance ${INTERFACE} \
   --cfg flash_android_t186.xml \
   --cmd "flash; reboot"
