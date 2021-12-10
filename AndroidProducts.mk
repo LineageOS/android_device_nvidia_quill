@@ -17,4 +17,4 @@
 PRODUCT_MAKEFILES := \
     $(LOCAL_DIR)/full_quill.mk \
     $(LOCAL_DIR)/lineage_quill.mk \
-    $(LOCAL_DIR)/omni_quill.mk
+    $(LOCAL_DIR)/twrp_quill.mk

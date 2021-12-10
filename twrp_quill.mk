@@ -12,12 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Inherit some common omni stuff.
-$(call inherit-product, vendor/omni/config/common.mk)
+# Inherit some common twrp stuff.
+$(call inherit-product, vendor/twrp/config/common.mk)
 
 # Inherit device configuration for quill.
-include device/nvidia/quill/omni.mk
+include device/nvidia/quill/lineage.mk
 $(call inherit-product, device/nvidia/quill/full_quill.mk)
 
-PRODUCT_NAME := omni_quill
+PRODUCT_NAME := twrp_quill
 PRODUCT_DEVICE := quill
