@@ -67,7 +67,7 @@ void vendor_load_properties()
 	                                             { "quill",    "lighting", "Jetson TX2",    3489,  888, 28, 320 },
 	                                             { "lanai",    "lanai",    "Jetson TX2 NX", 3636,    1, 28, 320 },
 	                                             { "asg",      "orbitty",  "Orbitty",          3,    0, 28, 320 } };
-	tegra_init::build_version tav = { "9", "PPR1.180610.011", "4079208_2740.7538" };
+	tegra_init::build_version tav = { "11", "RQ1A.210105.003", "7825230_3062.3935" };
 
 	tegra_init ti(devices);
 	ti.set_properties();
