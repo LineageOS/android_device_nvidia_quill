@@ -104,8 +104,7 @@ endif
 
 # Kernel
 ifneq ($(TARGET_PREBUILT_KERNEL),)
-PRODUCT_COPY_FILES += \
-    $(TARGET_PREBUILT_KERNEL):kernel
+TARGET_FORCE_PREBUILT_KERNEL := true
 endif
 
 # Light
@@ -147,10 +146,6 @@ PRODUCT_PACKAGES += \
     vendor.lineage.trust@1.0-service
 
 # Updater
-PRODUCT_PACKAGES += \
-    nv_bootloader_payload_updater \
-    bl_update_payload \
-    bmp_update_payload
 AB_OTA_PARTITIONS += \
     boot \
     recovery \
@@ -158,8 +153,14 @@ AB_OTA_PARTITIONS += \
     vbmeta \
     vendor \
     odm
+ifeq ($(TARGET_PREBUILT_KERNEL),)
 AB_OTA_POSTINSTALL_CONFIG += \
     FILESYSTEM_TYPE_system=ext4 \
     POSTINSTALL_OPTIONAL_system=true \
     POSTINSTALL_PATH_system=system/bin/nv_bootloader_payload_updater \
     RUN_POSTINSTALL_system=true
+PRODUCT_PACKAGES += \
+    nv_bootloader_payload_updater \
+    bl_update_payload \
+    bmp_update_payload
+endif
