@@ -43,7 +43,7 @@ on boot
     setprop persist.vendor.tegra.decompression cde-client
 
 on init
-    setprop ro.hardware.gatekeeper trusty.tegra
+    setprop ro.hardware.gatekeeper tlk.tegra
 
     write /dev/cpuset/foreground/cpus 0-5
     write /dev/cpuset/foreground/mems 0
