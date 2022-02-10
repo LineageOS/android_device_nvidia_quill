@@ -34,6 +34,14 @@ AWK_HOST     := $(HOST_OUT_EXECUTABLES)/one-true-awk
 AVBTOOL_HOST := $(HOST_OUT_EXECUTABLES)/avbtool
 SMD_GEN_HOST := $(HOST_OUT_EXECUTABLES)/nv_smd_generator
 
+ifeq ($(PRODUCT_USE_DYNAMIC_PARTITIONS),true)
+QUILL_PARTS := flash_android_t186.dynamic.xml
+LANAI_PARTS := flash_android_t186_p3636.dynamic.xml
+else
+QUILL_PARTS := flash_android_t186.xml
+LANAI_PARTS := flash_android_t186_p3636.xml
+endif
+
 include $(CLEAR_VARS)
 LOCAL_MODULE        := p2771_flash_package
 LOCAL_MODULE_SUFFIX := .txz
@@ -53,7 +61,7 @@ $(_p2771_package_archive): $(INSTALLED_BMP_BLOB_TARGET) $(INSTALLED_CBOOT_TARGET
 	@cp $(TEGRAFLASH_PATH)/sw_memcfg_overlay.pl $(dir $@)/tegraflash/
 	@cp $(COMMON_FLASH)/*.sh $(dir $@)/scripts/
 	@cp $(QUILL_FLASH)/p2771.sh $(dir $@)/flash.sh
-	@cp $(QUILL_FLASH)/flash_android_t186.xml $(dir $@)/
+	@cp $(QUILL_FLASH)/$(QUILL_PARTS) $(dir $@)/flash_android_t186.xml
 	@cp $(T186_BL)/* $(dir $@)/
 	@cp $(T186_FW)/xusb/tegra18x_xusb_firmware $(dir $@)/xusb_sil_rel_fw
 	@python2 $(TNSPEC_PY) nct new p2771-0000-devkit-c03 -o $(dir $@)/p2771-0000-devkit-c03.bin --spec $(QUILL_TNSPEC)
@@ -97,7 +105,7 @@ $(_p3636-p3509_package_archive): $(INSTALLED_BMP_BLOB_TARGET) $(INSTALLED_CBOOT_
 	@cp $(TEGRAFLASH_PATH)/sw_memcfg_overlay.pl $(dir $@)/tegraflash/
 	@cp $(COMMON_FLASH)/*.sh $(dir $@)/scripts/
 	@cp $(QUILL_FLASH)/p3636-p3509.sh $(dir $@)/flash.sh
-	@cp $(QUILL_FLASH)/flash_android_t186_p3636.xml $(dir $@)/
+	@cp $(QUILL_FLASH)/$(LANAI_PARTS) $(dir $@)/flash_android_t186_p3636.xml
 	@cp $(T186_BL)/* $(dir $@)/
 	@cp $(T186_FW)/xusb/tegra18x_xusb_firmware $(dir $@)/xusb_sil_rel_fw
 	@python2 $(TNSPEC_PY) nct new p3636-0001-p3509 -o $(dir $@)/p3636-0001-p3509.bin --spec $(QUILL_TNSPEC)

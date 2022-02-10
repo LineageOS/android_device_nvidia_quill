@@ -24,6 +24,14 @@ INSTALLED_KERNEL_TARGET := $(PRODUCT_OUT)/kernel
 
 TOYBOX_HOST := $(HOST_OUT_EXECUTABLES)/toybox
 
+ifeq ($(PRODUCT_USE_DYNAMIC_PARTITIONS),true)
+QUILL_PARTS := flash_android_t186.dynamic.xml
+LANAI_PARTS := flash_android_t186_p3636.dynamic.xml
+else
+QUILL_PARTS := flash_android_t186.xml
+LANAI_PARTS := flash_android_t186_p3636.xml
+endif
+
 include $(CLEAR_VARS)
 LOCAL_MODULE               := bl_update_payload
 LOCAL_MODULE_CLASS         := ETC
@@ -42,7 +50,7 @@ _quill_c04_br_bct := $(QUILL_C04_SIGNED_PATH)/br_bct_BR.bct
 
 $(_lanai_br_bct): $(TOYBOX_HOST) $(INSTALLED_CBOOT_TARGET) $(INSTALLED_KERNEL_TARGET)
 	@mkdir -p $(dir $@)
-	@cp $(QUILL_FLASH)/flash_android_t186_p3636.xml $(dir $@)/flash_android_t186.xml.tmp
+	@cp $(QUILL_FLASH)/$(LANAI_PARTS) $(dir $@)/flash_android_t186.xml.tmp
 	@cp $(T186_BL)/* $(dir $@)/
 	@cp $(INSTALLED_CBOOT_TARGET) $(dir $@)/cboot.bin
 	@cp $(QUILL_BCT)/tegra186-bpmp-p3636-0001-a00-00.dtb $(dir $@)/
@@ -67,7 +75,7 @@ $(_lanai_br_bct): $(TOYBOX_HOST) $(INSTALLED_CBOOT_TARGET) $(INSTALLED_KERNEL_TA
 
 $(_quill_c03_br_bct): $(TOYBOX_HOST) $(INSTALLED_CBOOT_TARGET) $(INSTALLED_KERNEL_TARGET)
 	@mkdir -p $(dir $@)
-	@cp $(QUILL_FLASH)/flash_android_t186.xml $(dir $@)/flash_android_t186.xml.tmp
+	@cp $(QUILL_FLASH)/$(QUILL_PARTS) $(dir $@)/flash_android_t186.xml.tmp
 	@cp $(T186_BL)/* $(dir $@)/
 	@cp $(INSTALLED_CBOOT_TARGET) $(dir $@)/cboot.bin
 	@cp $(QUILL_BCT)/tegra186-a02-bpmp-quill-p3310-1000-c01-00-te770d-ucm2.dtb $(dir $@)/tegra186-a02-bpmp-quill-p3310-1000.dtb
@@ -83,7 +91,7 @@ $(_quill_c03_br_bct): $(TOYBOX_HOST) $(INSTALLED_CBOOT_TARGET) $(INSTALLED_KERNE
 
 $(_quill_c04_br_bct): $(TOYBOX_HOST) $(INSTALLED_CBOOT_TARGET) $(INSTALLED_KERNEL_TARGET)
 	@mkdir -p $(dir $@)
-	@cp $(QUILL_FLASH)/flash_android_t186.xml $(dir $@)/flash_android_t186.xml.tmp
+	@cp $(QUILL_FLASH)/$(QUILL_PARTS) $(dir $@)/flash_android_t186.xml.tmp
 	@cp $(T186_BL)/* $(dir $@)/
 	@cp $(INSTALLED_CBOOT_TARGET) $(dir $@)/cboot.bin
 	@cp $(QUILL_BCT)/tegra186-a02-bpmp-quill-p3310-1000-c04-00-te770d-ucm2.dtb $(dir $@)/tegra186-a02-bpmp-quill-p3310-1000.dtb

@@ -3,35 +3,55 @@ LOCAL_PATH:= $(call my-dir)
 include $(CLEAR_VARS)
 LOCAL_MODULE        := fstab.lanai
 LOCAL_MODULE_CLASS  := ETC
+ifeq ($(PRODUCT_USE_DYNAMIC_PARTITIONS),true)
+LOCAL_SRC_FILES     := fstab.quill.dynamic
+else
 LOCAL_SRC_FILES     := fstab.quill
+endif
 LOCAL_VENDOR_MODULE := true
 include $(BUILD_PREBUILT)
 
 include $(CLEAR_VARS)
 LOCAL_MODULE        := fstab.lightning
 LOCAL_MODULE_CLASS  := ETC
+ifeq ($(PRODUCT_USE_DYNAMIC_PARTITIONS),true)
+LOCAL_SRC_FILES     := fstab.quill.dynamic
+else
 LOCAL_SRC_FILES     := fstab.quill
+endif
 LOCAL_VENDOR_MODULE := true
 include $(BUILD_PREBUILT)
 
 include $(CLEAR_VARS)
 LOCAL_MODULE        := fstab.orbitty
 LOCAL_MODULE_CLASS  := ETC
+ifeq ($(PRODUCT_USE_DYNAMIC_PARTITIONS),true)
+LOCAL_SRC_FILES     := fstab.quill.dynamic
+else
 LOCAL_SRC_FILES     := fstab.quill
+endif
 LOCAL_VENDOR_MODULE := true
 include $(BUILD_PREBUILT)
 
 include $(CLEAR_VARS)
 LOCAL_MODULE        := fstab.quill
 LOCAL_MODULE_CLASS  := ETC
+ifeq ($(PRODUCT_USE_DYNAMIC_PARTITIONS),true)
+LOCAL_SRC_FILES     := fstab.quill.dynamic
+else
 LOCAL_SRC_FILES     := fstab.quill
+endif
 LOCAL_VENDOR_MODULE := true
 include $(BUILD_PREBUILT)
 
 include $(CLEAR_VARS)
 LOCAL_MODULE        := fstab.storm
 LOCAL_MODULE_CLASS  := ETC
+ifeq ($(PRODUCT_USE_DYNAMIC_PARTITIONS),true)
+LOCAL_SRC_FILES     := fstab.quill.dynamic
+else
 LOCAL_SRC_FILES     := fstab.quill
+endif
 LOCAL_VENDOR_MODULE := true
 include $(BUILD_PREBUILT)
 
