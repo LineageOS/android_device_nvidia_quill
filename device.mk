@@ -129,6 +129,7 @@ PRODUCT_PACKAGES += \
 endif
 
 # Partitions
+PRODUCT_USE_DYNAMIC_PARTITIONS := true
 ifeq ($(PRODUCT_USE_DYNAMIC_PARTITIONS),true)
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/initfiles/fstab.quill.dynamic:$(TARGET_COPY_OUT_RAMDISK)/fstab.lanai \
