@@ -48,23 +48,10 @@
         <item>"9,0"</item>
     </string-array>
 
-    <!-- Boolean indicating whether the wifi chipset supports background scanning mechanism.
-         This mechanism allows the host to remain in suspend state and the dongle to actively
-         scan and wake the host when a configured SSID is detected by the dongle. This chipset
-         capability can provide power savings when wifi needs to be always kept on.
-         The driver commands needed to support the feature are BGSCAN-START and BGSCAN-STOP -->
-    <bool name="config_wifi_background_scan_support">true</bool>
-
     <!--  Maximum number of supported users -->
     <integer name="config_multiuserMaximumUsers">8</integer>
     <!-- Whether UI for multi user should be shown -->
     <bool name="config_enableMultiUserUI">true</bool>
-
-    <!-- Boolean indicating whether the wifi chipset has dual frequency band support -->
-    <bool translatable="false" name="config_wifi_dual_band_support">true</bool>
-
-    <!-- Boolean indicating associated network selection is allowed -->
-    <bool translatable="false" name="config_wifi_framework_enable_associated_network_selection">false</bool>
 
     <!-- Use proper headphone jack detection -->
     <bool name="config_useDevInputEventForAudioJack">true</bool>
