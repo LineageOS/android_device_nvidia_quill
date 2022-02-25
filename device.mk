@@ -131,6 +131,12 @@ PRODUCT_PACKAGES += \
     enctune.conf
 endif
 
+# NvPModel
+PRODUCT_PACKAGES += \
+    nvpmodel \
+    nvpmodel_t186.conf \
+    nvpmodel_t186_p3636.conf
+
 # PHS
 ifeq ($(TARGET_TEGRA_PHS),nvphs)
 PRODUCT_PACKAGES += \
