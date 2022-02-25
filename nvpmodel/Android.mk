@@ -1,4 +1,5 @@
-# Copyright (C) 2021 The LineageOS Project
+#
+# Copyright (C) 2022 The LineageOS Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -11,19 +12,20 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+#
 
-import /vendor/etc/init/hw/init.tegra.rc
-import /vendor/etc/init/hw/init.t18x.rc
-import /vendor/etc/init/hw/init.quill_common.rc
+LOCAL_PATH := $(call my-dir)
 
-on init
-    setprop ro.vendor.lineage.tegra.nvpmodel.config /odm/etc/nvpmodel_t186_p3636.conf
-    enable btlinux-1.1
+include $(CLEAR_VARS)
+LOCAL_MODULE       := nvpmodel_t186.conf
+LOCAL_MODULE_CLASS := ETC
+LOCAL_ODM_MODULE   := true
+LOCAL_SRC_FILES    := nvpmodel_t186.conf
+include $(BUILD_PREBUILT)
 
-on fs
-    mount_all /vendor/etc/fstab.lanai
-    swapon_all /vendor/etc/fstab.lanai
-
-service vendor.bluetooth-1-1 /vendor/bin/hw/android.hardware.bluetooth@1.1-service
-    override
-    disabled
+include $(CLEAR_VARS)
+LOCAL_MODULE       := nvpmodel_t186_p3636.conf
+LOCAL_MODULE_CLASS := ETC
+LOCAL_ODM_MODULE   := true
+LOCAL_SRC_FILES    := nvpmodel_t186_p3636.conf
+include $(BUILD_PREBUILT)

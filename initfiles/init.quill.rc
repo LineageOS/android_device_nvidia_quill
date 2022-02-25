@@ -16,6 +16,9 @@ import /vendor/etc/init/hw/init.tegra.rc
 import /vendor/etc/init/hw/init.t18x.rc
 import /vendor/etc/init/hw/init.quill_common.rc
 
+on init
+    setprop ro.vendor.lineage.tegra.nvpmodel.config /odm/etc/nvpmodel_t186.conf
+
 on fs
     mount_all /vendor/etc/fstab.quill
     swapon_all /vendor/etc/fstab.quill
