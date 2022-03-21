@@ -149,3 +149,6 @@ PRODUCT_PACKAGES += \
 endif
 endif
 endif
+
+PRODUCT_PACKAGES += \
+    WifiOverlay
