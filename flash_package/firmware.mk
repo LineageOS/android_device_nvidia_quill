@@ -118,8 +118,8 @@ $(_quill_blob): $(_lanai_br_bct) $(_quill_c03_br_bct) $(_quill_c04_br_bct) $(INS
 		 $(QUILL_C04_SIGNED_PATH)/camera-rtcpu-sce_sigheader.img.encrypt sce-fw 2 0 common; \
 		 $(QUILL_C04_SIGNED_PATH)/preboot_d15_prod_cr_sigheader.bin.encrypt mts-preboot 2 2 common; \
 		 $(QUILL_C04_SIGNED_PATH)/mce_mts_d15_prod_cr_sigheader.bin.encrypt mts-bootpack 2 2 common; \
-		 $(QUILL_C04_SIGNED_PATH)/warmboot_wbheader.bin.encrypt sc7 2 2 common; \
-		 $(QUILL_C04_SIGNED_PATH)/mb1_prod.bin.encrypt mb1 2 2 common; \
+		 $(QUILL_C04_SIGNED_PATH)/warmboot_wbheader_aligned.bin.encrypt sc7 2 2 common; \
+		 $(QUILL_C04_SIGNED_PATH)/mb1_prod_aligned.bin.encrypt mb1 2 2 common; \
 		 $(QUILL_C03_SIGNED_PATH)/tegra186-a02-bpmp-quill-p3310-1000_sigheader.dtb.encrypt bpmp-fw-dtb 2 0 P2771-0000-DEVKIT-C03.default; \
 		 $(QUILL_C04_SIGNED_PATH)/tegra186-quill-p3310-1000-c03-00-base_sigheader.dtb.encrypt bootloader-dtb 2 0 P2771-0000-DEVKIT-C03.default; \
 		 $(KERNEL_OUT)/arch/arm64/boot/dts/tegra186-quill-p3310-1000-c03-00-base.dtb kernel-dtb 2 0 P2771-0000-DEVKIT-C03.default; \
