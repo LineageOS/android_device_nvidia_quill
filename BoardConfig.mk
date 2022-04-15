@@ -62,6 +62,7 @@ endif
 TARGET_OTA_ASSERT_DEVICE := quill,asg,lanai
 
 # Bluetooth
+TARGET_VENDOR_PROP += device/nvidia/quill/bluetooth.prop
 ifneq ($(filter bcm, $(TARGET_TEGRA_BT)),)
 BOARD_CUSTOM_BT_CONFIG := device/nvidia/quill/comms/vnd_quill.txt
 endif
