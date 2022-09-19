@@ -177,7 +177,7 @@ do_insmod /vendor/lib/modules/lp855x_bl.ko
 
 /vendor/bin/log -t "$scriptName" -p i "loading odm audio modules started"
 do_insmod /vendor/lib/modules/snd-soc-rt5640.ko
-do_insmod /vendor/lib/modules/snd-soc-tegra-machine-driver-mobile.ko
+do_insmod /vendor/lib/modules/snd-soc-tegra-machine-driver.ko
 /vendor/bin/log -t "$scriptName" -p i "loading odm audio modules completed"
 
 # Load Touchscreen module before touch service is invoked
