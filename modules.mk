@@ -22,6 +22,10 @@ BOARD_VENDOR_KERNEL_MODULES_LOAD := \
 BOARD_VENDOR_KERNEL_MODULES_LOAD += \
     nvgpu
 
+# NvPModel
+BOARD_VENDOR_KERNEL_MODULES_LOAD += \
+    nvpmodel_emc_cap
+
 # Tegra sata
 BOARD_VENDOR_KERNEL_MODULES_LOAD += \
     ahci_tegra
