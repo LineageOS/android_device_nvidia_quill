@@ -101,3 +101,7 @@ BOARD_VENDOR_KERNEL_MODULES_LOAD += \
 BOARD_VENDOR_KERNEL_MODULES_LOAD += \
     hid_xinmo \
     hid_betopff
+
+# NvPModel
+BOARD_VENDOR_KERNEL_MODULES_LOAD += \
+    nvpmodel_emc_cap
