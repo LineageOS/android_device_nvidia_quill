@@ -105,3 +105,7 @@ BOARD_VENDOR_KERNEL_MODULES_LOAD += \
 # NvPModel
 BOARD_VENDOR_KERNEL_MODULES_LOAD += \
     nvpmodel_emc_cap
+
+# Nvhost podgov
+BOARD_VENDOR_KERNEL_MODULES_LOAD += \
+    governor_pod_scaling
