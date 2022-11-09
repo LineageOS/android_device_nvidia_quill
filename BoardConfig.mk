@@ -84,7 +84,7 @@ TARGET_RECOVERY_FSTAB    := device/nvidia/quill/initfiles/fstab.quill
 TARGET_RECOVERY_PIXEL_FORMAT := BGRA_8888
 
 # Security Patch Level
-VENDOR_SECURITY_PATCH := 2021-04-05
+VENDOR_SECURITY_PATCH := 2022-04-05
 
 # TWRP Support
 ifeq ($(WITH_TWRP),true)
