@@ -12,14 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-LOCAL_PATH := $(call my-dir)
+LOCAL_PATH := device/nvidia/quill/vendor/r35/bcm_firmware
+COMMON_BCM_PATH := device/nvidia/tegra-common/vendor/rel-shield-r/bcm_firmware
 
-include $(CLEAR_VARS)
-LOCAL_MODULE               := public.libraries
-LOCAL_SRC_FILES            := public.libraries.txt
-LOCAL_MODULE_SUFFIX        := .txt
-LOCAL_MODULE_CLASS         := ETC
-LOCAL_MODULE_TAGS          := optional
-LOCAL_MODULE_OWNER         := nvidia
-LOCAL_VENDOR_MODULE        := true
-include $(BUILD_NVIDIA_PREBUILT)
+$(call inherit-product, $(COMMON_BCM_PATH)/bcm4354/device-bcm.mk)
+$(call inherit-product, $(LOCAL_PATH)/clm.mk)
+$(call inherit-product, $(LOCAL_PATH)/nvram.mk)
+
+PRODUCT_PACKAGES += \
+    bcm4350 \
+    fw_bcmdhd_4354

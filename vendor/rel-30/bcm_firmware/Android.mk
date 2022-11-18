@@ -12,16 +12,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Boot Animation
-TARGET_SCREEN_HEIGHT      := 1920
-TARGET_SCREEN_WIDTH       := 1080
+# Purposefully unguarded, these are not available in any other supported branch
+LOCAL_PATH := $(call my-dir)
+REL30_BCM_PATH := ../../../../../../vendor/nvidia/quill/rel-30/bcm_firmware
 
-# Unified device support
-TARGET_INIT_VENDOR_LIB := //device/nvidia/quill:libinit_quill
-PRODUCT_VENDOR_PROPERTY_BLACKLIST := \
-    ro.product.vendor.device \
-    ro.product.vendor.model \
-    ro.product.vendor.name \
-    ro.vendor.build.fingerprint
-PRODUCT_PACKAGES += \
-    init_tegra
+include $(CLEAR_VARS)
+LOCAL_MODULE               := bcmdhd_clm_4354
+LOCAL_SRC_FILES            := $(REL30_BCM_PATH)/bcm4354/foster.clm_blob
+LOCAL_MODULE_SUFFIX        := .blob
+LOCAL_MODULE_CLASS         := ETC
+LOCAL_MODULE_PATH          := $(TARGET_OUT_VENDOR)/firmware
+LOCAL_MODULE_TAGS          := optional
+LOCAL_MODULE_OWNER         := nvidia
+include $(BUILD_NVIDIA_PREBUILT)

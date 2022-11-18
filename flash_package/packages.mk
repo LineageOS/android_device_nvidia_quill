@@ -14,14 +14,14 @@
 
 LOCAL_PATH := $(call my-dir)
 
-TEGRAFLASH_PATH := $(BUILD_TOP)/vendor/nvidia/common/tegraflash
-T186_BL         := $(BUILD_TOP)/vendor/nvidia/t186/bootloader
-T186_FW         := $(BUILD_TOP)/vendor/nvidia/t186/firmware
-QUILL_BCT       := $(BUILD_TOP)/vendor/nvidia/quill/BCT
+TEGRAFLASH_PATH := $(BUILD_TOP)/vendor/nvidia/common/r35/tegraflash
+T186_BL         := $(BUILD_TOP)/vendor/nvidia/t186/r32/bootloader
+T186_FW         := $(BUILD_TOP)/vendor/nvidia/t186/r32/firmware
+QUILL_BCT       := $(BUILD_TOP)/vendor/nvidia/quill/r32/BCT
 QUILL_FLASH     := $(BUILD_TOP)/device/nvidia/quill/flash_package
 COMMON_FLASH    := $(BUILD_TOP)/device/nvidia/tegra-common/flash_package
 
-TNSPEC_PY    := $(BUILD_TOP)/vendor/nvidia/common/tegraflash/tnspec.py
+TNSPEC_PY    := $(BUILD_TOP)/vendor/nvidia/common/rel-24/tegraflash/tnspec.py
 QUILL_TNSPEC := $(BUILD_TOP)/device/nvidia/quill/tnspec/quill.json
 
 INSTALLED_BMP_BLOB_TARGET      := $(PRODUCT_OUT)/bmp.blob

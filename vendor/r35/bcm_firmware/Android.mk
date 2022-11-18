@@ -12,16 +12,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Boot Animation
-TARGET_SCREEN_HEIGHT      := 1920
-TARGET_SCREEN_WIDTH       := 1080
+ifeq ($(TARGET_TEGRA_L4T_BRANCH),r35)
+LOCAL_PATH := $(call my-dir)
+QUILL_BCM_PATH := ../../../../../../vendor/nvidia/quill/r35/bcm_firmware
 
-# Unified device support
-TARGET_INIT_VENDOR_LIB := //device/nvidia/quill:libinit_quill
-PRODUCT_VENDOR_PROPERTY_BLACKLIST := \
-    ro.product.vendor.device \
-    ro.product.vendor.model \
-    ro.product.vendor.name \
-    ro.vendor.build.fingerprint
-PRODUCT_PACKAGES += \
-    init_tegra
+include $(CLEAR_VARS)
+LOCAL_MODULE               := nvram_quill_4354
+LOCAL_SRC_FILES            := $(QUILL_BCM_PATH)/bcm4354/nvram_quill_4354.txt
+LOCAL_MODULE_SUFFIX        := .txt
+LOCAL_MODULE_CLASS         := ETC
+LOCAL_MODULE_PATH          := $(TARGET_OUT_VENDOR)/firmware
+LOCAL_MODULE_TAGS          := optional
+LOCAL_MODULE_OWNER         := nvidia
+include $(BUILD_NVIDIA_PREBUILT)
+endif

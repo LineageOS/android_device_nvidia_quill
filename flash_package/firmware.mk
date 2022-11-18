@@ -14,9 +14,9 @@
 
 LOCAL_PATH := $(call my-dir)
 
-TEGRAFLASH_PATH := $(BUILD_TOP)/vendor/nvidia/common/tegraflash
-T186_BL         := $(BUILD_TOP)/vendor/nvidia/t186/bootloader
-QUILL_BCT       := $(BUILD_TOP)/vendor/nvidia/quill/BCT
+TEGRAFLASH_PATH := $(BUILD_TOP)/vendor/nvidia/common/r35/tegraflash
+T186_BL         := $(BUILD_TOP)/vendor/nvidia/t186/r32/bootloader
+QUILL_BCT       := $(BUILD_TOP)/vendor/nvidia/quill/r32/BCT
 QUILL_FLASH     := $(BUILD_TOP)/device/nvidia/quill/flash_package
 
 INSTALLED_CBOOT_TARGET  := $(PRODUCT_OUT)/cboot.bin
