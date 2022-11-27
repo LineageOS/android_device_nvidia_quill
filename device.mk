@@ -55,6 +55,10 @@ $(call inherit-product, device/nvidia/quill/vendor/quill-vendor.mk)
 # Soong namespaces
 PRODUCT_SOONG_NAMESPACES += device/nvidia/quill
 
+# Overlays
+DEVICE_PACKAGE_OVERLAYS += \
+    device/nvidia/quill/overlay
+
 # Init related
 PRODUCT_PACKAGES += \
     fstab.lanai \
