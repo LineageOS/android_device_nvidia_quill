@@ -31,7 +31,9 @@ BOARD_BUILD_SYSTEM_ROOT_IMAGE      := true
 # Android Verified Boot
 BOARD_AVB_ENABLE ?= true
 ifeq ($(BOARD_AVB_ENABLE),true)
+ifneq ($(TARGET_BUILD_VARIANT),user)
 BOARD_AVB_MAKE_VBMETA_IMAGE_ARGS           += --flags 3
+endif
 BOARD_AVB_ALGORITHM                        ?= SHA256_RSA4096
 BOARD_AVB_KEY_PATH                         ?= external/avb/test/data/testkey_rsa4096.pem
 BOARD_AVB_BOOT_ALGORITHM                   := $(BOARD_AVB_ALGORITHM)
