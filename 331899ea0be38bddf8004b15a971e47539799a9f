@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9ff258b7_0e1b0baa",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 14048
+      },
+      "writtenOn": "2022-11-27T04:29:56Z",
+      "side": 1,
+      "message": "Verified on lanai, putting the device to \u0027sleep\u0027 no longer disables network and bt, a remote is able to wake the device.",
+      "revId": "331899ea0be38bddf8004b15a971e47539799a9f",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
