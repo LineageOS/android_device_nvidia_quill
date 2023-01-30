@@ -14,7 +14,8 @@
 
 LOCAL_PATH := $(call my-dir)
 
-TEGRAFLASH_PATH := $(BUILD_TOP)/vendor/nvidia/common/tegraflash
+TEGRAFLASH_PATH := $(BUILD_TOP)/vendor/nvidia/t186/tegraflash
+TEGRAFLASH_R35  := $(BUILD_TOP)/vendor/nvidia/common/tegraflash
 T186_BL         := $(BUILD_TOP)/vendor/nvidia/t186/bootloader
 QUILL_BCT       := $(BUILD_TOP)/vendor/nvidia/quill/BCT
 QUILL_FLASH     := $(BUILD_TOP)/device/nvidia/quill/flash_package
@@ -115,7 +116,7 @@ $(_quill_c04_br_bct): $(TOYBOX_HOST) $(INSTALLED_CBOOT_TARGET) $(INSTALLED_KERNE
 
 $(_quill_blob): $(_lanai_br_bct) $(_quill_c03_br_bct) $(_quill_c04_br_bct) $(INSTALLED_KERNEL_TARGET)
 	@mkdir -p $(dir $@)
-	OUT=$(dir $@) TOP=$(BUILD_TOP) python2 $(TEGRAFLASH_PATH)/BUP_generator.py -t update -e \
+	OUT=$(dir $@) TOP=$(BUILD_TOP) python2 $(TEGRAFLASH_R35)/BUP_generator.py -t update -e \
 		"$(QUILL_C04_SIGNED_PATH)/spe_sigheader.bin.encrypt spe-fw 2 0 common; \
 		 $(QUILL_C04_SIGNED_PATH)/nvtboot_sigheader.bin.encrypt mb2 2 0 common; \
 		 $(QUILL_C04_SIGNED_PATH)/cboot_sigheader.bin.encrypt cpu-bootloader 2 0 common; \
@@ -125,8 +126,8 @@ $(_quill_blob): $(_lanai_br_bct) $(_quill_c03_br_bct) $(_quill_c04_br_bct) $(INS
 		 $(QUILL_C04_SIGNED_PATH)/camera-rtcpu-sce_sigheader.img.encrypt sce-fw 2 0 common; \
 		 $(QUILL_C04_SIGNED_PATH)/preboot_d15_prod_cr_sigheader.bin.encrypt mts-preboot 2 2 common; \
 		 $(QUILL_C04_SIGNED_PATH)/mce_mts_d15_prod_cr_sigheader.bin.encrypt mts-bootpack 2 2 common; \
-		 $(QUILL_C04_SIGNED_PATH)/warmboot_wbheader_aligned.bin.encrypt sc7 2 2 common; \
-		 $(QUILL_C04_SIGNED_PATH)/mb1_prod_aligned.bin.encrypt mb1 2 2 common; \
+		 $(QUILL_C04_SIGNED_PATH)/warmboot_wbheader.bin.encrypt sc7 2 2 common; \
+		 $(QUILL_C04_SIGNED_PATH)/mb1_prod.bin.encrypt mb1 2 2 common; \
 		 $(QUILL_C03_SIGNED_PATH)/tegra186-a02-bpmp-quill-p3310-1000_sigheader.dtb.encrypt bpmp-fw-dtb 2 0 P2771-0000-DEVKIT-C03.default; \
 		 $(QUILL_C04_SIGNED_PATH)/tegra186-quill-p3310-1000-c03-00-base_sigheader.dtb.encrypt bootloader-dtb 2 0 P2771-0000-DEVKIT-C03.default; \
 		 $(KERNEL_OUT)/arch/arm64/boot/dts/tegra186-quill-p3310-1000-c03-00-base.dtb kernel-dtb 2 0 P2771-0000-DEVKIT-C03.default; \
