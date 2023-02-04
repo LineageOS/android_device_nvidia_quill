@@ -21,8 +21,14 @@ prebuilt_etc_xml {
 }
 
 prebuilt_etc_xml {
-    name: "audio_policy_configuration.xml",
-    src: "audio_policy_configuration.xml",
+    name: "audio.lanai.xml",
+    src: "audio.quill.xml",
+    soc_specific: true,
+}
+
+prebuilt_etc_xml {
+    name: "audio.quill.xml",
+    src: "audio.quill.xml",
     soc_specific: true,
 }
 

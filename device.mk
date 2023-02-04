@@ -80,12 +80,24 @@ ifeq ($(PRODUCT_IS_ATV),true)
 endif
 
 # Audio
-ifneq ($(filter rel-shield-r, $(TARGET_TEGRA_AUDIO)),)
+ifneq ($(TARGET_TEGRA_AUDIO),)
 PRODUCT_PACKAGES += \
-    audio_effects.xml \
-    audio_policy_configuration.xml \
+    audio_effects.xml
+
+ifeq ($(TARGET_TEGRA_AUDIO),tinyhal)
+PRODUCT_PACKAGES += \
+    audio.lanai.xml \
+    audio.quill.xml
+PRODUCT_COPY_FILES += \
+    device/nvidia/quill/media/audio_policy_configuration_tinyhal.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy_configuration.xml
+
+else ifneq ($(filter rel-shield-r, $(TARGET_TEGRA_AUDIO)),)
+PRODUCT_PACKAGES += \
     nvaudio_conf.xml \
     nvaudio_fx.xml
+PRODUCT_COPY_FILES += \
+    device/nvidia/quill/media/audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy_configuration.xml
+endif
 endif
 
 # Fingerprint
