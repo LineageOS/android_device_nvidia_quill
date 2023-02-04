@@ -77,12 +77,21 @@ ifeq ($(PRODUCT_IS_ATV),true)
 endif
 
 # Audio
-ifneq ($(filter rel-shield-r, $(TARGET_TEGRA_AUDIO)),)
+ifneq ($(TARGET_TEGRA_AUDIO),)
 PRODUCT_PACKAGES += \
     audio_effects.xml \
-    audio_policy_configuration.xml \
+    audio_policy_configuration.xml
+
+ifeq ($(TARGET_TEGRA_AUDIO),tinyhal)
+PRODUCT_PACKAGES += \
+    audio.lanai.xml \
+    audio.quill.xml
+
+else ifneq ($(filter rel-shield-r, $(TARGET_TEGRA_AUDIO)),)
+PRODUCT_PACKAGES += \
     nvaudio_conf.xml \
     nvaudio_fx.xml
+endif
 endif
 
 # Kernel
