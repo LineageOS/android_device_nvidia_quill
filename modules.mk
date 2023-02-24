@@ -59,6 +59,9 @@ BOARD_VENDOR_KERNEL_MODULES_LOAD += \
     snd_soc_tegra210_alt_dmic \
     snd_soc_tegra210_alt_mvc \
     snd_soc_tegra210_alt_ope \
+    snd_soc_tegra186_alt_arad \
+    snd_soc_tegra186_alt_asrc \
+    snd_soc_tegra186_alt_dspk \
     snd_soc_tegra_machine_driver
 
 # Userspace aes crypto access
