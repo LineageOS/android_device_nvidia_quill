@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "599e5a52_fa80bc59",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 14048
+      },
+      "writtenOn": "2023-02-25T01:16:22Z",
+      "side": 1,
+      "message": "Verified on quill that dia link parsing succeeds for dspkr nodes.",
+      "revId": "d483b9b0982eaafdada6c993e0cfbb75cb4b9868",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
