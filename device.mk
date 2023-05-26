@@ -22,6 +22,7 @@ endif
 TARGET_REFERENCE_DEVICE ?= quill
 TARGET_TEGRA_VARIANT    ?= common
 
+TARGET_TEGRA_BOOTCTRL ?= smd
 TARGET_TEGRA_BT       ?= bcm btlinux
 TARGET_TEGRA_CAMERA   ?= rel-shield-r
 TARGET_TEGRA_KERNEL   ?= 4.9
@@ -30,8 +31,6 @@ TARGET_TEGRA_KEYSTORE ?= software
 TARGET_TEGRA_WIDEVINE ?= rel-shield-r
 TARGET_TEGRA_WIFI     ?= bcm
 TARGET_TEGRA_WIREGUARD ?= compat
-
-AB_OTA_UPDATER := true
 
 include device/nvidia/t186-common/t186.mk
 
@@ -151,6 +150,7 @@ PRODUCT_PACKAGES += \
     vendor.lineage.trust@1.0-service
 
 # Updater
+ifneq ($(TARGET_TEGRA_BOOTCTRL),)
 AB_OTA_PARTITIONS += \
     boot \
     recovery \
@@ -159,6 +159,7 @@ AB_OTA_PARTITIONS += \
     vendor \
     odm
 ifeq ($(TARGET_PREBUILT_KERNEL),)
+ifeq ($(TARGET_TEGRA_BOOTCTRL),smd)
 AB_OTA_POSTINSTALL_CONFIG += \
     FILESYSTEM_TYPE_system=ext4 \
     POSTINSTALL_OPTIONAL_system=true \
@@ -168,4 +169,6 @@ PRODUCT_PACKAGES += \
     nv_bootloader_payload_updater \
     bl_update_payload \
     bmp_update_payload
+endif
+endif
 endif
