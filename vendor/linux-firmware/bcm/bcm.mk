@@ -1,4 +1,4 @@
-# Copyright (C) 2022 The LineageOS Project
+# Copyright (C) 2023 The LineageOS Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,10 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Yes, this guard is intentional. Files under here are from rel-shield-r,
-# but should only be used when the rest of the firmware is from r32.
-ifeq ($(TARGET_TEGRA_FIRMWARE_BRANCH),r32)
-LOCAL_PATH := $(call my-dir)
-
-include $(call all-makefiles-under,$(LOCAL_PATH))
-endif
+PRODUCT_PACKAGES += \
+    bcm4350.hcd \
+    brcmfmac4354-sdio.bin \
+    brcmfmac4354-sdio.clm_blob \
+    nvram_quill_4354.txt

@@ -12,6 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# Yes, this guard is intentional. Files under here are from r35, but
+# should only be used when the rest of the firmware is from r32.
+ifeq ($(TARGET_TEGRA_FIRMWARE_BRANCH),r32)
 LOCAL_PATH := $(call my-dir)
 
 include $(call all-makefiles-under,$(LOCAL_PATH))
+endif
