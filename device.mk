@@ -44,7 +44,7 @@ PRODUCT_AAPT_PREF_CONFIG  := xhdpi
 
 $(call inherit-product, frameworks/native/build/tablet-10in-xhdpi-2048-dalvik-heap.mk)
 
-$(call inherit-product, device/nvidia/quill/vendor/quill-vendor.mk)
+include device/nvidia/quill/vendor/quill-vendor.mk
 
 # Soong namespaces
 PRODUCT_SOONG_NAMESPACES += device/nvidia/quill

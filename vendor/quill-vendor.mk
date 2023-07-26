@@ -12,16 +12,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-$(call inherit-product, device/nvidia/t186-common/vendor/t186-by-flags.mk)
-$(call inherit-product, device/nvidia/tegra-common/vendor/common-by-flags.mk)
-$(call inherit-product, device/nvidia/shield-common/vendor/shield-by-flags.mk)
+include device/nvidia/t186-common/vendor/t186-by-flags.mk
+include device/nvidia/tegra-common/vendor/common-by-flags.mk
+include device/nvidia/shield-common/vendor/shield-by-flags.mk
 
 ifneq ("$(wildcard device/nvidia/quill/vendor/$(TARGET_TEGRA_L4T_BRANCH)/bcm_firmware/bcm.mk)","")
-$(call inherit-product, device/nvidia/quill/vendor/$(TARGET_TEGRA_L4T_BRANCH)/bcm_firmware/bcm.mk)
+include device/nvidia/quill/vendor/$(TARGET_TEGRA_L4T_BRANCH)/bcm_firmware/bcm.mk
 endif
 
 ifneq ("$(wildcard device/nvidia/quill/vendor/$(TARGET_TEGRA_L4T_BRANCH)/realtek/realtek.mk)","")
-$(call inherit-product, device/nvidia/quill/vendor/$(TARGET_TEGRA_L4T_BRANCH)/realtek/realtek.mk)
+include device/nvidia/quill/vendor/$(TARGET_TEGRA_L4T_BRANCH)/realtek/realtek.mk
 endif
 
 PRODUCT_PACKAGES += public.libraries
