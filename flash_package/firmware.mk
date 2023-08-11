@@ -26,6 +26,10 @@ INSTALLED_TOS_TARGET    := $(PRODUCT_OUT)/tos-mon-only.img
 
 TOYBOX_HOST := $(HOST_OUT_EXECUTABLES)/toybox
 
+ifneq ($(TARGET_TEGRA_KERNEL),4.9)
+DTB_SUBFOLDER := nvidia/
+endif
+
 include $(CLEAR_VARS)
 LOCAL_MODULE               := bl_update_payload
 LOCAL_MODULE_CLASS         := ETC
@@ -50,7 +54,7 @@ $(_lanai_br_bct): $(TOYBOX_HOST) $(INSTALLED_CBOOT_TARGET) $(INSTALLED_KERNEL_TA
 	@cp $(INSTALLED_TOS_TARGET) $(dir $@)/
 	@cp $(INSTALLED_CBOOT_TARGET) $(dir $@)/cboot.bin
 	@cp $(QUILL_BCT)/tegra186-bpmp-p3636-0001-a00-00.dtb $(dir $@)/
-	@cp $(KERNEL_OUT)/arch/arm64/boot/dts/tegra186-p3636-0001-p3509-0000-a01-android.dtb $(dir $@)/
+	@cp $(KERNEL_OUT)/arch/arm64/boot/dts/$(DTB_SUBFOLDER)tegra186-p3636-0001-p3509-0000-a01-android.dtb $(dir $@)/
 	@$(TOYBOX_HOST) dd if=/dev/zero of=$(dir $@)/badpage_dummy.bin bs=4096 count=1
 	cd $(dir $@); $(TEGRAFLASH_PATH)/tegraparser_v2 --pt flash_android_t186.xml.tmp
 	cd $(dir $@); $(TEGRAFLASH_PATH)/tegrahost_v2 --chip 0x18 0 --partitionlayout flash_android_t186.xml.bin --list images_list.xml zerosbk
@@ -77,7 +81,7 @@ $(_quill_c03_br_bct): $(TOYBOX_HOST) $(INSTALLED_CBOOT_TARGET) $(INSTALLED_KERNE
 	@rm $(dir $@)/tos-mon-only.img
 	@cp $(INSTALLED_TOS_TARGET) $(dir $@)/
 	@cp $(QUILL_BCT)/tegra186-a02-bpmp-quill-p3310-1000-c01-00-te770d-ucm2.dtb $(dir $@)/tegra186-a02-bpmp-quill-p3310-1000.dtb
-	@cp $(KERNEL_OUT)/arch/arm64/boot/dts/tegra186-quill-p3310-1000-c03-00-base.dtb $(dir $@)/
+	@cp $(KERNEL_OUT)/arch/arm64/boot/dts/$(DTB_SUBFOLDER)tegra186-quill-p3310-1000-c03-00-base.dtb $(dir $@)/
 	@$(TOYBOX_HOST) dd if=/dev/zero of=$(dir $@)/badpage_dummy.bin bs=4096 count=1
 	cd $(dir $@); $(TEGRAFLASH_PATH)/tegraparser_v2 --pt flash_android_t186.xml.tmp
 	cd $(dir $@); $(TEGRAFLASH_PATH)/tegrahost_v2 --chip 0x18 0 --partitionlayout flash_android_t186.xml.bin --list images_list.xml zerosbk
@@ -95,7 +99,7 @@ $(_quill_c04_br_bct): $(TOYBOX_HOST) $(INSTALLED_CBOOT_TARGET) $(INSTALLED_KERNE
 	@rm $(dir $@)/tos-mon-only.img
 	@cp $(INSTALLED_TOS_TARGET) $(dir $@)/
 	@cp $(QUILL_BCT)/tegra186-a02-bpmp-quill-p3310-1000-c04-00-te770d-ucm2.dtb $(dir $@)/tegra186-a02-bpmp-quill-p3310-1000.dtb
-	@cp $(KERNEL_OUT)/arch/arm64/boot/dts/tegra186-quill-p3310-1000-c03-00-base.dtb $(dir $@)/
+	@cp $(KERNEL_OUT)/arch/arm64/boot/dts/$(DTB_SUBFOLDER)tegra186-quill-p3310-1000-c03-00-base.dtb $(dir $@)/
 	@$(TOYBOX_HOST) dd if=/dev/zero of=$(dir $@)/badpage_dummy.bin bs=4096 count=1
 	cd $(dir $@); $(TEGRAFLASH_PATH)/tegraparser_v2 --pt flash_android_t186.xml.tmp
 	cd $(dir $@); $(TEGRAFLASH_PATH)/tegrahost_v2 --chip 0x18 0 --partitionlayout flash_android_t186.xml.bin --list images_list.xml zerosbk
@@ -130,17 +134,17 @@ $(_quill_blob): $(_lanai_br_bct) $(_quill_c03_br_bct) $(_quill_c04_br_bct) $(INS
 		 $(QUILL_C04_SIGNED_PATH)/mb1_prod.bin.encrypt mb1 2 2 common; \
 		 $(QUILL_C03_SIGNED_PATH)/tegra186-a02-bpmp-quill-p3310-1000_sigheader.dtb.encrypt bpmp-fw-dtb 2 0 P2771-0000-DEVKIT-C03.default; \
 		 $(QUILL_C04_SIGNED_PATH)/tegra186-quill-p3310-1000-c03-00-base_sigheader.dtb.encrypt bootloader-dtb 2 0 P2771-0000-DEVKIT-C03.default; \
-		 $(KERNEL_OUT)/arch/arm64/boot/dts/tegra186-quill-p3310-1000-c03-00-base.dtb kernel-dtb 2 0 P2771-0000-DEVKIT-C03.default; \
+		 $(KERNEL_OUT)/arch/arm64/boot/dts/$(DTB_SUBFOLDER)tegra186-quill-p3310-1000-c03-00-base.dtb kernel-dtb 2 0 P2771-0000-DEVKIT-C03.default; \
 		 $(QUILL_C04_SIGNED_PATH)/br_bct_BR.bct BCT 2 2 P2771-0000-DEVKIT-C03.default; \
 		 $(QUILL_C03_SIGNED_PATH)/mb1_cold_boot_bct_MB1_sigheader.bct.encrypt MB1_BCT 2 0 P2771-0000-DEVKIT-C03.default; \
 		 $(QUILL_C04_SIGNED_PATH)/tegra186-a02-bpmp-quill-p3310-1000_sigheader.dtb.encrypt bpmp-fw-dtb 2 0 P2771-0000-DEVKIT-C04.default; \
 		 $(QUILL_C04_SIGNED_PATH)/tegra186-quill-p3310-1000-c03-00-base_sigheader.dtb.encrypt bootloader-dtb 2 0 P2771-0000-DEVKIT-C04.default; \
-		 $(KERNEL_OUT)/arch/arm64/boot/dts/tegra186-quill-p3310-1000-c03-00-base.dtb kernel-dtb 2 0 P2771-0000-DEVKIT-C04.default; \
+		 $(KERNEL_OUT)/arch/arm64/boot/dts/$(DTB_SUBFOLDER)tegra186-quill-p3310-1000-c03-00-base.dtb kernel-dtb 2 0 P2771-0000-DEVKIT-C04.default; \
 		 $(QUILL_C04_SIGNED_PATH)/br_bct_BR.bct BCT 2 2 P2771-0000-DEVKIT-C04.default; \
 		 $(QUILL_C04_SIGNED_PATH)/mb1_cold_boot_bct_MB1_sigheader.bct.encrypt MB1_BCT 2 0 P2771-0000-DEVKIT-C04.default; \
 		 $(LANAI_SIGNED_PATH)/tegra186-bpmp-p3636-0001-a00-00_sigheader.dtb.encrypt bpmp-fw-dtb 2 0 P3636-0001-P3509.default; \
 		 $(LANAI_SIGNED_PATH)/tegra186-p3636-0001-p3509-0000-a01-android_sigheader.dtb.encrypt bootloader-dtb 2 0 P3636-0001-P3509.default; \
-		 $(KERNEL_OUT)/arch/arm64/boot/dts/tegra186-p3636-0001-p3509-0000-a01-android.dtb kernel-dtb 2 0 P3636-0001-P3509.default; \
+		 $(KERNEL_OUT)/arch/arm64/boot/dts/$(DTB_SUBFOLDER)tegra186-p3636-0001-p3509-0000-a01-android.dtb kernel-dtb 2 0 P3636-0001-P3509.default; \
 		 $(LANAI_SIGNED_PATH)/br_bct_BR.bct BCT 2 2 P3636-0001-P3509.default; \
 		 $(LANAI_SIGNED_PATH)/mb1_cold_boot_bct_MB1_sigheader.bct.encrypt MB1_BCT 2 0 P3636-0001-P3509.default"
 	@mv $(dir $@)/ota.blob $@

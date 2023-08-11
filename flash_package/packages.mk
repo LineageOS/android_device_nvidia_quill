@@ -35,6 +35,10 @@ AWK_HOST     := $(HOST_OUT_EXECUTABLES)/one-true-awk
 AVBTOOL_HOST := $(HOST_OUT_EXECUTABLES)/avbtool
 SMD_GEN_HOST := $(HOST_OUT_EXECUTABLES)/nv_smd_generator
 
+ifneq ($(TARGET_TEGRA_KERNEL),4.9)
+DTB_SUBFOLDER := nvidia/
+endif
+
 include $(CLEAR_VARS)
 LOCAL_MODULE        := p2771_flash_package
 LOCAL_MODULE_SUFFIX := .txz
@@ -66,7 +70,7 @@ $(_p2771_package_archive): $(INSTALLED_BMP_BLOB_TARGET) $(INSTALLED_CBOOT_TARGET
 	@$(AVBTOOL_HOST) make_vbmeta_image --flags 2 --padding_size 256 --output $(dir $@)/vbmeta_skip.img
 	@cp $(INSTALLED_CBOOT_TARGET) $(dir $@)/cboot.bin
 	@cp $(INSTALLED_RECOVERYIMAGE_TARGET) $(dir $@)/
-	@cp $(KERNEL_OUT)/arch/arm64/boot/dts/tegra186-quill-p3310-1000-c03-00-base.dtb $(dir $@)/
+	@cp $(KERNEL_OUT)/arch/arm64/boot/dts/$(DTB_SUBFOLDER)tegra186-quill-p3310-1000-c03-00-base.dtb $(dir $@)/
 	@cp $(QUILL_BCT)/*3310* $(dir $@)/
 	@cp $(QUILL_BCT)/emmc.cfg $(dir $@)/
 	@cp $(QUILL_BCT)/*_scr.cfg $(dir $@)/
@@ -111,7 +115,7 @@ $(_p3636-p3509_package_archive): $(INSTALLED_BMP_BLOB_TARGET) $(INSTALLED_CBOOT_
 	@$(AVBTOOL_HOST) make_vbmeta_image --flags 2 --padding_size 256 --output $(dir $@)/vbmeta_skip.img
 	@cp $(INSTALLED_CBOOT_TARGET) $(dir $@)/cboot.bin
 	@cp $(INSTALLED_RECOVERYIMAGE_TARGET) $(dir $@)/
-	@cp $(KERNEL_OUT)/arch/arm64/boot/dts/tegra186-p3636-0001-p3509-0000-a01-android.dtb $(dir $@)/
+	@cp $(KERNEL_OUT)/arch/arm64/boot/dts/$(DTB_SUBFOLDER)tegra186-p3636-0001-p3509-0000-a01-android.dtb $(dir $@)/
 	@cp $(QUILL_BCT)/*3636* $(dir $@)/
 	@cp $(QUILL_BCT)/emmc.cfg $(dir $@)/
 	@cp $(QUILL_BCT)/*_scr.cfg $(dir $@)/
