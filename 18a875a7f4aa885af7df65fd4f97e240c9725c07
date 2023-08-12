@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4e06d475_6d77d1ca",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 14048
+      },
+      "writtenOn": "2023-08-12T20:04:48Z",
+      "side": 1,
+      "message": "Verified building with 5.10. This doesn\u0027t boot as is and would need a lot of work, but this topic allows it to build and get to kernel.",
+      "revId": "18a875a7f4aa885af7df65fd4f97e240c9725c07",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
