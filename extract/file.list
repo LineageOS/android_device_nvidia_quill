@@ -1,5 +1,5 @@
-l4t-t194	drivers/lib/firmware/brcm/nvram.txt						bcm_firmware/bcm4354/nvram_quill_4354.txt
-nv-tegra-t210	prebuilt/t210/3rdparty/cypress/bcm4354a1/wlan/atv/foster.clm_blob		bcm_firmware/bcm4354/
+l4t-t194	drivers/lib/firmware/brcm/nvram.txt	bcm_firmware/bcm4354/nvram_quill_4354.txt
+stock-t210	vendor/firmware/bcmdhd_clm_foster.blob	bcm_firmware/bcm4354/foster.clm_blob
 
 # BCT common
 l4t-t186	bootloader/t186ref/BCT/emmc.cfg				BCT/

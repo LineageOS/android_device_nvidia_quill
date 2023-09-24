@@ -1,4 +1,4 @@
-# Copyright (C) 2020 The LineageOS Project
+# Copyright (C) 2023 The LineageOS Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,11 +14,11 @@
 
 # Purposefully unguarded, these are not available in any other supported branch
 LOCAL_PATH := $(call my-dir)
-REL30_BCM_PATH := ../../../../../../vendor/nvidia/quill/rel-30/bcm_firmware
+QUILL_BCM_PATH := ../../../../../../vendor/nvidia/quill/rel-shield-r/bcm_firmware
 
 include $(CLEAR_VARS)
 LOCAL_MODULE               := bcmdhd_clm_4354
-LOCAL_SRC_FILES            := $(REL30_BCM_PATH)/bcm4354/foster.clm_blob
+LOCAL_SRC_FILES            := $(QUILL_BCM_PATH)/bcm4354/foster.clm_blob
 LOCAL_MODULE_SUFFIX        := .blob
 LOCAL_MODULE_CLASS         := ETC
 LOCAL_MODULE_PATH          := $(TARGET_OUT_VENDOR)/firmware
