@@ -396,7 +396,7 @@
             <file_system_attribute> 0 </file_system_attribute>
             <allocation_attribute> 8 </allocation_attribute>
             <percent_reserved> 0 </percent_reserved>
-            <filename> tegra186-bpmp-p3636-0001-a00-00.dtb </filename>
+            <filename> tegra186-bpmp.dtb </filename>
             <description> **Required.** Slot A; contains BPMP firmware device tree blob
               (DTB). </description>
         </partition>
@@ -407,7 +407,7 @@
             <file_system_attribute> 0 </file_system_attribute>
             <allocation_attribute> 8 </allocation_attribute>
             <percent_reserved> 0 </percent_reserved>
-            <filename> tegra186-bpmp-p3636-0001-a00-00.dtb </filename>
+            <filename> tegra186-bpmp.dtb </filename>
             <description> **Required.** Slot B; contains BPMP firmware device tree blob
               (DTB). </description>
         </partition>

@@ -54,6 +54,8 @@ $(_p2771_package_archive): $(INSTALLED_BMP_BLOB_TARGET) $(INSTALLED_CBOOT_TARGET
 	@cp $(TEGRAFLASH_PATH)/* $(dir $@)/tegraflash/
 	@cp $(COMMON_FLASH)/*.sh $(dir $@)/scripts/
 	@cp $(QUILL_FLASH)/p2771.sh $(dir $@)/flash.sh
+	@LINEAGEVER=$(shell BUILD_TOP=$(abspath $(BUILD_TOP)) python $(COMMON_FLASH)/get_branch_name.py) && \
+	$(TOYBOX_HOST) sed -i "s/REPLACEME/$${LINEAGEVER}/" $(dir $@)/flash.sh
 	@cp $(QUILL_FLASH)/flash_android_t186.xml $(dir $@)/
 	@cp $(T186_BL)/* $(dir $@)/
 	@rm $(dir $@)/tos-mon-only.img
@@ -71,11 +73,6 @@ $(_p2771_package_archive): $(INSTALLED_BMP_BLOB_TARGET) $(INSTALLED_CBOOT_TARGET
 	@cp $(QUILL_BCT)/emmc.cfg $(dir $@)/
 	@cp $(QUILL_BCT)/*_scr.cfg $(dir $@)/
 	@cp $(QUILL_BCT)/tegra186-mb1-bct-misc-si-l4t.cfg $(dir $@)/
-	@echo "NV3" > $(dir $@)/emmc_bootblob_ver.txt
-	@echo "# R17 , REVISION: 1" >> $(dir $@)/emmc_bootblob_ver.txt
-	@echo "BOARDID=3310 BOARDSKU=1000 FAB=B02" >> $(dir $@)/emmc_bootblob_ver.txt
-	@$(TOYBOX_HOST) date '+%Y%m%d%H%M%S' >> $(dir $@)/emmc_bootblob_ver.txt
-	@$(TOYBOX_HOST) cksum $(dir $@)/emmc_bootblob_ver.txt |$(AWK_HOST) '{ print "BYTES:" $$2, "CRC32:" $$1 }' >> $(dir $@)/emmc_bootblob_ver.txt
 	@$(TOYBOX_HOST) dd if=/dev/zero of=$(dir $@)/badpage_dummy.bin bs=4096 count=1
 	@cd $(dir $@); tar -cJf $(abspath $@) *
 
@@ -96,6 +93,8 @@ $(_p3636-p3509_package_archive): $(INSTALLED_BMP_BLOB_TARGET) $(INSTALLED_CBOOT_
 	@cp $(TEGRAFLASH_PATH)/* $(dir $@)/tegraflash/
 	@cp $(COMMON_FLASH)/*.sh $(dir $@)/scripts/
 	@cp $(QUILL_FLASH)/p3636-p3509.sh $(dir $@)/flash.sh
+	@LINEAGEVER=$(shell BUILD_TOP=$(abspath $(BUILD_TOP)) python $(COMMON_FLASH)/get_branch_name.py) && \
+	$(TOYBOX_HOST) sed -i "s/REPLACEME/$${LINEAGEVER}/" $(dir $@)/flash.sh
 	@cp $(QUILL_FLASH)/flash_android_t186_p3636.xml $(dir $@)/
 	@cp $(T186_BL)/* $(dir $@)/
 	@rm $(dir $@)/tos-mon-only.img
@@ -112,11 +111,6 @@ $(_p3636-p3509_package_archive): $(INSTALLED_BMP_BLOB_TARGET) $(INSTALLED_CBOOT_
 	@cp $(QUILL_BCT)/emmc.cfg $(dir $@)/
 	@cp $(QUILL_BCT)/*_scr.cfg $(dir $@)/
 	@cp $(QUILL_BCT)/tegra186-mb1-bct-misc-si-l4t.cfg $(dir $@)/
-	@echo "NV3" > $(dir $@)/emmc_bootblob_ver.txt
-	@echo "# R17 , REVISION: 1" >> $(dir $@)/emmc_bootblob_ver.txt
-	@echo "BOARDID=3636 BOARDSKU=0001 FAB=A00" >> $(dir $@)/emmc_bootblob_ver.txt
-	@$(TOYBOX_HOST) date '+%Y%m%d%H%M%S' >> $(dir $@)/emmc_bootblob_ver.txt
-	@$(TOYBOX_HOST) cksum $(dir $@)/emmc_bootblob_ver.txt |$(AWK_HOST) '{ print "BYTES:" $$2, "CRC32:" $$1 }' >> $(dir $@)/emmc_bootblob_ver.txt
 	@$(TOYBOX_HOST) dd if=/dev/zero of=$(dir $@)/badpage_dummy.bin bs=4096 count=1
 	@cd $(dir $@); tar -cJf $(abspath $@) *
 

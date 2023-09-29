@@ -40,6 +40,12 @@ if [ ! ${MODULEINFO[sku]} -eq 1 ]; then
   exit -1;
 fi;
 
+# Generate version partition
+if ! generate_version_bootblob_v3 emmc_bootblob_ver.txt REPLACEME; then
+  echo "Failed to generate version bootblob";
+  return -1;
+fi;
+
 declare -a FLASH_CMD_FLASH=(
   ${FLASH_CMD_EEPROM[@]}
   --bl nvtboot_recovery_cpu.bin
@@ -56,8 +62,12 @@ declare -a FLASH_CMD_FLASH=(
   --dev_params emmc.cfg
   --bins "mb2_bootloader nvtboot_recovery.bin; mts_preboot preboot_d15_prod_cr.bin; mts_bootpack mce_mts_d15_prod_cr.bin; bpmp_fw bpmp.bin; bpmp_fw_dtb tegra186-bpmp-p3636-0001-a00-00.dtb; tlk tos-mon-only.img; bootloader_dtb tegra186-p3636-0001-p3509-0000-a01-android.dtb");
 
+cp tegra186-bpmp-p3636-0001-a00-00.dtb tegra186-bpmp.dtb;
+
 tegraflash.py \
   "${FLASH_CMD_FLASH[@]}" \
   --instance ${INTERFACE} \
   --cfg flash_android_t186_p3636.xml \
   --cmd "flash; reboot"
+
+rm tegra186-bpmp.dtb emmc_bootblob_ver.txt;

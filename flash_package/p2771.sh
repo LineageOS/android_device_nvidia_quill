@@ -51,6 +51,12 @@ else
   exit -1;
 fi;
 
+# Generate version partition
+if ! generate_version_bootblob_v3 emmc_bootblob_ver.txt REPLACEME; then
+  echo "Failed to generate version bootblob";
+  return -1;
+fi;
+
 declare -a FLASH_CMD_FLASH=(
   ${FLASH_CMD_EEPROM[@]}
   --bl nvtboot_recovery_cpu.bin
@@ -68,7 +74,7 @@ declare -a FLASH_CMD_FLASH=(
   --bins "mb2_bootloader nvtboot_recovery.bin; mts_preboot preboot_d15_prod_cr.bin; mts_bootpack mce_mts_d15_prod_cr.bin; bpmp_fw bpmp.bin; bpmp_fw_dtb tegra186-a02-bpmp-quill-p3310-1000-${BPF_DTB_VER}-00-te770d-ucm2.dtb; tlk tos-mon-only.img; bootloader_dtb tegra186-quill-p3310-1000-c03-00-base.dtb");
 
 cp ${NCT} p2771-0000-devkit.bin;
-cp tegra186-a02-bpmp-quill-p3310-1000-${BPF_DTB_VER}-00-te770d-ucm2.dtb tegra186-a02-bpmp-quill-p3310-1000.dtb
+cp tegra186-a02-bpmp-quill-p3310-1000-${BPF_DTB_VER}-00-te770d-ucm2.dtb tegra186-bpmp.dtb
 
 tegraflash.py \
   "${FLASH_CMD_FLASH[@]}" \
@@ -76,4 +82,4 @@ tegraflash.py \
   --cfg flash_android_t186.xml \
   --cmd "flash; reboot"
 
-rm p2771-0000-devkit.bin tegra186-a02-bpmp-quill-p3310-1000.dtb;
+rm p2771-0000-devkit.bin tegra186-bpmp.dtb emmc_bootblob_ver.txt;
