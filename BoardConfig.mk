@@ -63,7 +63,6 @@ TARGET_OTA_ASSERT_DEVICE := quill,asg,lanai
 # Bluetooth
 ifneq ($(filter bcm, $(TARGET_TEGRA_BT)),)
 BOARD_CUSTOM_BT_CONFIG := device/nvidia/quill/comms/vnd_quill.txt
-BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/nvidia/quill/comms
 endif
 
 # Kernel
