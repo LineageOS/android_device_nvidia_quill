@@ -26,7 +26,6 @@ BOARD_ODMIMAGE_FILE_SYSTEM_TYPE    := ext4
 BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := ext4
 TARGET_COPY_OUT_ODM                := odm
 TARGET_COPY_OUT_VENDOR             := vendor
-BOARD_BUILD_SYSTEM_ROOT_IMAGE      := true
 
 # Android Verified Boot
 BOARD_AVB_ENABLE ?= true
@@ -79,6 +78,7 @@ TARGET_KERNEL_CONFIG           := tegra_android_defconfig
 TARGET_KERNEL_RECOVERY_CONFIG  := tegra_android_recovery_defconfig
 BOARD_KERNEL_IMAGE_NAME        := Image.gz
 TARGET_KERNEL_ADDITIONAL_FLAGS := "NV_BUILD_KERNEL_OPTIONS=$(TARGET_TEGRA_KERNEL)"
+BOARD_KERNEL_CMDLINE           := "androidboot.boot_devices=3460000.sdhci"
 include device/nvidia/quill/modules.mk
 
 # Manifest
