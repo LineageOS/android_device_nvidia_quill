@@ -19,6 +19,7 @@ TEGRAFLASH_R35  := $(BUILD_TOP)/vendor/nvidia/common/r35/tegraflash
 T186_BL         := $(BUILD_TOP)/vendor/nvidia/t186/r32/bootloader
 QUILL_BCT       := $(BUILD_TOP)/vendor/nvidia/quill/r32/BCT
 QUILL_FLASH     := $(BUILD_TOP)/device/nvidia/quill/flash_package
+COMMON_FLASH    := $(BUILD_TOP)/device/nvidia/tegra-common/flash_package
 
 INSTALLED_CBOOT_TARGET  := $(PRODUCT_OUT)/cboot.bin
 INSTALLED_KERNEL_TARGET := $(PRODUCT_OUT)/kernel
