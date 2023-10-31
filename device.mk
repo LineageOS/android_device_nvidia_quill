@@ -22,6 +22,8 @@ endif
 TARGET_REFERENCE_DEVICE ?= quill
 TARGET_TEGRA_VARIANT    ?= common
 
+TARGET_TEGRA_MODELS := $(shell awk -F, '/tegra_init::devices/{ f = 1; next } /};/{ f = 0 } f{ gsub(/"/, "", $$3); gsub(/ /, "", $$3); print $$3 }' device/nvidia/$(TARGET_REFERENCE_DEVICE)/init/init_$(TARGET_REFERENCE_DEVICE).cpp |sort |uniq)
+
 TARGET_TEGRA_BOOTCTRL ?= smd
 TARGET_TEGRA_BT       ?= bcm btlinux
 TARGET_TEGRA_CAMERA   ?= rel-shield-r
@@ -54,27 +56,8 @@ DEVICE_PACKAGE_OVERLAYS += \
 
 # Init related
 PRODUCT_PACKAGES += \
-    fstab.lanai \
-    fstab.lightning \
-    fstab.orbitty \
-    fstab.quill \
-    fstab.storm \
-    init.lanai.rc \
-    init.lightning.rc \
-    init.orbitty.rc \
-    init.quill.rc \
-    init.storm.rc \
-    init.quill_common.rc \
-    init.recovery.lanai.rc \
-    init.recovery.lightning.rc \
-    init.recovery.orbitty.rc \
-    init.recovery.quill.rc \
-    init.recovery.storm.rc \
-    power.lanai.rc \
-    power.lightning.rc \
-    power.orbitty.rc \
-    power.quill.rc \
-    power.storm.rc
+    $(foreach model,$(TARGET_TEGRA_MODELS),fstab.$(model) init.$(model).rc init.recovery.$(model).rc power.$(model).rc) \
+    init.quill_common.rc
 
 # Permissions
 PRODUCT_COPY_FILES += \
@@ -141,9 +124,7 @@ endif
 # Thermal
 PRODUCT_PACKAGES += \
     android.hardware.thermal@1.0-service-nvidia \
-    thermalhal.lanai.xml \
-    thermalhal.quill.xml \
-    thermalhal.storm.xml
+    $(foreach model,$(TARGET_TEGRA_MODELS),thermalhal.$(model).xml)
 
 # Trust HAL
 PRODUCT_PACKAGES += \
