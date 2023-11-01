@@ -75,7 +75,6 @@ KERNEL_TOOLCHAIN               := $(shell pwd)/prebuilts/gcc/linux-x86/aarch64/a
 KERNEL_TOOLCHAIN_PREFIX        := aarch64-buildroot-linux-gnu-
 TARGET_KERNEL_SOURCE           := kernel/nvidia/kernel-$(TARGET_TEGRA_KERNEL)
 TARGET_KERNEL_CONFIG           := tegra_android_defconfig
-TARGET_KERNEL_RECOVERY_CONFIG  := tegra_android_recovery_defconfig
 BOARD_KERNEL_IMAGE_NAME        := Image.gz
 TARGET_KERNEL_ADDITIONAL_FLAGS := "NV_BUILD_KERNEL_OPTIONS=$(TARGET_TEGRA_KERNEL)"
 BOARD_KERNEL_CMDLINE           := "androidboot.boot_devices=3460000.sdhci"
