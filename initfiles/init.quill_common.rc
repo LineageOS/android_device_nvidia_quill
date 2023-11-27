@@ -19,8 +19,6 @@ on boot
     write /sys/devices/system/cpu/cpufreq/schedutil/up_rate_limit_us 0
 
 on fs
-    setprop ro.wifi.sdmmc 1
-
     # Assuming system takes 1GB runtime RAM, dedeuct it from GPU comptag memory allocation
     write /sys/devices/gpu.0/comptag_mem_deduct 1024
 
