@@ -59,6 +59,18 @@ void vendor_set_usb_product_ids(tegra_init *ti)
 		ti->property_set(id.first, id.second);
 }
 
+void vendor_make_fastbootd_symlinks(tegra_init *ti)
+{
+	std::map<std::string, std::string> mFastbootdSymlinks;
+
+	mFastbootdSymlinks.emplace("/dev/block/by-name/kernel-dtb_a",  "/dev/block/by-name/dtb_a");
+	mFastbootdSymlinks.emplace("/dev/block/by-name/kernel-dtb_b",  "/dev/block/by-name/dtb_b");
+	mFastbootdSymlinks.emplace("/dev/block/by-name/kernel-dtbo_a", "/dev/block/by-name/dtbo_a");
+	mFastbootdSymlinks.emplace("/dev/block/by-name/kernel-dtbo_b", "/dev/block/by-name/dtbo_b");
+
+	ti->make_symlinks(mFastbootdSymlinks);
+}
+
 void vendor_load_properties()
 {
 	//                                              device     name        model             id    sku   api dpi
@@ -82,6 +94,7 @@ void vendor_load_properties()
 
 	if (ti.vendor_context() || ti.recovery_context()) {
 		vendor_set_usb_product_ids(&ti);
+		vendor_make_fastbootd_symlinks(&ti);
 
 		ti.property_set("vendor.tegra.ota.boot_device", "/dev/block/platform/3460000.sdhci/mmcblk0boot0");
 		ti.property_set("vendor.tegra.ota.gpt_device",  "/dev/block/platform/3460000.sdhci/mmcblk0boot1");
