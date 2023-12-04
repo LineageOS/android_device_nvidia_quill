@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "63107d56_c3f65530",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 14048
+      },
+      "writtenOn": "2023-12-04T18:45:59Z",
+      "side": 1,
+      "message": "Policy doesn\u0027t like this patchset, need to try platform which is labelled.",
+      "revId": "2227cdce6e5eeef3ffb093c9e56647878e656281",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
