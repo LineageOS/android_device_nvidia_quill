@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "082671ed_1b0488e5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 14048
+      },
+      "writtenOn": "2023-12-05T18:05:04Z",
+      "side": 1,
+      "message": "Verified on quill that cpufreq vts test doesn\u0027t crash",
+      "revId": "98035fff14fcad25335726c6e9a0346ac2ee34ff",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
