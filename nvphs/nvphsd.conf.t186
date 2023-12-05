@@ -29,4 +29,6 @@
 #
 cpu_fmax_at_vmin=1000000
 gpu_fmax_at_vmin=750000
-governor=boot,generic,graphics,ui,camera,gpucompute,il,force,tbc,spincircle
+# graphics, tbc, spincircle should be enabled/disabled in sync
+# il should always be the last governor in the list
+governor=boot,generic,camera,gpucompute,ui,force,graphics,tbc,spincircle,il
