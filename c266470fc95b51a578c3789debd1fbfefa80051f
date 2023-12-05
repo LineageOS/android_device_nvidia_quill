@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a009656d_58e8e41f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 14048
+      },
+      "writtenOn": "2023-12-05T04:41:28Z",
+      "side": 1,
+      "message": "Still failing due to selinux. May need to just do this in an init rc like how mdarcy/sif do upstream.",
+      "revId": "c266470fc95b51a578c3789debd1fbfefa80051f",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
