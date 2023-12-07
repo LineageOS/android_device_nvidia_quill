@@ -16,3 +16,4 @@
 /devices/platform/tegra-xhci*    auto                vfat      defaults                                                            voldmanaged=usbdrive:auto,encryptable=userdata
 /devices/tegra-ehci*             auto                vfat      defaults                                                            voldmanaged=usbdrive:auto,encryptable=userdata
 /dev/block/by-name/bootlogo      /bmps               emmc      defaults                                                            recoveryonly,slotselect
+/dev/block/zram0                 none                swap      defaults                                                            zramsize=30%
