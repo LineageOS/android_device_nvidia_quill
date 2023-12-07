@@ -66,6 +66,9 @@ ifneq ($(filter bcm, $(TARGET_TEGRA_BT)),)
 BOARD_CUSTOM_BT_CONFIG := device/nvidia/quill/comms/vnd_quill.txt
 endif
 
+# Boot image
+BOARD_MKBOOTIMG_ARGS := --header_version 1
+
 # Kernel
 ifneq ($(TARGET_PREBUILT_KERNEL),)
 BOARD_VENDOR_KERNEL_MODULES += $(wildcard $(dir $(TARGET_PREBUILT_KERNEL))/*.ko)
