@@ -113,10 +113,16 @@ endif
 
 # Loadable kernel modules
 PRODUCT_PACKAGES += \
-    lkm_loader \
-    lkm_loader_target
+    lkm_loader
 PRODUCT_COPY_FILES += \
     device/nvidia/tegra-common/initfiles/init.lkm.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.lkm.rc
+ifneq ($(filter 4.9, $(TARGET_KERNEL_VERSION)),)
+PRODUCT_PACKAGES += \
+    lkm_loader_target
+else
+PRODUCT_COPY_FILES += \
+    device/nvidia/quill/initfiles/lkm.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/lkm.rc
+endif
 
 # Media config
 ifneq ($(filter rel-shield-r, $(TARGET_TEGRA_OMX)),)
@@ -138,6 +144,14 @@ endif
 ifneq ($(TARGET_TEGRA_PHS),)
 PRODUCT_COPY_FILES += \
     device/nvidia/quill/nvphs/nvphsd.conf.t186:$(TARGET_COPY_OUT_ODM)/etc/nvphsd.conf
+endif
+
+# Shipping API
+ifneq ($(filter 4.9 5.10, $(TARGET_KERNEL_VERSION)),)
+$(call inherit-product, $(SRC_TARGET_DIR)/product/product_launched_with_p.mk)
+else
+PRODUCT_SHIPPING_API_LEVEL := 36
+PRODUCT_VIRTUAL_AB_COW_VERSION := 2
 endif
 
 # Thermal
