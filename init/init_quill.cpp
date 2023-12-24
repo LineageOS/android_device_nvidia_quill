@@ -85,7 +85,10 @@ void vendor_load_properties()
 	if (ti.vendor_context() || ti.recovery_context()) {
 		vendor_set_usb_product_ids(&ti);
 
-		ti.property_set("vendor.tegra.ota.boot_device", "/dev/block/platform/3460000.sdhci/mmcblk0boot0");
-		ti.property_set("vendor.tegra.ota.gpt_device",  "/dev/block/platform/3460000.sdhci/mmcblk0boot1");
+		std::string boot_dev = ti.property_get("ro.boot.boot_devices");
+		if (boot_dev.empty())
+			boot_dev = "3460000.sdhci";
+		ti.property_set("vendor.tegra.ota.boot_device", std::string("/dev/block/platform/") + boot_dev + "/mmcblk0boot0");
+		ti.property_set("vendor.tegra.ota.gpt_device",  std::string("/dev/block/platform/") + boot_dev + "/mmcblk0boot1");
 	}
 }
