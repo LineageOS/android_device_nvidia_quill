@@ -33,8 +33,12 @@ LINEAGEVER := $(shell python $(COMMON_FLASH)/get_branch_name.py)
 
 KERNEL_OUT ?= $(PRODUCT_OUT)/obj/KERNEL_OBJ
 
-ifneq ($(TARGET_TEGRA_KERNEL),4.9)
-DTB_SUBFOLDER := nvidia/
+ifneq ($(filter 4.9, $(TARGET_TEGRA_KERNEL)),)
+DTB_PATH := $(abspath $(KERNEL_OUT)/arch/arm64/boot/dts)
+else ifneq ($(findstring dtstree,$(TARGET_KERNEL_ADDITIONAL_FLAGS)),)
+DTB_PATH := $(abspath $(KERNEL_OUT)/../nv-oot/device-tree/platform/generic-dts/t18x/lineage)
+else
+DTB_PATH := $(abspath $(KERNEL_OUT)/arch/arm64/boot/dts/nvidia)
 endif
 
 include $(CLEAR_VARS)
@@ -77,7 +81,7 @@ $(strip $1)/br_bct_BR.bct: $(INSTALLED_KERNEL_TARGET) $(INSTALLED_CBOOT_TARGET) 
 	@rm $(strip $1)/tos-mon-only.img
 	@cp $(INSTALLED_TOS_TARGET) $(strip $1)/tos-mon-only.img
 	@cp $(QUILL_BCT)/$(strip $3) $(strip $1)/tegra186-bpmp.dtb
-	@cp $(KERNEL_OUT)/arch/arm64/boot/dts/$(DTB_SUBFOLDER)$(strip $4) $(strip $1)/
+	@cp $(DTB_PATH)/$(strip $4) $(strip $1)/
 	@cp $(QUILL_BL)/$(strip $(14)).dtb $(strip $1)/$(strip $(14))-bl.dtb
 	echo "NV3" > $(strip $1)/emmc_bootblob_ver.txt
 	echo "# R$(word 1,$(subst ., ,$(LINEAGEVER))) , REVISION: $(word 2,$(subst ., ,$(LINEAGEVER)))" >> $(strip $1)/emmc_bootblob_ver.txt
@@ -179,17 +183,17 @@ $(_quill_blob): $(_p2771-c03_br_bct) $(_p2771-c04_br_bct) $(_p3636-p3509_br_bct)
 		 $(P2771-C04_SIGNED_PATH)/mb1_prod.bin.encrypt mb1 2 2 common; \
 		 $(P2771-C03_SIGNED_PATH)/tegra186-bpmp_sigheader.dtb.encrypt bpmp-fw-dtb 2 0 P2771-0000-DEVKIT-C03.default; \
 		 $(P2771-C03_SIGNED_PATH)/tegra186-quill-p3310-1000-c03-00-base-bl_sigheader.dtb.encrypt bootloader-dtb 2 0 P2771-0000-DEVKIT-C03.default; \
-		 $(KERNEL_OUT)/arch/arm64/boot/dts/$(DTB_SUBFOLDER)tegra186-quill-p3310-1000-c03-00-base.dtb kernel-dtb 2 0 P2771-0000-DEVKIT-C03.default; \
+		 $(DTB_PATH)/tegra186-quill-p3310-1000-c03-00-base.dtb kernel-dtb 2 0 P2771-0000-DEVKIT-C03.default; \
 		 $(P2771-C03_SIGNED_PATH)/br_bct_BR.bct BCT 2 2 P2771-0000-DEVKIT-C03.default; \
 		 $(P2771-C03_SIGNED_PATH)/mb1_cold_boot_bct_MB1_sigheader.bct.encrypt MB1_BCT 2 0 P2771-0000-DEVKIT-C03.default; \
 		 $(P2771-C04_SIGNED_PATH)/tegra186-bpmp_sigheader.dtb.encrypt bpmp-fw-dtb 2 0 P2771-0000-DEVKIT-C04.default; \
 		 $(P2771-C04_SIGNED_PATH)/tegra186-quill-p3310-1000-c03-00-base-bl_sigheader.dtb.encrypt bootloader-dtb 2 0 P2771-0000-DEVKIT-C04.default; \
-		 $(KERNEL_OUT)/arch/arm64/boot/dts/$(DTB_SUBFOLDER)tegra186-quill-p3310-1000-c03-00-base.dtb kernel-dtb 2 0 P2771-0000-DEVKIT-C04.default; \
+		 $(DTB_PATH)/tegra186-quill-p3310-1000-c03-00-base.dtb kernel-dtb 2 0 P2771-0000-DEVKIT-C04.default; \
 		 $(P2771-C04_SIGNED_PATH)/br_bct_BR.bct BCT 2 2 P2771-0000-DEVKIT-C04.default; \
 		 $(P2771-C04_SIGNED_PATH)/mb1_cold_boot_bct_MB1_sigheader.bct.encrypt MB1_BCT 2 0 P2771-0000-DEVKIT-C04.default; \
 		 $(P3636-P3509_SIGNED_PATH)/tegra186-bpmp_sigheader.dtb.encrypt bpmp-fw-dtb 2 0 P3636-0001-P3509.default; \
 		 $(P3636-P3509_SIGNED_PATH)/tegra186-p3636-0001-p3509-0000-a01-bl_sigheader.dtb.encrypt bootloader-dtb 2 0 P3636-0001-P3509.default; \
-		 $(KERNEL_OUT)/arch/arm64/boot/dts/$(DTB_SUBFOLDER)tegra186-p3636-0001-p3509-0000-a01-android.dtb kernel-dtb 2 0 P3636-0001-P3509.default; \
+		 $(DTB_PATH)/tegra186-p3636-0001-p3509-0000-a01-android.dtb kernel-dtb 2 0 P3636-0001-P3509.default; \
 		 $(P3636-P3509_SIGNED_PATH)/br_bct_BR.bct BCT 2 2 P3636-0001-P3509.default; \
 		 $(P3636-P3509_SIGNED_PATH)/mb1_cold_boot_bct_MB1_sigheader.bct.encrypt MB1_BCT 2 0 P3636-0001-P3509.default"
 	@mv $(dir $@)/ota.blob $@

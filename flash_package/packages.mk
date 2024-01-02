@@ -36,8 +36,12 @@ AWK_HOST     := $(HOST_OUT_EXECUTABLES)/one-true-awk
 AVBTOOL_HOST := $(HOST_OUT_EXECUTABLES)/avbtool
 SMD_GEN_HOST := $(HOST_OUT_EXECUTABLES)/nv_smd_generator
 
-ifneq ($(TARGET_TEGRA_KERNEL),4.9)
-DTB_SUBFOLDER := nvidia/
+ifneq ($(filter 4.9, $(TARGET_TEGRA_KERNEL)),)
+DTB_PATH := $(abspath $(KERNEL_OUT)/arch/arm64/boot/dts)
+else ifneq ($(findstring dtstree,$(TARGET_KERNEL_ADDITIONAL_FLAGS)),)
+DTB_PATH := $(abspath $(KERNEL_OUT)/../nv-oot/device-tree/platform/generic-dts/t18x/lineage)
+else
+DTB_PATH := $(abspath $(KERNEL_OUT)/arch/arm64/boot/dts/nvidia)
 endif
 
 include $(CLEAR_VARS)
@@ -70,7 +74,7 @@ $(_p2771_package_archive): $(INSTALLED_BMP_BLOB_TARGET) $(INSTALLED_CBOOT_TARGET
 	@cp $(INSTALLED_CBOOT_TARGET) $(dir $@)/cboot.bin
 	@cp $(INSTALLED_RECOVERYIMAGE_TARGET) $(dir $@)/
 	@cp $(QUILL_BL)/tegra186-quill-p3310-1000-c03-00-base.dtb $(dir $@)/tegra186-quill-p3310-1000-c03-00-base-bl.dtb
-	@cp $(KERNEL_OUT)/arch/arm64/boot/dts/$(DTB_SUBFOLDER)tegra186-quill-p3310-1000-c03-00-base.dtb $(dir $@)/
+	@cp $(DTB_PATH)/tegra186-quill-p3310-1000-c03-00-base.dtb $(dir $@)/
 	@cp $(QUILL_BCT)/*3310* $(dir $@)/
 	@cp $(QUILL_BCT)/emmc.cfg $(dir $@)/
 	@cp $(QUILL_BCT)/*_scr.cfg $(dir $@)/
@@ -109,7 +113,7 @@ $(_p3636-p3509_package_archive): $(INSTALLED_BMP_BLOB_TARGET) $(INSTALLED_CBOOT_
 	@cp $(INSTALLED_CBOOT_TARGET) $(dir $@)/cboot.bin
 	@cp $(INSTALLED_RECOVERYIMAGE_TARGET) $(dir $@)/
 	@cp $(QUILL_BL)/tegra186-p3636-0001-p3509-0000-a01.dtb $(dir $@)/tegra186-p3636-0001-p3509-0000-a01-bl.dtb
-	@cp $(KERNEL_OUT)/arch/arm64/boot/dts/$(DTB_SUBFOLDER)tegra186-p3636-0001-p3509-0000-a01-android.dtb $(dir $@)/
+	@cp $(DTB_PATH)/tegra186-p3636-0001-p3509-0000-a01-android.dtb $(dir $@)/
 	@cp $(QUILL_BCT)/*3636* $(dir $@)/
 	@cp $(QUILL_BCT)/emmc.cfg $(dir $@)/
 	@cp $(QUILL_BCT)/*_scr.cfg $(dir $@)/
