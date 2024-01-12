@@ -84,6 +84,10 @@ TARGET_KERNEL_CONFIG           := tegra_android_defconfig
 BOARD_KERNEL_IMAGE_NAME        := Image.gz
 TARGET_KERNEL_ADDITIONAL_FLAGS := "NV_BUILD_KERNEL_OPTIONS=$(TARGET_TEGRA_KERNEL)"
 BOARD_KERNEL_CMDLINE           := "androidboot.boot_devices=3460000.sdhci"
+
+TARGET_KERNEL_EXT_MODULE_ROOT := kernel/nvidia
+TARGET_KERNEL_EXT_MODULES := \
+    nvgpu/drivers/gpu/nvgpu:kbuild
 include device/nvidia/quill/modules.mk
 
 # Manifest
