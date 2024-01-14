@@ -94,10 +94,10 @@ $(strip $1)/br_bct_BR.bct: $(INSTALLED_KERNEL_TARGET) $(INSTALLED_CBOOT_TARGET) 
 	@$(TOYBOX_HOST) dd if=/dev/zero of=$(strip $1)/badpage_dummy.bin bs=4096 count=1
 	cd $(strip $1); PYTHONDONTWRITEBYTECODE=1 $(TEGRAFLASH_PATH)/tegraflash.py \
 		--chip 0x18 \
-		--bl $(strip $(1))/nvtboot_recovery_cpu.bin \
-		--applet $(strip $(1))/mb1_recovery_prod.bin \
+		--bl nvtboot_recovery_cpu.bin \
+		--applet mb1_recovery_prod.bin \
 		--cmd "sign" \
-		--cfg $(strip $(1))/$(strip $(2)) \
+		--cfg $(strip $(2)) \
 		--odmdata $(strip $(5)) \
 		--sdram_config $(QUILL_BCT)/$(strip $(6)) \
 		--misc_config $(QUILL_BCT)/tegra186-mb1-bct-misc-si-l4t.cfg \
