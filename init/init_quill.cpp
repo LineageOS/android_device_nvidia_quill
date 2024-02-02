@@ -69,6 +69,7 @@ void vendor_load_properties()
 		{ "quill",    "lighting", "quill",   "Jetson TX2 4GB", 3489,  888, 28, 320 },
 		{ "quill",    "lighting", "quill",   "Jetson TX2 4GB", 3489,    1, 28, 320 },
 		{ "lanai",    "lanai",    "lanai",   "Jetson TX2 NX",  3636,    1, 28, 320 },
+		{ "quill",    "baracus",  "baracus", "Jamboard",       3310, 9999, 28, 320 },
 	};
 	tegra_init::build_version tav = { "11", "RQ1A.210105.003", "7825230_4387.0822" };
 

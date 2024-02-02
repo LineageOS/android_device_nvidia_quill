@@ -34,6 +34,7 @@ TOYBOX_HOST  := $(HOST_OUT_EXECUTABLES)/toybox
 AWK_HOST     := $(HOST_OUT_EXECUTABLES)/one-true-awk
 AVBTOOL_HOST := $(HOST_OUT_EXECUTABLES)/avbtool
 SMD_GEN_HOST := $(HOST_OUT_EXECUTABLES)/nv_smd_generator
+FDTPUT_HOST  := $(HOST_OUT_EXECUTABLES)/fdtput
 
 ifneq ($(TARGET_PREBUILT_KERNEL),)
 DTB_PATH := $(dir $(TARGET_PREBUILT_KERNEL))
@@ -119,6 +120,55 @@ $(PRODUCT_OUT)/p3636-p3509_flash_package.txz: $(_p3636-p3509_package_archive)
 
 .PHONY: p3636-p3509_flash_package
 p3636-p3509_flash_package: $(PRODUCT_OUT)/p3636-p3509_flash_package.txz
+
+_baracus_package_archive := $(call intermediates-dir-for,ETC,baracus_flash_package)/baracus_flash_package.txz
+
+$(_baracus_package_archive): $(INSTALLED_BMP_BLOB_TARGET) $(INSTALLED_CBOOT_TARGET) $(INSTALLED_KERNEL_TARGET) $(INSTALLED_RECOVERYIMAGE_TARGET) $(INSTALLED_TOS_TARGET) $(AWK_HOST) $(TOYBOX_HOST) $(AVBTOOL_HOST) $(SMD_GEN_HOST) $(FDTPUT_HOST)
+	@mkdir -p $(dir $@)/tegraflash
+	@mkdir -p $(dir $@)/scripts
+	@cp $(TEGRAFLASH_PATH)/* $(dir $@)/tegraflash/
+	@cp $(COMMON_FLASH)/*.sh $(dir $@)/scripts/
+	@cp $(QUILL_FLASH)/p2771.sh $(dir $@)/flash.sh
+	@LINEAGEVER=$(shell BUILD_TOP=$(abspath $(BUILD_TOP)) python $(COMMON_FLASH)/get_branch_name.py) && \
+	$(TOYBOX_HOST) sed -i "s/REPLACEME/$${LINEAGEVER}/" $(dir $@)/flash.sh
+	$(TOYBOX_HOST) sed -i "s/2597//" $(dir $@)/flash.sh
+	@cp $(QUILL_FLASH)/flash_android_t186.xml $(dir $@)/
+	@cp $(T186_BL)/* $(dir $@)/
+	@rm $(dir $@)/tos-mon-only.img
+	@cp $(INSTALLED_TOS_TARGET) $(dir $@)/tos.img
+	@cp $(T186_FW)/xusb/tegra18x_xusb_firmware $(dir $@)/xusb_sil_rel_fw
+	@python3 $(TNSPEC_PY) nct new p2771-0000-devkit-c03 -o $(dir $@)/p2771-0000-devkit-c03.bin --spec $(QUILL_TNSPEC)
+	@python3 $(TNSPEC_PY) nct new p2771-0000-devkit-c04 -o $(dir $@)/p2771-0000-devkit-c04.bin --spec $(QUILL_TNSPEC)
+	@cp $(INSTALLED_BMP_BLOB_TARGET) $(dir $@)/
+	@$(SMD_GEN_HOST) $(dir $@)/slot_metadata.bin
+	@$(AVBTOOL_HOST) make_vbmeta_image --flags 2 --padding_size 256 --output $(dir $@)/vbmeta_skip.img
+	@cp $(INSTALLED_CBOOT_TARGET) $(dir $@)/cboot.bin
+	@cp $(INSTALLED_RECOVERYIMAGE_TARGET) $(dir $@)/
+	@cp $(QUILL_BL)/tegra186-quill-p3310-1000-c03-00-base.dtb $(dir $@)/tegra186-quill-p3310-1000-c03-00-base-bl.dtb
+	@$(FDTPUT_HOST) -t bx $(dir $@)/tegra186-quill-p3310-1000-c03-00-base-bl.dtb /host1x/nvdisplay@15200000 status $(shell printf "okay\0" |xxd -p |sed 's/../& /g')
+	@$(FDTPUT_HOST) -t bx $(dir $@)/tegra186-quill-p3310-1000-c03-00-base-bl.dtb /host1x/nvdisplay@15200000 nvidia,dc-or-node $(shell printf "/host1x/sor1\0" |xxd -p |sed 's/../& /g')
+	@$(FDTPUT_HOST) $(dir $@)/tegra186-quill-p3310-1000-c03-00-base-bl.dtb /host1x/nvdisplay@15200000 nvidia,dc-connector 142
+	@$(FDTPUT_HOST) $(dir $@)/tegra186-quill-p3310-1000-c03-00-base-bl.dtb -d /fixed-regulators/regulator@3 gpio
+	@$(FDTPUT_HOST) $(dir $@)/tegra186-quill-p3310-1000-c03-00-base-bl.dtb -d /fixed-regulators/regulator@3 enable-active-high
+	@$(FDTPUT_HOST) -t bx $(dir $@)/tegra186-quill-p3310-1000-c03-00-base-bl.dtb /host1x/nvdisplay@15210000 status $(shell printf "disabled\0" |xxd -p |sed 's/../& /g')
+	@$(FDTPUT_HOST) -t bx $(dir $@)/tegra186-quill-p3310-1000-c03-00-base-bl.dtb /host1x/nvdisplay@15210000 nvidia,dc-or-node $(shell printf "/host1x/dsi\0" |xxd -p |sed 's/../& /g')
+	@$(FDTPUT_HOST) $(dir $@)/tegra186-quill-p3310-1000-c03-00-base-bl.dtb /host1x/nvdisplay@15210000 nvidia,dc-connector 134
+	@$(FDTPUT_HOST) -t bx $(dir $@)/tegra186-quill-p3310-1000-c03-00-base-bl.dtb /host1x/nvdisplay@15220000 status $(shell printf "disabled\0" |xxd -p |sed 's/../& /g')
+	@$(FDTPUT_HOST) -t bx $(dir $@)/tegra186-quill-p3310-1000-c03-00-base-bl.dtb /host1x/nvdisplay@15220000 nvidia,dc-or-node $(shell printf "/host1x/sor\0" |xxd -p |sed 's/../& /g')
+	@$(FDTPUT_HOST) $(dir $@)/tegra186-quill-p3310-1000-c03-00-base-bl.dtb /host1x/nvdisplay@15220000 nvidia,dc-connector 143
+	@cp $(DTB_PATH)/tegra186-baracus.dtb $(dir $@)/tegra186-quill-p3310-1000-c03-00-base.dtb
+	@cp $(QUILL_BCT)/*3310* $(dir $@)/
+	@cp $(QUILL_BCT)/emmc.cfg $(dir $@)/
+	@cp $(QUILL_BCT)/*_scr.cfg $(dir $@)/
+	@cp $(QUILL_BCT)/tegra186-mb1-bct-misc-si-l4t.cfg $(dir $@)/
+	@$(TOYBOX_HOST) dd if=/dev/zero of=$(dir $@)/badpage_dummy.bin bs=4096 count=1
+	@cd $(dir $@); tar -cJf $(abspath $@) *
+
+$(PRODUCT_OUT)/baracus_flash_package.txz: $(_baracus_package_archive)
+	$(hide) cp $< $@
+
+.PHONY: baracus_flash_package
+baracus_flash_package: $(PRODUCT_OUT)/baracus_flash_package.txz
 
 
 ifeq ($(word 2,$(subst _, ,$(TARGET_PRODUCT))),quill)
