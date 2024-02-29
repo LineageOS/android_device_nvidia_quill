@@ -17,6 +17,7 @@ LOCAL_PATH := $(call my-dir)
 TEGRAFLASH_PATH := $(BUILD_TOP)/vendor/nvidia/t186/r32/tegraflash
 T186_BL         := $(BUILD_TOP)/vendor/nvidia/t186/r32/bootloader
 T186_FW         := $(BUILD_TOP)/vendor/nvidia/t186/r32/firmware
+QUILL_BL        := $(BUILD_TOP)/vendor/nvidia/quill/r32/bootloader
 QUILL_BCT       := $(BUILD_TOP)/vendor/nvidia/quill/r32/BCT
 QUILL_FLASH     := $(BUILD_TOP)/device/nvidia/quill/flash_package
 COMMON_FLASH    := $(BUILD_TOP)/device/nvidia/tegra-common/flash_package
@@ -68,6 +69,7 @@ $(_p2771_package_archive): $(INSTALLED_BMP_BLOB_TARGET) $(INSTALLED_CBOOT_TARGET
 	@$(AVBTOOL_HOST) make_vbmeta_image --flags 2 --padding_size 256 --output $(dir $@)/vbmeta_skip.img
 	@cp $(INSTALLED_CBOOT_TARGET) $(dir $@)/cboot.bin
 	@cp $(INSTALLED_RECOVERYIMAGE_TARGET) $(dir $@)/
+	@cp $(QUILL_BL)/tegra186-quill-p3310-1000-c03-00-base.dtb $(dir $@)/tegra186-quill-p3310-1000-c03-00-base-bl.dtb
 	@cp $(KERNEL_OUT)/arch/arm64/boot/dts/$(DTB_SUBFOLDER)tegra186-quill-p3310-1000-c03-00-base.dtb $(dir $@)/
 	@cp $(QUILL_BCT)/*3310* $(dir $@)/
 	@cp $(QUILL_BCT)/emmc.cfg $(dir $@)/
@@ -106,6 +108,7 @@ $(_p3636-p3509_package_archive): $(INSTALLED_BMP_BLOB_TARGET) $(INSTALLED_CBOOT_
 	@$(AVBTOOL_HOST) make_vbmeta_image --flags 2 --padding_size 256 --output $(dir $@)/vbmeta_skip.img
 	@cp $(INSTALLED_CBOOT_TARGET) $(dir $@)/cboot.bin
 	@cp $(INSTALLED_RECOVERYIMAGE_TARGET) $(dir $@)/
+	@cp $(QUILL_BL)/tegra186-p3636-0001-p3509-0000-a01.dtb $(dir $@)/tegra186-p3636-0001-p3509-0000-a01-bl.dtb
 	@cp $(KERNEL_OUT)/arch/arm64/boot/dts/$(DTB_SUBFOLDER)tegra186-p3636-0001-p3509-0000-a01-android.dtb $(dir $@)/
 	@cp $(QUILL_BCT)/*3636* $(dir $@)/
 	@cp $(QUILL_BCT)/emmc.cfg $(dir $@)/

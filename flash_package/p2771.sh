@@ -71,7 +71,7 @@ declare -a FLASH_CMD_FLASH=(
   --scr_cold_boot_config mobile_scr.cfg
   --br_cmd_config tegra186-mb1-bct-bootrom-quill-p3310-1000-c03.cfg
   --dev_params emmc.cfg
-  --bins "mb2_bootloader nvtboot_recovery.bin; mts_preboot preboot_d15_prod_cr.bin; mts_bootpack mce_mts_d15_prod_cr.bin; bpmp_fw bpmp.bin; bpmp_fw_dtb tegra186-a02-bpmp-quill-p3310-1000-${BPF_DTB_VER}-00-te770d-ucm2.dtb; tlk tos-mon-only.img; bootloader_dtb tegra186-quill-p3310-1000-c03-00-base.dtb");
+  --bins "mb2_bootloader nvtboot_recovery.bin; mts_preboot preboot_d15_prod_cr.bin; mts_bootpack mce_mts_d15_prod_cr.bin; bpmp_fw bpmp.bin; bpmp_fw_dtb tegra186-a02-bpmp-quill-p3310-1000-${BPF_DTB_VER}-00-te770d-ucm2.dtb; tlk tos-mon-only.img; bootloader_dtb tegra186-quill-p3310-1000-c03-00-base-bl.dtb");
 
 cp ${NCT} p2771-0000-devkit.bin;
 cp tegra186-a02-bpmp-quill-p3310-1000-${BPF_DTB_VER}-00-te770d-ucm2.dtb tegra186-bpmp.dtb

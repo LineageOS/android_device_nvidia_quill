@@ -17,6 +17,7 @@ LOCAL_PATH := $(call my-dir)
 TEGRAFLASH_PATH := $(BUILD_TOP)/vendor/nvidia/t186/r32/tegraflash
 TEGRAFLASH_R35  := $(BUILD_TOP)/vendor/nvidia/common/r35/tegraflash
 T186_BL         := $(BUILD_TOP)/vendor/nvidia/t186/r32/bootloader
+QUILL_BL        := $(BUILD_TOP)/vendor/nvidia/quill/r32/bootloader
 QUILL_BCT       := $(BUILD_TOP)/vendor/nvidia/quill/r32/BCT
 QUILL_FLASH     := $(BUILD_TOP)/device/nvidia/quill/flash_package
 COMMON_FLASH    := $(BUILD_TOP)/device/nvidia/tegra-common/flash_package
@@ -66,6 +67,7 @@ _p3636-p3509_br_bct := $(P3636-P3509_SIGNED_PATH)/br_bct_BR.bct
 # $11 Br cmd config
 # $12 Module board id
 # $13 Module sku
+# $14 Bootloader dtb w/o suffix
 define t186_bl_signing_rule
 $(strip $1)/br_bct_BR.bct: $(INSTALLED_KERNEL_TARGET) $(INSTALLED_CBOOT_TARGET) $(INSTALLED_TOS_TARGET) $(TOYBOX_HOST) $(SMD_GEN_HOST)
 	@mkdir -p $(strip $1)
@@ -76,6 +78,7 @@ $(strip $1)/br_bct_BR.bct: $(INSTALLED_KERNEL_TARGET) $(INSTALLED_CBOOT_TARGET) 
 	@cp $(INSTALLED_TOS_TARGET) $(strip $1)/tos-mon-only.img
 	@cp $(QUILL_BCT)/$(strip $3) $(strip $1)/tegra186-bpmp.dtb
 	@cp $(KERNEL_OUT)/arch/arm64/boot/dts/$(DTB_SUBFOLDER)$(strip $4) $(strip $1)/
+	@cp $(QUILL_BL)/$(strip $(14)).dtb $(strip $1)/$(strip $(14))-bl.dtb
 	echo "NV3" > $(strip $1)/emmc_bootblob_ver.txt
 	echo "# R$(word 1,$(subst ., ,$(LINEAGEVER))) , REVISION: $(word 2,$(subst ., ,$(LINEAGEVER)))" >> $(strip $1)/emmc_bootblob_ver.txt
 	echo "BOARDID=$(strip $(12)) BOARDSKU=$(strip $(13)) FAB=" >> $(strip $1)/emmc_bootblob_ver.txt
@@ -129,7 +132,8 @@ $(call t186_bl_signing_rule, \
   tegra186-mb1-bct-prod-quill-p3310-1000-c03.cfg, \
   tegra186-mb1-bct-bootrom-quill-p3310-1000-c03.cfg, \
   3310, \
-  0 \
+  0, \
+  tegra186-quill-p3310-1000-c03-00-base \
 )
 endef
 
@@ -148,7 +152,8 @@ $(call t186_bl_signing_rule, \
   tegra186-mb1-bct-prod-p3636-0001-a00.cfg, \
   tegra186-mb1-bct-bootrom-p3636-0001-a00.cfg, \
   3636, \
-  1 \
+  1, \
+  tegra186-p3636-0001-p3509-0000-a01 \
 )
 endef
 
@@ -173,17 +178,17 @@ $(_quill_blob): $(_p2771-c03_br_bct) $(_p2771-c04_br_bct) $(_p3636-p3509_br_bct)
 		 $(P2771-C04_SIGNED_PATH)/warmboot_wbheader.bin.encrypt sc7 2 2 common; \
 		 $(P2771-C04_SIGNED_PATH)/mb1_prod.bin.encrypt mb1 2 2 common; \
 		 $(P2771-C03_SIGNED_PATH)/tegra186-bpmp_sigheader.dtb.encrypt bpmp-fw-dtb 2 0 P2771-0000-DEVKIT-C03.default; \
-		 $(P2771-C03_SIGNED_PATH)/tegra186-quill-p3310-1000-c03-00-base_sigheader.dtb.encrypt bootloader-dtb 2 0 P2771-0000-DEVKIT-C03.default; \
+		 $(P2771-C03_SIGNED_PATH)/tegra186-quill-p3310-1000-c03-00-base-bl_sigheader.dtb.encrypt bootloader-dtb 2 0 P2771-0000-DEVKIT-C03.default; \
 		 $(KERNEL_OUT)/arch/arm64/boot/dts/$(DTB_SUBFOLDER)tegra186-quill-p3310-1000-c03-00-base.dtb kernel-dtb 2 0 P2771-0000-DEVKIT-C03.default; \
 		 $(P2771-C03_SIGNED_PATH)/br_bct_BR.bct BCT 2 2 P2771-0000-DEVKIT-C03.default; \
 		 $(P2771-C03_SIGNED_PATH)/mb1_cold_boot_bct_MB1_sigheader.bct.encrypt MB1_BCT 2 0 P2771-0000-DEVKIT-C03.default; \
 		 $(P2771-C04_SIGNED_PATH)/tegra186-bpmp_sigheader.dtb.encrypt bpmp-fw-dtb 2 0 P2771-0000-DEVKIT-C04.default; \
-		 $(P2771-C04_SIGNED_PATH)/tegra186-quill-p3310-1000-c03-00-base_sigheader.dtb.encrypt bootloader-dtb 2 0 P2771-0000-DEVKIT-C04.default; \
+		 $(P2771-C04_SIGNED_PATH)/tegra186-quill-p3310-1000-c03-00-base-bl_sigheader.dtb.encrypt bootloader-dtb 2 0 P2771-0000-DEVKIT-C04.default; \
 		 $(KERNEL_OUT)/arch/arm64/boot/dts/$(DTB_SUBFOLDER)tegra186-quill-p3310-1000-c03-00-base.dtb kernel-dtb 2 0 P2771-0000-DEVKIT-C04.default; \
 		 $(P2771-C04_SIGNED_PATH)/br_bct_BR.bct BCT 2 2 P2771-0000-DEVKIT-C04.default; \
 		 $(P2771-C04_SIGNED_PATH)/mb1_cold_boot_bct_MB1_sigheader.bct.encrypt MB1_BCT 2 0 P2771-0000-DEVKIT-C04.default; \
 		 $(P3636-P3509_SIGNED_PATH)/tegra186-bpmp_sigheader.dtb.encrypt bpmp-fw-dtb 2 0 P3636-0001-P3509.default; \
-		 $(P3636-P3509_SIGNED_PATH)/tegra186-p3636-0001-p3509-0000-a01-android_sigheader.dtb.encrypt bootloader-dtb 2 0 P3636-0001-P3509.default; \
+		 $(P3636-P3509_SIGNED_PATH)/tegra186-p3636-0001-p3509-0000-a01-bl_sigheader.dtb.encrypt bootloader-dtb 2 0 P3636-0001-P3509.default; \
 		 $(KERNEL_OUT)/arch/arm64/boot/dts/$(DTB_SUBFOLDER)tegra186-p3636-0001-p3509-0000-a01-android.dtb kernel-dtb 2 0 P3636-0001-P3509.default; \
 		 $(P3636-P3509_SIGNED_PATH)/br_bct_BR.bct BCT 2 2 P3636-0001-P3509.default; \
 		 $(P3636-P3509_SIGNED_PATH)/mb1_cold_boot_bct_MB1_sigheader.bct.encrypt MB1_BCT 2 0 P3636-0001-P3509.default"

@@ -26,3 +26,6 @@ l4t-t186	bootloader/t186ref/BCT/tegra186-mb1-bct-pinmux-p3636-0001-a00.cfg	BCT/
 l4t-t186	bootloader/t186ref/BCT/tegra186-mb1-bct-pmic-p3636-0001-a00.cfg		BCT/
 l4t-t186	bootloader/t186ref/BCT/tegra186-mb1-bct-prod-p3636-0001-a00.cfg		BCT/
 l4t-t186	bootloader/t186ref/tegra186-bpmp-p3636-0001-a00-00.dtb			BCT/
+
+l4t-t186	kernel/dtb/tegra186-quill-p3310-1000-c03-00-base.dtb	bootloader/
+l4t-t186	kernel/dtb/tegra186-p3636-0001-p3509-0000-a01.dtb	bootloader/
