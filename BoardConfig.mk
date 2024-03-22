@@ -69,6 +69,9 @@ endif
 # Boot image
 BOARD_MKBOOTIMG_ARGS := --header_version 1
 
+# Fingerprint override
+BUILD_FINGERPRINT := NVIDIA/quill/quill:11/RQ1A.210105.003/7825230_3167.5736:user/release-keys
+
 # Kernel
 ifneq ($(TARGET_PREBUILT_KERNEL),)
 BOARD_VENDOR_KERNEL_MODULES += $(wildcard $(dir $(TARGET_PREBUILT_KERNEL))/*.ko)
