@@ -94,6 +94,10 @@ BOARD_VENDOR_KERNEL_MODULES_LOAD += \
     cx25840 \
     cx231xx-dvb
 
+# FS
+BOARD_VENDOR_KERNEL_MODULES_LOAD += \
+    exfat
+
 # USB Storage
 BOARD_VENDOR_KERNEL_MODULES_LOAD += \
     usb-storage
@@ -116,6 +120,7 @@ BOARD_VENDOR_KERNEL_MODULES_LOAD += \
 
 # Copy to recovery
 BOARD_RECOVERY_RAMDISK_KERNEL_MODULES_LOAD := \
+    exfat \
     hid-nvidia-blake \
     hid-jarvis-remote \
     usb-storage
