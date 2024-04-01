@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "73e88014_ff65bd1b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 14048
+      },
+      "writtenOn": "2024-04-01T05:26:29Z",
+      "side": 1,
+      "message": "Verified on quill, both external sd and usb storage operate as expected.",
+      "revId": "10fc600251a6bf9e7a155fbfa262b21fc8996356",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
