@@ -98,7 +98,7 @@ TARGET_KERNEL_PLATFORM_TARGET := tegra
 TARGET_KERNEL_SOURCE          := vendor/nvidia/$(TARGET_KERNEL_PLATFORM_TARGET)
 BOARD_KERNEL_IMAGE_NAME       := Image
 endif
-BOARD_KERNEL_CMDLINE          := firmware_class.path=/vendor/firmware cpufreq.default_governor=performance nouveau.atomic=1 cma=512MB
+BOARD_KERNEL_CMDLINE          := firmware_class.path=/vendor/firmware cpufreq.default_governor=performance nouveau.atomic=1 cma=512MB 8250.nr_uarts=1 earlycon
 include device/nvidia/quill/modules-ack.mk
 endif
 

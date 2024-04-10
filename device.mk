@@ -26,15 +26,22 @@ TARGET_TEGRA_MODELS := $(shell awk -F, '/tegra_init::devices/{ f = 1; next } /};
 
 TARGET_KERNEL_VERSION ?= 4.9
 TARGET_TEGRA_BOOTCTRL ?= smd
-TARGET_TEGRA_BT       ?= bcm btlinux
-TARGET_TEGRA_CAMERA   ?= rel-shield-r
 TARGET_TEGRA_HEALTH   ?= nobattery
-TARGET_TEGRA_TOS      ?= software
-TARGET_TEGRA_LIGHT    ?= lineage
 TARGET_TEGRA_PMODEL   ?= r36
 TARGET_TEGRA_THERMAL  ?= lineage
-TARGET_TEGRA_WIDEVINE ?= rel-shield-r
 TARGET_TEGRA_WIFI     ?= bcm
+
+ifneq ($(filter 4.9 5.10, $(TARGET_KERNEL_VERSION)),)
+TARGET_TEGRA_BT       ?= bcm btlinux
+TARGET_TEGRA_CAMERA   ?= rel-shield-r
+TARGET_TEGRA_LIGHT    ?= lineage
+TARGET_TEGRA_TOS      ?= software
+TARGET_TEGRA_WIDEVINE ?= rel-shield-r
+else
+TARGET_TEGRA_FIRMWARE_BRANCH ?= linux-firmware
+
+TARGET_TEGRA_BT       ?= btlinux
+endif
 
 include device/nvidia/t186-common/t186.mk
 
