@@ -91,9 +91,6 @@ TARGET_KERNEL_EXT_MODULES := \
     nvgpu/drivers/gpu/nvgpu:kbuild
 include device/nvidia/quill/modules.mk
 
-# Manifest
-DEVICE_MANIFEST_FILE := device/nvidia/quill/manifest.xml
-
 # Recovery
 TARGET_RECOVERY_FSTAB    := device/nvidia/quill/initfiles/fstab.quill
 TARGET_RECOVERY_PIXEL_FORMAT := BGRA_8888
