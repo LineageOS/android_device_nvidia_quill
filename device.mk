@@ -30,6 +30,7 @@ TARGET_TEGRA_CAMERA   ?= rel-shield-r
 TARGET_TEGRA_KERNEL   ?= 4.9
 TARGET_TEGRA_HEALTH   ?= nobattery
 TARGET_TEGRA_KEYSTORE ?= software
+TARGET_TEGRA_THERMAL  ?= lineage
 TARGET_TEGRA_WIDEVINE ?= rel-shield-r
 TARGET_TEGRA_WIFI     ?= bcm
 TARGET_TEGRA_WIREGUARD ?= compat
@@ -122,9 +123,10 @@ PRODUCT_PACKAGES += \
 endif
 
 # Thermal
+ifneq ($(TARGET_TEGRA_THERMAL),)
 PRODUCT_PACKAGES += \
-    android.hardware.thermal@1.0-service-nvidia \
     $(foreach model,$(TARGET_TEGRA_MODELS),thermalhal.$(model).xml)
+endif
 
 # Updater
 ifneq ($(TARGET_TEGRA_BOOTCTRL),)
