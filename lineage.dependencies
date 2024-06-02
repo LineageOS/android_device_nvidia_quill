@@ -49,6 +49,9 @@
    "target_path": "hardware/nvidia/light"
  },
  {
+   "repository": "android_hardware_nvidia_memtrack",
+   "target_path": "hardware/nvidia/memtrack"
+ },
    "repository": "android_hardware_nvidia_platform_t18x_lanai",
    "target_path": "hardware/nvidia/platform/t18x/lanai"
  },
