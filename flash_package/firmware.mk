@@ -36,7 +36,7 @@ KERNEL_OUT ?= $(PRODUCT_OUT)/obj/KERNEL_OBJ
 ifneq ($(filter 4.9, $(TARGET_TEGRA_KERNEL)),)
 DTB_PATH := $(abspath $(KERNEL_OUT)/arch/arm64/boot/dts)
 else ifneq ($(findstring dtstree,$(TARGET_KERNEL_ADDITIONAL_FLAGS)),)
-DTB_PATH := $(abspath $(KERNEL_OUT)/../nv-oot/device-tree/platform/generic-dts/t18x/lineage)
+DTB_PATH := $(abspath $(KERNEL_OUT)/../lineage-oot/device-tree/platform/generic-dts/t18x/lineage)
 else
 DTB_PATH := $(abspath $(KERNEL_OUT)/arch/arm64/boot/dts/nvidia)
 endif
