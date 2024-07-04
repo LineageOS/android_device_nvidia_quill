@@ -44,7 +44,6 @@ include $(BUILD_PREBUILT)
 endef
 
 $(eval $(call initfiles_rule, lanai,   lanai ))
-$(eval $(call initfiles_rule, orbitty, quill ))
 $(eval $(call initfiles_rule, quill,   quill ))
 
 include $(CLEAR_VARS)

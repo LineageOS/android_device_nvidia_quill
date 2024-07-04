@@ -58,7 +58,7 @@ BOARD_AVB_VENDOR_ROLLBACK_INDEX_LOCATION   := 5
 endif
 
 # Assert
-TARGET_OTA_ASSERT_DEVICE := quill,asg,lanai
+TARGET_OTA_ASSERT_DEVICE := quill,lanai
 
 # Bluetooth
 TARGET_VENDOR_PROP += device/nvidia/quill/bluetooth.prop
