@@ -75,7 +75,7 @@ _p3636-p3509_br_bct := $(P3636-P3509_SIGNED_PATH)/br_bct_BR.bct
 define t186_bl_signing_rule
 $(strip $1)/br_bct_BR.bct: $(INSTALLED_KERNEL_TARGET) $(INSTALLED_CBOOT_TARGET) $(INSTALLED_TOS_TARGET) $(TOYBOX_HOST) $(SMD_GEN_HOST)
 	@mkdir -p $(strip $1)
-	@cp $(QUILL_FLASH)/$(strip $2) $(strip $1)/
+	@cp $(strip $2) $(strip $1)/
 	@cp $(T186_BL)/* $(strip $1)/
 	@cp $(INSTALLED_CBOOT_TARGET) $(strip $1)/cboot.bin
 	@rm $(strip $1)/tos-mon-only.img
@@ -93,10 +93,10 @@ $(strip $1)/br_bct_BR.bct: $(INSTALLED_KERNEL_TARGET) $(INSTALLED_CBOOT_TARGET) 
 	cat $(strip $1)/bytes.txt >> $(strip $1)/emmc_bootblob_ver.txt
 	echo -n " CRC32:" >> $(strip $1)/emmc_bootblob_ver.txt
 	cat $(strip $1)/crc.txt >> $(strip $1)/emmc_bootblob_ver.txt
-	sed -i '/bmp\.blob/d' $(strip $1)/$(strip $(2))
-	sed -i '/p[0-9]\{4\}.*bin/d' $(strip $1)/$(strip $(2))
-	sed -i '/recovery\.img/d' $(strip $1)/$(strip $(2))
-	sed -i '/vbmeta_skip\.img/d' $(strip $1)/$(strip $(2))
+	sed -i '/bmp\.blob/d' $(strip $1)/$(notdir $(strip $(2)))
+	sed -i '/p[0-9]\{4\}.*bin/d' $(strip $1)/$(notdir $(strip $(2)))
+	sed -i '/recovery\.img/d' $(strip $1)/$(notdir $(strip $(2)))
+	sed -i '/vbmeta_skip\.img/d' $(strip $1)/$(notdir $(strip $(2)))
 	@$(SMD_GEN_HOST) $(strip $(1))/slot_metadata.bin
 	@$(TOYBOX_HOST) dd if=/dev/zero of=$(strip $1)/badpage_dummy.bin bs=4096 count=1
 	cd $(strip $1); PYTHONDONTWRITEBYTECODE=1 $(TEGRAFLASH_PATH)/tegraflash.py \
@@ -104,7 +104,7 @@ $(strip $1)/br_bct_BR.bct: $(INSTALLED_KERNEL_TARGET) $(INSTALLED_CBOOT_TARGET) 
 		--bl nvtboot_recovery_cpu.bin \
 		--applet mb1_recovery_prod.bin \
 		--cmd "sign" \
-		--cfg $(strip $(2)) \
+		--cfg $(notdir $(strip $(2))) \
 		--odmdata $(strip $(5)) \
 		--sdram_config $(QUILL_BCT)/$(strip $(6)) \
 		--misc_config $(QUILL_BCT)/tegra186-mb1-bct-misc-si-l4t.cfg \
@@ -122,12 +122,14 @@ endef
 # $1 Intermediates path
 # $2 Bpmp dtb fab
 # $3 Pmic fab
+# $4 Partition xml
+# $5 Kernel dtb
 define p2771_bl_signing_rule
 $(call t186_bl_signing_rule, \
   $(strip $(1)), \
-  flash_android_t186.xml, \
+  $(strip $(4)), \
   tegra186-a02-bpmp-quill-p3310-1000-$(strip $(2))-00-te770d-ucm2.dtb, \
-  tegra186-quill-p3310-1000-c03-00-base.dtb, \
+  $(strip $(5)), \
   0x1098000, \
   P3310_A00_8GB_lpddr4_A02_l4t.cfg, \
   tegra186-mb1-bct-pinmux-quill-p3310-1000-c03.cfg, \
@@ -142,12 +144,14 @@ $(call t186_bl_signing_rule, \
 endef
 
 # $1 Intermediates path
+# $2 Partition xml
+# $3 Kernel dtb
 define p3636-p3509_bl_signing_rule
 $(call t186_bl_signing_rule, \
   $(strip $(1)), \
-  flash_android_t186_p3636.xml, \
+  $(strip $(2)), \
   tegra186-bpmp-p3636-0001-a00-00.dtb, \
-  tegra186-p3636-0001-p3509-0000-a01-android.dtb, \
+  $(strip $(3)), \
   0x2090000, \
   tegra186-mb1-bct-memcfg-p3636-0001-a01.cfg, \
   tegra186-mb1-bct-pinmux-p3636-0001-a00.cfg, \
@@ -162,10 +166,17 @@ $(call t186_bl_signing_rule, \
 endef
 
 
-$(eval $(call p2771_bl_signing_rule, $(P2771-C03_SIGNED_PATH), c01, c03))
-$(eval $(call p2771_bl_signing_rule, $(P2771-C04_SIGNED_PATH), c04, c04))
+$(eval $(call p2771_bl_signing_rule, $(P2771-C03_SIGNED_PATH), c01, c03, $(QUILL_FLASH)/flash_android_t186.xml, tegra186-quill-p3310-1000-c03-00-base.dtb))
+$(eval $(call p2771_bl_signing_rule, $(P2771-C04_SIGNED_PATH), c04, c04, $(QUILL_FLASH)/flash_android_t186.xml, tegra186-quill-p3310-1000-c03-00-base.dtb))
 
-$(eval $(call p3636-p3509_bl_signing_rule, $(P3636-P3509_SIGNED_PATH)))
+$(eval $(call p3636-p3509_bl_signing_rule, $(P3636-P3509_SIGNED_PATH), $(QUILL_FLASH)/flash_android_t186_p3636.xml, tegra186-p3636-0001-p3509-0000-a01-android.dtb))
+
+ifneq ($(LINEAGE_BUILD),$(TARGET_REFERENCE_DEVICE))
+TEGRA_DERIVATIVE_FIRMWARE ?= $(wildcard device/*/$(LINEAGE_BUILD)/flash_package/firmware.mk)
+ifneq ($(TEGRA_DERIVATIVE_FIRMWARE),)
+include $(TEGRA_DERIVATIVE_FIRMWARE)
+endif
+endif
 
 $(_quill_blob): $(_p2771-c03_br_bct) $(_p2771-c04_br_bct) $(_p3636-p3509_br_bct) $(INSTALLED_KERNEL_TARGET)
 	@mkdir -p $(dir $@)
@@ -181,6 +192,7 @@ $(_quill_blob): $(_p2771-c03_br_bct) $(_p2771-c04_br_bct) $(_p3636-p3509_br_bct)
 		 $(P2771-C04_SIGNED_PATH)/mce_mts_d15_prod_cr_sigheader.bin.encrypt mts-bootpack 2 2 common; \
 		 $(P2771-C04_SIGNED_PATH)/warmboot_wbheader.bin.encrypt sc7 2 2 common; \
 		 $(P2771-C04_SIGNED_PATH)/mb1_prod.bin.encrypt mb1 2 2 common; \
+		 $(TEGRA_FIRMWARE_ADDITIONS) \
 		 $(P2771-C03_SIGNED_PATH)/tegra186-bpmp_sigheader.dtb.encrypt bpmp-fw-dtb 2 0 P2771-0000-DEVKIT-C03.default; \
 		 $(P2771-C03_SIGNED_PATH)/tegra186-quill-p3310-1000-c03-00-base-bl_sigheader.dtb.encrypt bootloader-dtb 2 0 P2771-0000-DEVKIT-C03.default; \
 		 $(DTB_PATH)/tegra186-quill-p3310-1000-c03-00-base.dtb kernel-dtb 2 0 P2771-0000-DEVKIT-C03.default; \
