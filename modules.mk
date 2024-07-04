@@ -14,10 +14,6 @@
 # limitations under the License.
 #
 
-# Tegra pcie host
-BOARD_VENDOR_KERNEL_MODULES_LOAD := \
-    pci-tegra
-
 # Nvhost podgov
 BOARD_VENDOR_KERNEL_MODULES_LOAD += \
     governor_pod_scaling
@@ -98,10 +94,6 @@ BOARD_VENDOR_KERNEL_MODULES_LOAD += \
 BOARD_VENDOR_KERNEL_MODULES_LOAD += \
     exfat
 
-# USB Storage
-BOARD_VENDOR_KERNEL_MODULES_LOAD += \
-    usb-storage
-
 # USB Modem
 BOARD_VENDOR_KERNEL_MODULES_LOAD += \
     cdc-acm
@@ -118,11 +110,18 @@ BOARD_VENDOR_KERNEL_MODULES_LOAD += \
     hid-betopff
 
 
-# Copy to recovery
-BOARD_RECOVERY_RAMDISK_KERNEL_MODULES_LOAD := \
-    exfat \
-    hid-nvidia-blake \
-    hid-jarvis-remote \
+# Load in first stage boot
+BOARD_VENDOR_RAMDISK_KERNEL_MODULES_LOAD := \
+    pci-tegra \
     usb-storage
 
+
+# Copy to recovery
+BOARD_RECOVERY_RAMDISK_KERNEL_MODULES_LOAD := \
+    $(BOARD_VENDOR_RAMDISK_KERNEL_MODULES_LOAD) \
+    exfat \
+    hid-nvidia-blake \
+    hid-jarvis-remote
+
+BOOT_KERNEL_MODULES     := $(addsuffix .ko,$(BOARD_VENDOR_RAMDISK_KERNEL_MODULES_LOAD))
 RECOVERY_KERNEL_MODULES := $(addsuffix .ko,$(BOARD_RECOVERY_RAMDISK_KERNEL_MODULES_LOAD))
