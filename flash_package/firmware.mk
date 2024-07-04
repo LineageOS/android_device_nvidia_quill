@@ -57,6 +57,13 @@ _p2771-c03_br_bct   := $(P2771-C03_SIGNED_PATH)/br_bct_BR.bct
 _p2771-c04_br_bct   := $(P2771-C04_SIGNED_PATH)/br_bct_BR.bct
 _p3636-p3509_br_bct := $(P3636-P3509_SIGNED_PATH)/br_bct_BR.bct
 
+ifneq ($(LINEAGE_BUILD),$(TARGET_REFERENCE_DEVICE))
+TEGRA_DERIVATIVE_FIRMWARE ?= $(wildcard device/*/$(LINEAGE_BUILD)/flash_package/firmware.mk)
+ifneq ($(TEGRA_DERIVATIVE_FIRMWARE),)
+include $(TEGRA_DERIVATIVE_FIRMWARE)
+endif
+endif
+
 # Parameters
 # $1  Intermediates path
 # $2  Partition xml
@@ -181,6 +188,7 @@ $(_quill_blob): $(_p2771-c03_br_bct) $(_p2771-c04_br_bct) $(_p3636-p3509_br_bct)
 		 $(P2771-C04_SIGNED_PATH)/mce_mts_d15_prod_cr_sigheader.bin.encrypt mts-bootpack 2 2 common; \
 		 $(P2771-C04_SIGNED_PATH)/warmboot_wbheader.bin.encrypt sc7 2 2 common; \
 		 $(P2771-C04_SIGNED_PATH)/mb1_prod.bin.encrypt mb1 2 2 common; \
+		 $(TEGRA_FIRMWARE_ADDITIONS) \
 		 $(P2771-C03_SIGNED_PATH)/tegra186-bpmp_sigheader.dtb.encrypt bpmp-fw-dtb 2 0 P2771-0000-DEVKIT-C03.default; \
 		 $(P2771-C03_SIGNED_PATH)/tegra186-quill-p3310-1000-c03-00-base-bl_sigheader.dtb.encrypt bootloader-dtb 2 0 P2771-0000-DEVKIT-C03.default; \
 		 $(DTB_PATH)/tegra186-quill-p3310-1000-c03-00-base.dtb kernel-dtb 2 0 P2771-0000-DEVKIT-C03.default; \
