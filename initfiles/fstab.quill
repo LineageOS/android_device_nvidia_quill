@@ -11,7 +11,6 @@
 /dev/block/by-name/boot          /boot               emmc      defaults                                                            defaults,slotselect
 /dev/block/by-name/misc          /misc               emmc      defaults                                                            defaults
 /dev/block/by-name/userdata      /data               ext4      noatime,nosuid,nodev,data=ordered,barrier=0,noauto_da_alloc         wait,check,formattable,quota
-/dev/block/by-name/metadata      /metadata           emmc      defaults                                                            defaults
 /dev/block/by-name/recovery      /recovery           emmc      defaults                                                            defaults,slotselect
 /devices/3530000.xhci/usb*       auto                vfat      defaults                                                            voldmanaged=usbdrive:auto,encryptable=userdata
 /devices/3400000.sdhci/mmc_host* auto                vfat      defaults                                                            voldmanaged=sdcard1:auto,encryptable=userdata
