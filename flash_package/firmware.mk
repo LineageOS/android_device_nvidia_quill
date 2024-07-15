@@ -52,10 +52,12 @@ _quill_blob := $(_quill_blob_intermediates)/$(LOCAL_MODULE)$(LOCAL_MODULE_SUFFIX
 P2771-C03_SIGNED_PATH   := $(_quill_blob_intermediates)/p2771-c03-signed
 P2771-C04_SIGNED_PATH   := $(_quill_blob_intermediates)/p2771-c04-signed
 P3636-P3509_SIGNED_PATH := $(_quill_blob_intermediates)/p3636-p3509-signed
+P3636-P3509-NVME_SIGNED_PATH := $(_quill_blob_intermediates)/p3636-p3509-nvme-signed
 
 _p2771-c03_br_bct   := $(P2771-C03_SIGNED_PATH)/br_bct_BR.bct
 _p2771-c04_br_bct   := $(P2771-C04_SIGNED_PATH)/br_bct_BR.bct
 _p3636-p3509_br_bct := $(P3636-P3509_SIGNED_PATH)/br_bct_BR.bct
+_p3636-p3509-nvme_br_bct := $(P3636-P3509-NVME_SIGNED_PATH)/br_bct_BR.bct
 
 # Parameters
 # $1  Intermediates path
@@ -172,12 +174,13 @@ $(eval $(call p2771_bl_signing_rule, $(P2771-C03_SIGNED_PATH), c01, c03, $(QUILL
 $(eval $(call p2771_bl_signing_rule, $(P2771-C04_SIGNED_PATH), c04, c04, $(QUILL_FLASH)/flash_android_t186.xml, tegra186-quill-p3310-1000-c03-00-base.dtb, $(QUILL_BL)/tegra186-quill-p3310-1000-c03-00-base))
 
 $(eval $(call p3636-p3509_bl_signing_rule, $(P3636-P3509_SIGNED_PATH), $(QUILL_FLASH)/flash_android_t186_p3636.xml, tegra186-p3636-0001-p3509-0000-a01-android.dtb, $(QUILL_BL)/tegra186-p3636-0001-p3509-0000-a01))
+$(eval $(call p3636-p3509_bl_signing_rule, $(P3636-P3509-NVME_SIGNED_PATH), $(QUILL_FLASH)/flash_android_t186_p3636-nodata.xml, tegra186-p3636-0001-p3509-0000-a01-android.dtb, $(QUILL_BL)/tegra186-p3636-0001-p3509-0000-a01))
 
 ifneq ($(TEGRA_DERIVATIVE_FIRMWARE),)
 include $(TEGRA_DERIVATIVE_FIRMWARE)
 endif
 
-$(_quill_blob): $(_p2771-c03_br_bct) $(_p2771-c04_br_bct) $(_p3636-p3509_br_bct) $(INSTALLED_KERNEL_TARGET)
+$(_quill_blob): $(_p2771-c03_br_bct) $(_p2771-c04_br_bct) $(_p3636-p3509_br_bct) $(_p3636-p3509-nvme_br_bct) $(INSTALLED_KERNEL_TARGET)
 	@mkdir -p $(dir $@)
 	OUT=$(dir $@) TOP=$(BUILD_TOP) python2 $(TEGRAFLASH_R35)/BUP_generator.py -t update -e \
 		"$(P2771-C04_SIGNED_PATH)/spe_sigheader.bin.encrypt spe-fw 2 0 common; \
@@ -206,7 +209,12 @@ $(_quill_blob): $(_p2771-c03_br_bct) $(_p2771-c04_br_bct) $(_p3636-p3509_br_bct)
 		 $(P3636-P3509_SIGNED_PATH)/tegra186-p3636-0001-p3509-0000-a01-bl_sigheader.dtb.encrypt bootloader-dtb 2 0 P3636-0001-P3509.default; \
 		 $(DTB_PATH)/tegra186-p3636-0001-p3509-0000-a01-android.dtb kernel-dtb 2 0 P3636-0001-P3509.default; \
 		 $(P3636-P3509_SIGNED_PATH)/br_bct_BR.bct BCT 2 2 P3636-0001-P3509.default; \
-		 $(P3636-P3509_SIGNED_PATH)/mb1_cold_boot_bct_MB1_sigheader.bct.encrypt MB1_BCT 2 0 P3636-0001-P3509.default"
+		 $(P3636-P3509_SIGNED_PATH)/mb1_cold_boot_bct_MB1_sigheader.bct.encrypt MB1_BCT 2 0 P3636-0001-P3509.default; \
+		 $(P3636-P3509-NVME_SIGNED_PATH)/tegra186-bpmp_sigheader.dtb.encrypt bpmp-fw-dtb 2 0 P3636-0001-P3509-NVME.default; \
+		 $(P3636-P3509-NVME_SIGNED_PATH)/tegra186-p3636-0001-p3509-0000-a01-bl_sigheader.dtb.encrypt bootloader-dtb 2 0 P3636-0001-P3509-NVME.default; \
+		 $(DTB_PATH)/tegra186-p3636-0001-p3509-0000-a01-android.dtb kernel-dtb 2 0 P3636-0001-P3509-NVME.default; \
+		 $(P3636-P3509-NVME_SIGNED_PATH)/br_bct_BR.bct BCT 2 2 P3636-0001-P3509-NVME.default; \
+		 $(P3636-P3509-NVME_SIGNED_PATH)/mb1_cold_boot_bct_MB1_sigheader.bct.encrypt MB1_BCT 2 0 P3636-0001-P3509-NVME.default"
 	@mv $(dir $@)/ota.blob $@
 
 include $(BUILD_SYSTEM)/base_rules.mk

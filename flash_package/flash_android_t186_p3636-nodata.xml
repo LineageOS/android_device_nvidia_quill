@@ -654,17 +654,6 @@
             <filename> vbmeta_skip.img </filename>
             <description> **Required.** Slot B; Contains verified boot metadata. </description>
         </partition>
-        <partition name="userdata" type="data">
-            <allocation_policy> sequential </allocation_policy>
-            <filesystem_type> basic </filesystem_type>
-            <size> 18432 </size>
-            <file_system_attribute> 0 </file_system_attribute>
-            <allocation_attribute> 0x808 </allocation_attribute>
-            <percent_reserved> 0 </percent_reserved>
-            <description> **Required.** Automatically takes all remaining space on the device except that
-              occupied by the `secondary_gpt` partition. Allocation attribute must be set to 0x808.
-              May be mounted and used to store user data. </description>
-        </partition>
         <partition name="secondary_gpt" type="secondary_gpt">
             <allocation_policy> sequential </allocation_policy>
             <filesystem_type> basic </filesystem_type>
