@@ -61,7 +61,9 @@ DEVICE_PACKAGE_OVERLAYS += \
 # Init related
 PRODUCT_PACKAGES += \
     $(foreach model,$(TARGET_TEGRA_MODELS),fstab.$(model) init.$(model).rc init.recovery.$(model).rc power.$(model).rc) \
-    init.quill_common.rc
+    init.quill_common.rc \
+    symlink_data.rc \
+    symlink_data
 
 # Permissions
 PRODUCT_COPY_FILES += \
@@ -125,6 +127,10 @@ ifneq ($(TARGET_TEGRA_PHS),)
 PRODUCT_PACKAGES += \
     nvphsd.conf
 endif
+
+# Recovery
+TARGET_RECOVERY_DEVICE_MODULES := \
+    symlink_data-recovery
 
 # Thermal
 ifneq ($(TARGET_TEGRA_THERMAL),)

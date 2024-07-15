@@ -61,3 +61,27 @@ LOCAL_MODULE_SUFFIX := .sh
 LOCAL_MODULE_CLASS  := EXECUTABLES
 LOCAL_VENDOR_MODULE := true
 include $(BUILD_PREBUILT)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE        := symlink_data
+LOCAL_SRC_FILES     := symlink_data.sh
+LOCAL_MODULE_SUFFIX := .sh
+LOCAL_MODULE_CLASS  := EXECUTABLES
+LOCAL_VENDOR_MODULE := true
+include $(BUILD_PREBUILT)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE               := symlink_data.rc
+LOCAL_MODULE_CLASS         := ETC
+LOCAL_SRC_FILES            := symlink_data.rc
+LOCAL_VENDOR_MODULE        := true
+LOCAL_MODULE_RELATIVE_PATH := init
+include $(BUILD_PREBUILT)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE        := symlink_data-recovery
+LOCAL_MODULE_STEM   := symlink_data.sh
+LOCAL_SRC_FILES     := symlink_data-recovery.sh
+LOCAL_MODULE_PATH   := $(TARGET_RECOVERY_ROOT_OUT)/system/bin
+LOCAL_MODULE_CLASS  := EXECUTABLES
+include $(BUILD_PREBUILT)

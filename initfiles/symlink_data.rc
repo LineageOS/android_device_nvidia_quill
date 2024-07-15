@@ -1,4 +1,4 @@
-# Copyright (C) 2019 The LineageOS Project
+# Copyright (C) 2024 The LineageOS Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,15 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import init.recovery.usb.rc
-
-service symlink_data /system/bin/symlink_data.sh
+service vendor.symlink_data /vendor/bin/symlink_data.sh
     class main
     user root
     group root
     oneshot
-    seclabel u:r:symlink_data:s0
     disabled
 
-on fs
-    exec_start symlink_data
+on init
+    exec_start vendor.symlink_data
