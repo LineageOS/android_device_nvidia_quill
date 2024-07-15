@@ -20,3 +20,18 @@ sh_binary {
     src: "lkm_loader_target.sh",
     soc_specific: true,
 }
+
+sh_binary {
+    name: "symlink_data",
+    filename: "symlink_data.sh",
+    src: "symlink_data.sh",
+    soc_specific: true,
+    init_rc: ["symlink_data.rc"],
+}
+
+sh_binary {
+    name: "symlink_data-rec",
+    filename: "symlink_data.sh",
+    src: "symlink_data-recovery.sh",
+    recovery: true,
+}

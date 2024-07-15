@@ -66,6 +66,10 @@ PRODUCT_COPY_FILES += \
     $(foreach model,$(TARGET_TEGRA_MODELS),device/nvidia/quill/initfiles/power.quill.rc:$(TARGET_COPY_OUT_ODM)/etc/power.$(model).rc) \
     device/nvidia/quill/initfiles/init.quill_common.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.quill_common.rc
 
+PRODUCT_PACKAGES += \
+    symlink_data \
+    symlink_data-rec.recovery
+
 # Permissions
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.audio.low_latency.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.audio.low_latency.xml \
