@@ -93,11 +93,13 @@ $(_p3636-p3509_package_archive): $(INSTALLED_BMP_BLOB_TARGET) $(INSTALLED_CBOOT_
 	@LINEAGEVER=$(shell BUILD_TOP=$(abspath $(BUILD_TOP)) python $(COMMON_FLASH)/get_branch_name.py) && \
 	$(TOYBOX_HOST) sed -i "s/REPLACEME/$${LINEAGEVER}/" $(dir $@)/flash.sh
 	@cp $(QUILL_FLASH)/flash_android_t186_p3636.xml $(dir $@)/
+	@cp $(QUILL_FLASH)/flash_android_t186_p3636-nodata.xml $(dir $@)/
 	@cp $(T186_BL)/* $(dir $@)/
 	@rm $(dir $@)/tos-mon-only.img
 	@cp $(INSTALLED_TOS_TARGET) $(dir $@)/tos.img
 	@cp $(T186_FW)/xusb/tegra18x_xusb_firmware $(dir $@)/xusb_sil_rel_fw
 	@python2 $(TNSPEC_PY) nct new p3636-0001-p3509 -o $(dir $@)/p3636-0001-p3509.bin --spec $(QUILL_TNSPEC)
+	@python2 $(TNSPEC_PY) nct new p3636-0001-p3509-nvme -o $(dir $@)/p3636-0001-p3509-nvme.bin --spec $(QUILL_TNSPEC)
 	@cp $(INSTALLED_BMP_BLOB_TARGET) $(dir $@)/
 	@$(SMD_GEN_HOST) $(dir $@)/slot_metadata.bin
 	@$(AVBTOOL_HOST) make_vbmeta_image --flags 2 --padding_size 256 --output $(dir $@)/vbmeta_skip.img
