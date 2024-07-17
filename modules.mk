@@ -46,6 +46,7 @@ BOARD_VENDOR_KERNEL_MODULES_LOAD += \
 BOARD_VENDOR_KERNEL_MODULES_LOAD += \
     snd-soc-tegra210-alt-xbar \
     snd-soc-tegra210-alt-admaif \
+    snd-soc-tegra210-alt-adsp \
     snd-soc-tegra210-alt-sfc \
     snd-soc-tegra210-alt-i2s \
     snd-soc-tegra210-alt-mixer \
