@@ -64,8 +64,8 @@
     <param name="builtin speaker" val="0"/>
 
     <!-- AHUB static controls -->
-    <ctl name="I2S2 Mux" val="ADMAIF2"/>
-    <ctl name="ADMAIF2 Mux" val="I2S2"/>
+    <ctl name="I2S6 Mux" val="ADMAIF2"/>
+    <ctl name="ADMAIF2 Mux" val="I2S6"/>
     <ctl name="I2S1 Mux" val="ADMAIF1"/>
     <ctl name="ADMAIF1 Mux" val="I2S1"/>
   </card>
@@ -123,8 +123,8 @@
     <param name="builtin speaker" val="0"/>
 
     <!-- AHUB static controls -->
-    <ctl name="I2S2 Mux" val="ADMAIF2"/>
-    <ctl name="ADMAIF2 Mux" val="I2S2"/>
+    <ctl name="I2S6 Mux" val="ADMAIF2"/>
+    <ctl name="ADMAIF2 Mux" val="I2S6"/>
     <ctl name="I2S1 Mux" val="ADMAIF1"/>
     <ctl name="ADMAIF1 Mux" val="I2S1"/>
   </card>
@@ -182,8 +182,8 @@
     <param name="builtin speaker" val="0"/>
 
     <!-- AHUB static controls -->
-    <ctl name="I2S2 Mux" val="ADMAIF2"/>
-    <ctl name="ADMAIF2 Mux" val="I2S2"/>
+    <ctl name="I2S6 Mux" val="ADMAIF2"/>
+    <ctl name="ADMAIF2 Mux" val="I2S6"/>
     <ctl name="I2S1 Mux" val="ADMAIF1"/>
     <ctl name="ADMAIF1 Mux" val="I2S1"/>
   </card>
