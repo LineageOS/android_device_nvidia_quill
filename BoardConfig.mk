@@ -76,9 +76,6 @@ BOARD_MKBOOTIMG_ARGS := --header_version 1
 BUILD_FINGERPRINT := NVIDIA/quill/quill:11/RQ1A.210105.003/7825230_3167.5736:user/release-keys
 
 # Kernel
-ifneq ($(TARGET_PREBUILT_KERNEL),)
-BOARD_VENDOR_KERNEL_MODULES += $(wildcard $(dir $(TARGET_PREBUILT_KERNEL))/*.ko)
-endif
 TARGET_KERNEL_CLANG_COMPILE    := false
 KERNEL_TOOLCHAIN               := $(shell pwd)/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-gnu-9.3/bin
 KERNEL_TOOLCHAIN_PREFIX        := aarch64-buildroot-linux-gnu-
@@ -93,6 +90,13 @@ TARGET_KERNEL_EXT_MODULES := \
     exfat:kbuild \
     nvgpu/drivers/gpu/nvgpu:kbuild
 include device/nvidia/quill/modules.mk
+
+ifneq ($(TARGET_PREBUILT_KERNEL),)
+MODDIR := $(dir $(TARGET_PREBUILT_KERNEL))
+BOARD_VENDOR_KERNEL_MODULES := $(wildcard $(MODDIR)/*.ko)
+BOARD_VENDOR_RAMDISK_KERNEL_MODULES := $(addprefix $(MODDIR)/,$(BOOT_KERNEL_MODULES))
+BOARD_RECOVERY_KERNEL_MODULES := $(addprefix $(MODDIR)/,$(RECOVERY_KERNEL_MODULES))
+endif
 
 # Recovery
 TARGET_RECOVERY_FSTAB    := device/nvidia/quill/initfiles/fstab.quill

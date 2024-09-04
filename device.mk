@@ -132,7 +132,6 @@ AB_OTA_PARTITIONS += \
     vbmeta \
     vendor \
     odm
-ifeq ($(TARGET_PREBUILT_KERNEL),)
 ifeq ($(TARGET_TEGRA_BOOTCTRL),smd)
 AB_OTA_POSTINSTALL_CONFIG += \
     FILESYSTEM_TYPE_system=ext4 \
@@ -143,7 +142,6 @@ PRODUCT_PACKAGES += \
     nv_bootloader_payload_updater \
     bl_update_payload \
     bmp_update_payload
-endif
 endif
 endif
 
