@@ -72,9 +72,6 @@ endif
 # Boot image
 BOARD_MKBOOTIMG_ARGS := --header_version 1
 
-# Fingerprint override
-BUILD_FINGERPRINT := NVIDIA/quill/quill:11/RQ1A.210105.003/7825230_3167.5736:user/release-keys
-
 # Kernel
 TARGET_KERNEL_CLANG_COMPILE    := false
 KERNEL_TOOLCHAIN               := $(shell pwd)/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-gnu-9.3/bin
