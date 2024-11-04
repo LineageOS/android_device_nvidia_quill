@@ -60,7 +60,7 @@ declare -a FLASH_CMD_FLASH=(
   --scr_cold_boot_config mobile_scr.cfg
   --br_cmd_config tegra186-mb1-bct-bootrom-p3636-0001-a00.cfg
   --dev_params emmc.cfg
-  --bins "mb2_bootloader nvtboot_recovery.bin; mts_preboot preboot_d15_prod_cr.bin; mts_bootpack mce_mts_d15_prod_cr.bin; bpmp_fw bpmp.bin; bpmp_fw_dtb tegra186-bpmp-p3636-0001-a00-00.dtb; tlk tos-mon-only.img; bootloader_dtb tegra186-p3636-0001-p3509-0000-a01-bl.dtb");
+  --bins "mb2_bootloader nvtboot_recovery.bin; mts_preboot preboot_d15_prod_cr.bin; mts_bootpack mce_mts_d15_prod_cr.bin; bpmp_fw bpmp.bin; bpmp_fw_dtb tegra186-bpmp-p3636-0001-a00-00.dtb; tlk tos.img; eks eks.img; bootloader_dtb tegra186-p3636-0001-p3509-0000-a01-bl.dtb");
 
 cp tegra186-bpmp-p3636-0001-a00-00.dtb tegra186-bpmp.dtb;
 

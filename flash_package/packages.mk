@@ -29,7 +29,7 @@ INSTALLED_BMP_BLOB_TARGET      := $(PRODUCT_OUT)/bmp.blob
 INSTALLED_CBOOT_TARGET         := $(PRODUCT_OUT)/cboot.bin
 INSTALLED_KERNEL_TARGET        := $(PRODUCT_OUT)/kernel
 INSTALLED_RECOVERYIMAGE_TARGET := $(PRODUCT_OUT)/recovery.img
-INSTALLED_TOS_TARGET           := $(PRODUCT_OUT)/tos-mon-only.img
+INSTALLED_TOS_TARGET           := $(PRODUCT_OUT)/tos-$(if $(filter software,$(TARGET_TEGRA_TOS)),mon-only,$(TARGET_TEGRA_TOS)).img
 
 TOYBOX_HOST  := $(HOST_OUT_EXECUTABLES)/toybox
 AWK_HOST     := $(HOST_OUT_EXECUTABLES)/one-true-awk
@@ -64,7 +64,7 @@ $(_p2771_package_archive): $(INSTALLED_BMP_BLOB_TARGET) $(INSTALLED_CBOOT_TARGET
 	@cp $(QUILL_FLASH)/flash_android_t186.xml $(dir $@)/
 	@cp $(T186_BL)/* $(dir $@)/
 	@rm $(dir $@)/tos-mon-only.img
-	@cp $(INSTALLED_TOS_TARGET) $(dir $@)/
+	@cp $(INSTALLED_TOS_TARGET) $(dir $@)/tos.img
 	@cp $(T186_FW)/xusb/tegra18x_xusb_firmware $(dir $@)/xusb_sil_rel_fw
 	@python2 $(TNSPEC_PY) nct new p2771-0000-devkit-c03 -o $(dir $@)/p2771-0000-devkit-c03.bin --spec $(QUILL_TNSPEC)
 	@python2 $(TNSPEC_PY) nct new p2771-0000-devkit-c04 -o $(dir $@)/p2771-0000-devkit-c04.bin --spec $(QUILL_TNSPEC)
@@ -104,7 +104,7 @@ $(_p3636-p3509_package_archive): $(INSTALLED_BMP_BLOB_TARGET) $(INSTALLED_CBOOT_
 	@cp $(QUILL_FLASH)/flash_android_t186_p3636.xml $(dir $@)/
 	@cp $(T186_BL)/* $(dir $@)/
 	@rm $(dir $@)/tos-mon-only.img
-	@cp $(INSTALLED_TOS_TARGET) $(dir $@)/
+	@cp $(INSTALLED_TOS_TARGET) $(dir $@)/tos.img
 	@cp $(T186_FW)/xusb/tegra18x_xusb_firmware $(dir $@)/xusb_sil_rel_fw
 	@python2 $(TNSPEC_PY) nct new p3636-0001-p3509 -o $(dir $@)/p3636-0001-p3509.bin --spec $(QUILL_TNSPEC)
 	@cp $(INSTALLED_BMP_BLOB_TARGET) $(dir $@)/
