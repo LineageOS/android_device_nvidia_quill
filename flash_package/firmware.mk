@@ -24,7 +24,7 @@ COMMON_FLASH    := $(BUILD_TOP)/device/nvidia/tegra-common/flash_package
 
 INSTALLED_CBOOT_TARGET  := $(PRODUCT_OUT)/cboot.bin
 INSTALLED_KERNEL_TARGET := $(PRODUCT_OUT)/kernel
-INSTALLED_TOS_TARGET    := $(PRODUCT_OUT)/tos-mon-only.img
+INSTALLED_TOS_TARGET    := $(PRODUCT_OUT)/tos-$(if $(filter software,$(TARGET_TEGRA_TOS)),mon-only,$(TARGET_TEGRA_TOS)).img
 
 TOYBOX_HOST  := $(HOST_OUT_EXECUTABLES)/toybox
 SMD_GEN_HOST := $(HOST_OUT_EXECUTABLES)/nv_smd_generator
@@ -79,7 +79,7 @@ $(strip $1)/br_bct_BR.bct: $(INSTALLED_KERNEL_TARGET) $(INSTALLED_CBOOT_TARGET) 
 	@cp $(T186_BL)/* $(strip $1)/
 	@cp $(INSTALLED_CBOOT_TARGET) $(strip $1)/cboot.bin
 	@rm $(strip $1)/tos-mon-only.img
-	@cp $(INSTALLED_TOS_TARGET) $(strip $1)/tos-mon-only.img
+	@cp $(INSTALLED_TOS_TARGET) $(strip $1)/tos.img
 	@cp $(QUILL_BCT)/$(strip $3) $(strip $1)/tegra186-bpmp.dtb
 	@cp $(DTB_PATH)/$(strip $4) $(strip $1)/
 	@cp $(QUILL_BL)/$(strip $(14)).dtb $(strip $1)/$(strip $(14))-bl.dtb
@@ -173,7 +173,7 @@ $(_quill_blob): $(_p2771-c03_br_bct) $(_p2771-c04_br_bct) $(_p3636-p3509_br_bct)
 		"$(P2771-C04_SIGNED_PATH)/spe_sigheader.bin.encrypt spe-fw 2 0 common; \
 		 $(P2771-C04_SIGNED_PATH)/nvtboot_sigheader.bin.encrypt mb2 2 0 common; \
 		 $(P2771-C04_SIGNED_PATH)/cboot_sigheader.bin.encrypt cpu-bootloader 2 0 common; \
-		 $(P2771-C04_SIGNED_PATH)/tos-mon-only_sigheader.img.encrypt secure-os 2 0 common; \
+		 $(P2771-C04_SIGNED_PATH)/tos_sigheader.img.encrypt secure-os 2 0 common; \
 		 $(P2771-C04_SIGNED_PATH)/bpmp_sigheader.bin.encrypt bpmp-fw 2 0 common; \
 		 $(P2771-C04_SIGNED_PATH)/adsp-fw_sigheader.bin.encrypt adsp-fw 2 0 common; \
 		 $(P2771-C04_SIGNED_PATH)/camera-rtcpu-sce_sigheader.img.encrypt sce-fw 2 0 common; \
