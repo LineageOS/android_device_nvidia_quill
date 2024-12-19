@@ -1,4 +1,4 @@
-# Copyright (C) 2020 The LineageOS Project
+# Copyright (C) 2020-2024 The LineageOS Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,16 +15,4 @@
 include device/nvidia/t186-common/vendor/t186-by-flags.mk
 include device/nvidia/tegra-common/vendor/common-by-flags.mk
 include device/nvidia/shield-common/vendor/shield-by-flags.mk
-
-ifneq ("$(wildcard device/nvidia/quill/vendor/$(TARGET_TEGRA_FIRMWARE_BRANCH)/bcm/bcm.mk)","")
-include device/nvidia/quill/vendor/$(TARGET_TEGRA_FIRMWARE_BRANCH)/bcm/bcm.mk
-include device/nvidia/tegra-common/vendor/$(TARGET_TEGRA_FIRMWARE_BRANCH)/bcm/bcm4354.mk
-else ifneq ("$(wildcard device/nvidia/quill/vendor/$(TARGET_TEGRA_L4T_BRANCH)/bcm_firmware/bcm.mk)","")
-include device/nvidia/quill/vendor/$(TARGET_TEGRA_L4T_BRANCH)/bcm_firmware/bcm.mk
-endif
-
-ifneq ("$(wildcard device/nvidia/tegra-common/vendor/$(TARGET_TEGRA_FIRMWARE_BRANCH)/realtek/rtl8822ce.mk)","")
-include device/nvidia/tegra-common/vendor/$(TARGET_TEGRA_FIRMWARE_BRANCH)/realtek/rtl8822ce.mk
-else ifneq ("$(wildcard device/nvidia/quill/vendor/$(TARGET_TEGRA_L4T_BRANCH)/realtek/realtek.mk)","")
-include device/nvidia/quill/vendor/$(TARGET_TEGRA_L4T_BRANCH)/realtek/realtek.mk
-endif
+include device/nvidia/quill/vendor/$(TARGET_TEGRA_FIRMWARE_BRANCH)/quill.mk
