@@ -21,9 +21,6 @@ include device/nvidia/quill/vendor/$(TARGET_TEGRA_FIRMWARE_BRANCH)/bcm/bcm.mk
 include device/nvidia/tegra-common/vendor/$(TARGET_TEGRA_FIRMWARE_BRANCH)/bcm/bcm4354.mk
 else ifneq ("$(wildcard device/nvidia/quill/vendor/$(TARGET_TEGRA_L4T_BRANCH)/bcm_firmware/bcm.mk)","")
 include device/nvidia/quill/vendor/$(TARGET_TEGRA_L4T_BRANCH)/bcm_firmware/bcm.mk
-
-# This needs a better check. Assumption is that when firmware is from r32, nvgpu is in use.
-PRODUCT_PACKAGES += public.libraries
 endif
 
 ifneq ("$(wildcard device/nvidia/tegra-common/vendor/$(TARGET_TEGRA_FIRMWARE_BRANCH)/realtek/rtl8822ce.mk)","")
