@@ -97,9 +97,10 @@ endif
 
 # Loadable kernel modules
 PRODUCT_PACKAGES += \
-    init.lkm.rc \
     lkm_loader \
     lkm_loader_target
+PRODUCT_COPY_FILES += \
+    device/nvidia/tegra-common/initfiles/init.lkm.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.lkm.rc
 
 # Media config
 ifneq ($(filter rel-shield-r, $(TARGET_TEGRA_OMX)),)
@@ -112,14 +113,15 @@ endif
 
 # NvPModel
 PRODUCT_PACKAGES += \
-    nvpmodel \
-    nvpmodel_t186.conf \
-    nvpmodel_t186_p3636.conf
+    nvpmodel
+PRODUCT_COPY_FILES += \
+    device/nvidia/quill/nvpmodel/nvpmodel_t186.conf:$(TARGET_COPY_OUT_ODM)/etc/nvpmodel_t186.conf \
+    device/nvidia/quill/nvpmodel/nvpmodel_t186_p3636.conf:$(TARGET_COPY_OUT_ODM)/etc/nvpmodel_t186_p3636.conf
 
 # PHS
 ifneq ($(TARGET_TEGRA_PHS),)
-PRODUCT_PACKAGES += \
-    nvphsd.conf
+PRODUCT_COPY_FILES += \
+    device/nvidia/quill/nvphs/nvphsd.conf.t186:$(TARGET_COPY_OUT_ODM)/etc/nvphsd.conf
 endif
 
 # Thermal
