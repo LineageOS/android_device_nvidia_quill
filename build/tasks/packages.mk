@@ -1,4 +1,4 @@
-# Copyright (C) 2021 The LineageOS Project
+# Copyright (C) 2021-2024 The LineageOS Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,8 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-LOCAL_PATH := $(call my-dir)
-
+ifeq ($(TARGET_REFERENCE_DEVICE), quill)
 TEGRAFLASH_PATH := $(BUILD_TOP)/vendor/nvidia/t186/r32/tegraflash
 T186_BL         := $(BUILD_TOP)/vendor/nvidia/t186/r32/bootloader
 T186_FW         := $(BUILD_TOP)/vendor/nvidia/t186/r32/firmware
@@ -46,14 +45,7 @@ else
 DTB_PATH := $(abspath $(KERNEL_OUT)/arch/arm64/boot/dts/nvidia)
 endif
 
-include $(CLEAR_VARS)
-LOCAL_MODULE        := p2771_flash_package
-LOCAL_MODULE_SUFFIX := .txz
-LOCAL_MODULE_CLASS  := ETC
-LOCAL_MODULE_PATH   := $(PRODUCT_OUT)
-
-_p2771_package_intermediates := $(call intermediates-dir-for,$(LOCAL_MODULE_CLASS),$(LOCAL_MODULE))
-_p2771_package_archive := $(_p2771_package_intermediates)/$(LOCAL_MODULE)$(LOCAL_MODULE_SUFFIX)
+_p2771_package_archive := $(call intermediates-dir-for,ETC,p2771_flash_package)/p2771_flash_package.txz
 
 $(_p2771_package_archive): $(INSTALLED_BMP_BLOB_TARGET) $(INSTALLED_CBOOT_TARGET) $(INSTALLED_KERNEL_TARGET) $(INSTALLED_RECOVERYIMAGE_TARGET) $(INSTALLED_TOS_TARGET) $(AWK_HOST) $(TOYBOX_HOST) $(AVBTOOL_HOST) $(SMD_GEN_HOST)
 	@mkdir -p $(dir $@)/tegraflash
@@ -84,16 +76,13 @@ $(_p2771_package_archive): $(INSTALLED_BMP_BLOB_TARGET) $(INSTALLED_CBOOT_TARGET
 	@$(TOYBOX_HOST) dd if=/dev/zero of=$(dir $@)/badpage_dummy.bin bs=4096 count=1
 	@cd $(dir $@); tar -cJf $(abspath $@) *
 
-include $(BUILD_SYSTEM)/base_rules.mk
+$(PRODUCT_OUT)/p2771_flash_package.txz: $(_p2771_package_archive)
+	$(hide) cp $< $@
 
-include $(CLEAR_VARS)
-LOCAL_MODULE        := p3636-p3509_flash_package
-LOCAL_MODULE_SUFFIX := .txz
-LOCAL_MODULE_CLASS  := ETC
-LOCAL_MODULE_PATH   := $(PRODUCT_OUT)
+.PHONY: p2771_flash_package
+p2771_flash_package: $(PRODUCT_OUT)/p2771_flash_package.txz
 
-_p3636-p3509_package_intermediates := $(call intermediates-dir-for,$(LOCAL_MODULE_CLASS),$(LOCAL_MODULE))
-_p3636-p3509_package_archive := $(_p3636-p3509_package_intermediates)/$(LOCAL_MODULE)$(LOCAL_MODULE_SUFFIX)
+_p3636-p3509_package_archive := $(call intermediates-dir-for,ETC,p3636-p3509_flash_package)/p3636-p3509_flash_package.txz
 
 $(_p3636-p3509_package_archive): $(INSTALLED_BMP_BLOB_TARGET) $(INSTALLED_CBOOT_TARGET) $(INSTALLED_KERNEL_TARGET) $(INSTALLED_RECOVERYIMAGE_TARGET) $(INSTALLED_TOS_TARGET) $(AWK_HOST) $(TOYBOX_HOST) $(AVBTOOL_HOST) $(SMD_GEN_HOST)
 	@mkdir -p $(dir $@)/tegraflash
@@ -123,4 +112,25 @@ $(_p3636-p3509_package_archive): $(INSTALLED_BMP_BLOB_TARGET) $(INSTALLED_CBOOT_
 	@$(TOYBOX_HOST) dd if=/dev/zero of=$(dir $@)/badpage_dummy.bin bs=4096 count=1
 	@cd $(dir $@); tar -cJf $(abspath $@) *
 
-include $(BUILD_SYSTEM)/base_rules.mk
+$(PRODUCT_OUT)/p3636-p3509_flash_package.txz: $(_p3636-p3509_package_archive)
+	$(hide) cp $< $@
+
+.PHONY: p3636-p3509_flash_package
+p3636-p3509_flash_package: $(PRODUCT_OUT)/p3636-p3509_flash_package.txz
+
+
+ifeq ($(word 2,$(subst _, ,$(TARGET_PRODUCT))),quill)
+BUILT_TARGET_FILES_ZIPROOT := $(call intermediates-dir-for,PACKAGING,target_files)/$(TARGET_PRODUCT)-target_files
+$(BUILT_TARGET_FILES_ZIPROOT).zip: $(BUILT_TARGET_FILES_ZIPROOT)/IMAGES/p2771_flash_package.txz $(BUILT_TARGET_FILES_ZIPROOT)/IMAGES/p3636-p3509_flash_package.txz
+
+$(BUILT_TARGET_FILES_ZIPROOT)/IMAGES/p2771_flash_package.txz: $(BUILT_TARGET_FILES_ZIPROOT).zip.list $(PRODUCT_OUT)/p2771_flash_package.txz
+	@mkdir -p $(dir $@)
+	@cp $(PRODUCT_OUT)/p2771_flash_package.txz $@
+	@echo $@ >> $(BUILT_TARGET_FILES_ZIPROOT).zip.list
+
+$(BUILT_TARGET_FILES_ZIPROOT)/IMAGES/p3636-p3509_flash_package.txz: $(BUILT_TARGET_FILES_ZIPROOT).zip.list $(PRODUCT_OUT)/p3636-p3509_flash_package.txz
+	@mkdir -p $(dir $@)
+	@cp $(PRODUCT_OUT)/p3636-p3509_flash_package.txz $@
+	@echo $@ >> $(BUILT_TARGET_FILES_ZIPROOT).zip.list
+endif
+endif

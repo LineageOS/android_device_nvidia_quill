@@ -1,4 +1,4 @@
-# Copyright (C) 2021 The LineageOS Project
+# Copyright (C) 2021-2024 The LineageOS Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,8 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-LOCAL_PATH := $(call my-dir)
-
+ifeq ($(TARGET_REFERENCE_DEVICE), quill)
 TEGRAFLASH_PATH := $(BUILD_TOP)/vendor/nvidia/t186/r32/tegraflash
 TEGRAFLASH_R35  := $(BUILD_TOP)/vendor/nvidia/common/r35/tegraflash
 T186_BL         := $(BUILD_TOP)/vendor/nvidia/t186/r32/bootloader
@@ -43,13 +42,8 @@ else
 DTB_PATH := $(abspath $(KERNEL_OUT)/arch/arm64/boot/dts/nvidia)
 endif
 
-include $(CLEAR_VARS)
-LOCAL_MODULE               := bl_update_payload
-LOCAL_MODULE_CLASS         := ETC
-LOCAL_MODULE_RELATIVE_PATH := firmware
-
-_quill_blob_intermediates := $(call intermediates-dir-for,$(LOCAL_MODULE_CLASS),$(LOCAL_MODULE))
-_quill_blob := $(_quill_blob_intermediates)/$(LOCAL_MODULE)$(LOCAL_MODULE_SUFFIX)
+_quill_blob_intermediates := $(call intermediates-dir-for,ETC,bl_update_payload)
+_quill_blob := $(_quill_blob_intermediates)/bl_update_payload
 
 P2771-C03_SIGNED_PATH   := $(_quill_blob_intermediates)/p2771-c03-signed
 P2771-C04_SIGNED_PATH   := $(_quill_blob_intermediates)/p2771-c04-signed
@@ -211,21 +205,17 @@ $(_quill_blob): $(_p2771-c03_br_bct) $(_p2771-c04_br_bct) $(_p3636-p3509_br_bct)
 		 $(P3636-P3509_SIGNED_PATH)/mb1_cold_boot_bct_MB1_sigheader.bct.encrypt MB1_BCT 2 0 P3636-0001-P3509.default"
 	@mv $(dir $@)/ota.blob $@
 
-include $(BUILD_SYSTEM)/base_rules.mk
+$(TARGET_OUT_ETC)/firmware/bl_update_payload: $(_quill_blob)
+	$(hide) cp $< $@
 
-include $(CLEAR_VARS)
-LOCAL_MODULE               := bmp_update_payload
-LOCAL_MODULE_STEM          := bmp.blob
-LOCAL_MODULE_CLASS         := ETC
-LOCAL_MODULE_RELATIVE_PATH := firmware
+.PHONY: bl_update_payload
+bl_update_payload: $(TARGET_OUT_ETC)/firmware/bl_update_payload
 
-INSTALLED_BMP_BLOB_TARGET := $(PRODUCT_OUT)/bmp.blob
+$(TARGET_OUT_ETC)/firmware/bmp_update_payload: $(PRODUCT_OUT)/bmp.blob
+	$(hide) cp $< $@
 
-_bmp_blob_intermediates := $(call intermediates-dir-for,$(LOCAL_MODULE_CLASS),$(LOCAL_MODULE))
-_bmp_blob := $(_bmp_blob_intermediates)/$(LOCAL_MODULE_STEM)
+.PHONY: bmp_update_payload
+bmp_update_payload: $(TARGET_OUT_ETC)/firmware/bmp_update_payload
 
-$(_bmp_blob): $(INSTALLED_BMP_BLOB_TARGET)
-	@mkdir -p $(dir $@)
-	@cp $(INSTALLED_BMP_BLOB_TARGET) $@
-
-include $(BUILD_SYSTEM)/base_rules.mk
+$(call intermediates-dir-for,EXECUTABLES,nv_bootloader_payload_updater)/nv_bootloader_payload_updater: $(TARGET_OUT_ETC)/firmware/bl_update_payload $(TARGET_OUT_ETC)/firmware/bmp_update_payload
+endif
