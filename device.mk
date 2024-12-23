@@ -112,14 +112,15 @@ endif
 
 # NvPModel
 PRODUCT_PACKAGES += \
-    nvpmodel \
-    nvpmodel_t186.conf \
-    nvpmodel_t186_p3636.conf
+    nvpmodel
+PRODUCT_COPY_FILES += \
+    device/nvidia/quill/nvpmodel/nvpmodel_t186.conf:$(TARGET_COPY_OUT_ODM)/etc/nvpmodel_t186.conf \
+    device/nvidia/quill/nvpmodel/nvpmodel_t186_p3636.conf:$(TARGET_COPY_OUT_ODM)/etc/nvpmodel_t186_p3636.conf
 
 # PHS
 ifneq ($(TARGET_TEGRA_PHS),)
-PRODUCT_PACKAGES += \
-    nvphsd.conf
+PRODUCT_COPY_FILES += \
+    device/nvidia/quill/nvphs/nvphs.conf.t186:$(TARGET_COPY_OUT_ODM)/etc/nvphs.conf
 endif
 
 # Thermal
