@@ -23,6 +23,7 @@ TARGET_REFERENCE_DEVICE ?= quill
 TARGET_TEGRA_VARIANT    ?= common
 
 TARGET_TEGRA_MODELS := $(shell awk -F, '/tegra_init::devices/{ f = 1; next } /};/{ f = 0 } f{ gsub(/"/, "", $$3); gsub(/ /, "", $$3); print $$3 }' device/nvidia/$(TARGET_REFERENCE_DEVICE)/init/init_$(TARGET_REFERENCE_DEVICE).cpp |sort |uniq)
+TARGET_TEGRA_VARIANTS := $(shell awk -F, '/tegra_init::devices/{ f = 1; next } /};/{ f = 0 } f{ gsub(/"/, "", $$2); gsub(/ /, "", $$2); print $$2 }' device/nvidia/$(TARGET_REFERENCE_DEVICE)/init/init_$(TARGET_REFERENCE_DEVICE).cpp |sort |uniq)
 
 TARGET_TEGRA_BOOTCTRL ?= smd
 TARGET_TEGRA_BT       ?= bcm btlinux
@@ -59,9 +60,13 @@ DEVICE_PACKAGE_OVERLAYS += \
     device/nvidia/quill/overlay
 
 # Init related
-PRODUCT_PACKAGES += \
-    $(foreach model,$(TARGET_TEGRA_MODELS),fstab.$(model) init.$(model).rc init.recovery.$(model).rc power.$(model).rc) \
-    init.quill_common.rc
+PRODUCT_COPY_FILES += \
+    $(foreach model,$(TARGET_TEGRA_MODELS),device/nvidia/quill/initfiles/fstab.quill:$(TARGET_COPY_OUT_VENDOR)/etc/fstab.$(model)) \
+    $(foreach model,$(TARGET_TEGRA_MODELS),device/nvidia/quill/initfiles/fstab.quill:$(TARGET_COPY_OUT_RAMDISK)/fstab.$(model)) \
+    $(foreach model,$(TARGET_TEGRA_MODELS),device/nvidia/quill/initfiles/init.$(model).rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.$(model).rc) \
+    $(foreach model,$(TARGET_TEGRA_MODELS),device/nvidia/quill/initfiles/init.recovery.quill.rc:$(TARGET_COPY_OUT_RECOVERY)/root/init.recovery.$(model).rc) \
+    $(foreach model,$(TARGET_TEGRA_MODELS),device/nvidia/quill/initfiles/power.quill.rc:$(TARGET_COPY_OUT_ODM)/etc/power.$(model).rc) \
+    device/nvidia/quill/initfiles/init.quill_common.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.quill_common.rc
 
 # Permissions
 PRODUCT_COPY_FILES += \
@@ -119,8 +124,8 @@ endif
 
 # Thermal
 ifneq ($(TARGET_TEGRA_THERMAL),)
-PRODUCT_PACKAGES += \
-    $(foreach model,$(TARGET_TEGRA_MODELS),thermalhal.$(model).xml)
+PRODUCT_COPY_FILES += \
+    $(foreach variant,$(TARGET_TEGRA_VARIANTS),device/nvidia/quill/thermal/thermalhal.quill.xml:$(TARGET_COPY_OUT_VENDOR)/etc/thermalhal.$(variant).xml)
 endif
 
 # Updater
