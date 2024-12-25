@@ -34,7 +34,6 @@ TARGET_TEGRA_LIGHT    ?= lineage
 TARGET_TEGRA_THERMAL  ?= lineage
 TARGET_TEGRA_WIDEVINE ?= rel-shield-r
 TARGET_TEGRA_WIFI     ?= bcm
-TARGET_TEGRA_WIREGUARD ?= compat
 
 include device/nvidia/t186-common/t186.mk
 
