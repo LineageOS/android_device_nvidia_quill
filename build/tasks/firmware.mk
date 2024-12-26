@@ -205,19 +205,19 @@ $(_quill_blob): $(_p2771-c03_br_bct) $(_p2771-c04_br_bct) $(_p3636-p3509_br_bct)
 		 $(P3636-P3509_SIGNED_PATH)/mb1_cold_boot_bct_MB1_sigheader.bct.encrypt MB1_BCT 2 0 P3636-0001-P3509.default"
 	@mv $(dir $@)/ota.blob $@
 
-$(TARGET_OUT_ETC)/firmware/bl_update_payload: $(_quill_blob) $(systemimage_intermediates)/file_list.txt
+$(TARGET_OUT_VENDOR)/firmware/bl_update_payload: $(_quill_blob) $(vendorimage_intermediates)/file_list.txt
 	$(hide) cp $< $@
-	$(hide) grep system/etc/firmware/bl_update_payload $(systemimage_intermediates)/file_list.txt > /dev/null 2>&1 || echo system/etc/firmware/bl_update_payload >> $(systemimage_intermediates)/file_list.txt
+	$(hide) grep firmware/bl_update_payload $(vendorimage_intermediates)/file_list.txt > /dev/null 2>&1 || echo firmware/bl_update_payload >> $(vendorimage_intermediates)/file_list.txt
 
 .PHONY: bl_update_payload
 bl_update_payload: $(_quill_blob)
 
-$(TARGET_OUT_ETC)/firmware/bmp_update_payload: $(PRODUCT_OUT)/bmp.blob $(systemimage_intermediates)/file_list.txt
+$(TARGET_OUT_VENDOR)/firmware/bmp_update_payload: $(PRODUCT_OUT)/bmp.blob $(vendorimage_intermediates)/file_list.txt
 	$(hide) cp $< $@
-	$(hide) grep system/etc/firmware/bmp_update_payload $(systemimage_intermediates)/file_list.txt > /dev/null 2>&1 || echo system/etc/firmware/bmp_update_payload >> $(systemimage_intermediates)/file_list.txt
+	$(hide) grep firmware/bmp_update_payload $(vendorimage_intermediates)/file_list.txt > /dev/null 2>&1 || echo firmware/bmp_update_payload >> $(vendorimage_intermediates)/file_list.txt
 
 .PHONY: bmp_update_payload
 bmp_update_payload: $(PRODUCT_OUT)/bmp.blob
 
-$(call intermediates-dir-for,EXECUTABLES,nv_bootloader_payload_updater)/nv_bootloader_payload_updater: $(TARGET_OUT_ETC)/firmware/bl_update_payload $(TARGET_OUT_ETC)/firmware/bmp_update_payload
+$(call intermediates-dir-for,EXECUTABLES,nv_bootloader_payload_updater.vendor)/nv_bootloader_payload_updater: $(TARGET_OUT_VENDOR)/firmware/bl_update_payload $(TARGET_OUT_VENDOR)/firmware/bmp_update_payload
 endif
