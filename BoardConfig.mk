@@ -61,7 +61,6 @@ endif
 TARGET_OTA_ASSERT_DEVICE := quill,lanai
 
 # Bluetooth
-DEVICE_MANIFEST_FILE += device/nvidia/quill/manifests/zz_bluetooth.xml
 ODM_MANIFEST_SKUS += lanai
 ODM_MANIFEST_LANAI_FILES := device/nvidia/quill/manifests/manifest_lanai.xml
 TARGET_VENDOR_PROP += device/nvidia/quill/bluetooth.prop
@@ -103,3 +102,6 @@ TARGET_RECOVERY_PIXEL_FORMAT := BGRA_8888
 VENDOR_SECURITY_PATCH := 2024-12-05
 
 include device/nvidia/t186-common/BoardConfigCommon.mk
+
+# Manifest, must be after common include
+DEVICE_MANIFEST_FILE += device/nvidia/quill/manifests/zz_bluetooth.xml
