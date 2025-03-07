@@ -39,7 +39,7 @@ TARGET_TEGRA_WIREGUARD ?= compat
 include device/nvidia/t186-common/t186.mk
 
 # System properties
-include $(LOCAL_PATH)/system_prop.mk
+include device/nvidia/quill/system_prop.mk
 
 PRODUCT_CHARACTERISTICS   := tv
 PRODUCT_AAPT_PREBUILT_DPI := xxhdpi xhdpi hdpi mdpi hdpi tvdpi
