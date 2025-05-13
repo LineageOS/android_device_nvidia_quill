@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b5cae334_e6452b18",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 16185
+      },
+      "writtenOn": "2025-05-13T14:32:37Z",
+      "side": 1,
+      "message": "Absolutely breaks MTG.\n\nYou need to gate this behind an envelope var or something.\n\nThere\u0027s a reason every other target disabled it.",
+      "revId": "0660daa45dccd2a33a34b4ea677b361e47dbc691",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
