@@ -178,7 +178,7 @@ endif
 
 $(_quill_blob): $(_p2771-c03_br_bct) $(_p2771-c04_br_bct) $(_p3636-p3509_br_bct) $(_p3636-p3509-nvme_br_bct) $(INSTALLED_KERNEL_TARGET)
 	@mkdir -p $(dir $@)
-	OUT=$(dir $@) TOP=$(BUILD_TOP) python2 $(TEGRAFLASH_R35)/BUP_generator.py -t update -e \
+	OUT=$(dir $@) TOP=$(BUILD_TOP) python3 $(TEGRAFLASH_R35)/BUP_generator.py -t update -e \
 		"$(P2771-C04_SIGNED_PATH)/spe_sigheader.bin.encrypt spe-fw 2 0 common; \
 		 $(P2771-C04_SIGNED_PATH)/nvtboot_sigheader.bin.encrypt mb2 2 0 common; \
 		 $(P2771-C04_SIGNED_PATH)/cboot_sigheader.bin.encrypt cpu-bootloader 2 0 common; \
