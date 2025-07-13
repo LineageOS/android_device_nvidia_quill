@@ -18,7 +18,7 @@ import /vendor/etc/init/hw/init.quill_common.rc
 
 on init
     setprop ro.vendor.lineage.tegra.nvpmodel.config /odm/etc/nvpmodel_t186_p3636.conf
-    setprop ro.boot.product.vendor.sku lanai
+    setprop ro.boot.product.hardware.sku lanai
     enable vendor.bluetooth-default
 
 on fs

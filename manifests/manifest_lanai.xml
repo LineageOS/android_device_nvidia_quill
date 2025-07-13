@@ -1,11 +1,4 @@
 <manifest version="1.0" type="device">
-    <!-- disable hidl bt -->
-    <hal format="hidl" override="true">
-        <name>android.hardware.bluetooth</name>
-        <transport>hwbinder</transport>
-    </hal>
-
-    <!-- re-enable aidl bt -->
     <hal format="aidl" override="true">
         <name>android.hardware.bluetooth</name>
         <fqname>IBluetoothHci/default</fqname>
