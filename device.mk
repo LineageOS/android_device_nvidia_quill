@@ -31,6 +31,7 @@ TARGET_TEGRA_KERNEL   ?= 4.9
 TARGET_TEGRA_HEALTH   ?= nobattery
 TARGET_TEGRA_TOS      ?= software
 TARGET_TEGRA_LIGHT    ?= lineage
+TARGET_TEGRA_PMODEL   ?= r36
 TARGET_TEGRA_THERMAL  ?= lineage
 TARGET_TEGRA_WIDEVINE ?= rel-shield-r
 TARGET_TEGRA_WIFI     ?= bcm
@@ -130,11 +131,11 @@ PRODUCT_PACKAGES += \
 endif
 
 # NvPModel
-PRODUCT_PACKAGES += \
-    nvpmodel
+ifneq ($(TARGET_TEGRA_PMODEL),)
 PRODUCT_COPY_FILES += \
     device/nvidia/quill/nvpmodel/nvpmodel_t186.conf:$(TARGET_COPY_OUT_ODM)/etc/nvpmodel_t186.conf \
     device/nvidia/quill/nvpmodel/nvpmodel_t186_p3636.conf:$(TARGET_COPY_OUT_ODM)/etc/nvpmodel_t186_p3636.conf
+endif
 
 # PHS
 ifneq ($(TARGET_TEGRA_PHS),)
