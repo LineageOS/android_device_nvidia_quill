@@ -1,5 +1,5 @@
 <manifest version="1.0" type="device">
-    <!-- disable aidl bt by default -->
+    <!-- disable aidl bt -->
     <hal format="aidl" override="true">
         <name>android.hardware.bluetooth</name>
     </hal>
