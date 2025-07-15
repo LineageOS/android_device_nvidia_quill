@@ -24,10 +24,10 @@ TARGET_TEGRA_VARIANT    ?= common
 
 TARGET_TEGRA_MODELS := $(shell awk -F, '/tegra_init::devices/{ f = 1; next } /};/{ f = 0 } f{ gsub(/"/, "", $$3); gsub(/ /, "", $$3); print $$3 }' device/nvidia/$(TARGET_REFERENCE_DEVICE)/init/init_$(TARGET_REFERENCE_DEVICE).cpp |sort |uniq)
 
+TARGET_KERNEL_VERSION ?= 4.9
 TARGET_TEGRA_BOOTCTRL ?= smd
 TARGET_TEGRA_BT       ?= bcm btlinux
 TARGET_TEGRA_CAMERA   ?= rel-shield-r
-TARGET_TEGRA_KERNEL   ?= 4.9
 TARGET_TEGRA_HEALTH   ?= nobattery
 TARGET_TEGRA_TOS      ?= software
 TARGET_TEGRA_LIGHT    ?= lineage
