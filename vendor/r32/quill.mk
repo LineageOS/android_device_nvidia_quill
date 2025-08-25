@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-QUILL_COMMS_L4T_BRANCH := r35
+QUILL_COMMS_L4T_BRANCH := r32
 QUILL_COMMS_ANDROID_BRANCH := rel-shield-r
 QUILL_BCM_L4T_PATH := vendor/nvidia/quill/$(QUILL_COMMS_L4T_BRANCH)/bcm
 QUILL_BCM_ANDROID_PATH := vendor/nvidia/quill/$(QUILL_COMMS_ANDROID_BRANCH)/bcm
