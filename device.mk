@@ -105,6 +105,11 @@ PRODUCT_COPY_FILES += \
 endif
 endif
 
+# Bluetooth
+ifeq ($(TARGET_TEGRA_BT),bcm)
+$(call soong_config_set,brcm_libbt,custom_bt_config,//device/nvidia/quill:vnd_quill.txt)
+endif
+
 # Fingerprint
 PRODUCT_BUILD_PROP_OVERRIDES += \
     BuildFingerprint=NVIDIA/quill/quill:11/RQ1A.210105.003/13961456_3871.0251:user/release-keys
