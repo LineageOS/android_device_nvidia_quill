@@ -65,9 +65,6 @@ ODM_MANIFEST_SKUS += lanai quill
 ODM_MANIFEST_LANAI_FILES := device/nvidia/quill/manifests/manifest_lanai.xml
 ODM_MANIFEST_QUILL_FILES := device/nvidia/quill/manifests/manifest_quill.xml
 TARGET_VENDOR_PROP += device/nvidia/quill/bluetooth.prop
-ifneq ($(filter bcm, $(TARGET_TEGRA_BT)),)
-BOARD_CUSTOM_BT_CONFIG := device/nvidia/quill/comms/vnd_quill.txt
-endif
 
 # Boot image
 BOARD_MKBOOTIMG_ARGS := --header_version 1
