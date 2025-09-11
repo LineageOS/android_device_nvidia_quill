@@ -27,6 +27,7 @@ BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := ext4
 TARGET_COPY_OUT_ODM                := odm
 TARGET_COPY_OUT_VENDOR             := vendor
 
+<<<<<<< HEAD
 # Android Verified Boot
 BOARD_AVB_ENABLE ?= true
 ifeq ($(BOARD_AVB_ENABLE),true)
@@ -56,6 +57,22 @@ BOARD_AVB_VENDOR_KEY_PATH                  := $(BOARD_AVB_KEY_PATH)
 BOARD_AVB_VENDOR_ROLLBACK_INDEX            := 0
 BOARD_AVB_VENDOR_ROLLBACK_INDEX_LOCATION   := 5
 endif
+=======
+# Assert
+TARGET_OTA_ASSERT_DEVICE := foster,darcy,jetson,loki,mdarcy,nx
+
+# Boot image
+BOARD_CUSTOM_BOOTIMG    := true
+BOARD_CUSTOM_BOOTIMG_MK := device/nvidia/foster/mkbootimg.mk
+BOARD_MKBOOTIMG_ARGS    := --header_version 1
+BOARD_RAMDISK_USE_XZ    := true
+
+# Bootloader versions
+TARGET_BOARD_INFO_FILE := device/nvidia/foster/board-info.txt
+
+# Bluetooth
+TARGET_VENDOR_PROP += device/nvidia/foster/bluetooth.prop
+>>>>>>> 739aa40 (Adapt to libbt migration to blueprint)
 
 # Assert
 TARGET_OTA_ASSERT_DEVICE := quill,lanai
