@@ -80,6 +80,16 @@ PRODUCT_COPY_FILES += \
     device/nvidia/tegra-common/initfiles/init.lkm.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.lkm.rc \
     device/nvidia/quill/initfiles/lkm.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/lkm.rc
 
+# Power
+ifeq ($(TARGET_POWER_HAL),perfmgr-lineage)
+ifeq ($(TARGET_GRAPHICS),mesa)
+PRODUCT_PACKAGES += \
+    powerhint.nouveau.json
+PRODUCT_PROPERTY_OVERRIDES += \
+    vendor.powerhal.config=powerhint.nouveau.json
+endif
+endif
+
 # Shipping API
 PRODUCT_SHIPPING_API_LEVEL := 36
 PRODUCT_VIRTUAL_AB_COW_VERSION := 2
