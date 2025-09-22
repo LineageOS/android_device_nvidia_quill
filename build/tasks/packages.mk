@@ -13,7 +13,7 @@
 # limitations under the License.
 
 ifeq ($(TARGET_REFERENCE_DEVICE), quill)
-TEGRAFLASH_PATH := $(BUILD_TOP)/vendor/nvidia/t186/r32/tegraflash
+TEGRAFLASH_PATH := $(BUILD_TOP)/vendor/nvidia/common/r32/tegraflash
 T186_BL         := $(BUILD_TOP)/vendor/nvidia/t186/r32/bootloader
 T186_FW         := $(BUILD_TOP)/vendor/nvidia/t186/r32/firmware
 QUILL_BL        := $(BUILD_TOP)/vendor/nvidia/quill/r32/bootloader
