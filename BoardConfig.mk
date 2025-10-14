@@ -81,6 +81,9 @@ include device/nvidia/quill/modules.mk
 TARGET_RECOVERY_FSTAB    := device/nvidia/quill/initfiles/fstab.quill
 TARGET_RECOVERY_PIXEL_FORMAT := BGRA_8888
 
+# SELinux
+BOARD_VENDOR_SEPOLICY_DIRS += device/nvidia/quill/sepolicy/vendor
+
 # Security Patch Level
 VENDOR_SECURITY_PATCH := 2024-12-05
 
