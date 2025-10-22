@@ -28,3 +28,7 @@
 /dev/block/platform/34[06]0000\.mmc/by-name/sc7(_b)?		u:object_r:bootloader_block_device:s0
 /dev/block/platform/34[06]0000\.mmc/by-name/sce-fw(_b)?		u:object_r:bootloader_block_device:s0
 /dev/block/platform/34[06]0000\.mmc/by-name/secure-os(_b)?	u:object_r:bootloader_block_device:s0
+
+# Jetson TX2 otg port
+/sys/devices/platform/3520000.padctl/usb2-0/3520000.padctl:ports:usb2-0:connector/power_supply/usb-charger-0/type	u:object_r:sysfs_power_supply:s0
+/sys/devices/platform/3520000.padctl/usb2-0/3520000.padctl:ports:usb2-0:connector/power_supply/usb-charger-0/online	u:object_r:sysfs_power_supply:s0
