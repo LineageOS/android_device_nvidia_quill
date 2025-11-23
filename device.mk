@@ -98,7 +98,7 @@ endif
 endif
 
 # Bluetooth
-ifeq ($(TARGET_TEGRA_BT),bcm)
+ifneq ($(filter bcm, $(TARGET_TEGRA_BT)),)
 $(call soong_config_set,brcm_libbt,custom_bt_config,//device/nvidia/quill:vnd_quill.txt)
 endif
 
