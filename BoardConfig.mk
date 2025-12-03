@@ -26,6 +26,7 @@ BOARD_ODMIMAGE_FILE_SYSTEM_TYPE    := ext4
 BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := ext4
 TARGET_COPY_OUT_ODM                := odm
 TARGET_COPY_OUT_VENDOR             := vendor
+BOARD_USES_METADATA_PARTITION      := true
 
 # Android Verified Boot
 BOARD_AVB_ENABLE ?= true
@@ -61,46 +62,20 @@ endif
 TARGET_OTA_ASSERT_DEVICE := quill,lanai
 
 # Bluetooth
-ODM_MANIFEST_SKUS += lanai quill
-ODM_MANIFEST_LANAI_FILES := device/nvidia/quill/manifests/manifest_lanai.xml
-ODM_MANIFEST_QUILL_FILES := device/nvidia/quill/manifests/manifest_quill.xml
 TARGET_VENDOR_PROP += device/nvidia/quill/bluetooth.prop
 
 # Boot image
 BOARD_MKBOOTIMG_ARGS := --header_version 1
 
 # Kernel
-ifeq ($(TARGET_KERNEL_VERSION),4.9)
-TARGET_KERNEL_CLANG_COMPILE    := false
-KERNEL_TOOLCHAIN               := $(shell pwd)/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-gnu-9.3/bin
-KERNEL_TOOLCHAIN_PREFIX        := aarch64-buildroot-linux-gnu-
-TARGET_KERNEL_SOURCE           := kernel/nvidia/kernel-$(TARGET_KERNEL_VERSION)
-TARGET_KERNEL_CONFIG           := tegra_android_defconfig
-BOARD_KERNEL_IMAGE_NAME        := Image.gz
-TARGET_KERNEL_ADDITIONAL_FLAGS := NV_BUILD_KERNEL_OPTIONS=$(TARGET_KERNEL_VERSION) CONFIG_EXFAT_FS=m
-BOARD_KERNEL_CMDLINE           := androidboot.boot_devices=3460000.sdhci
-
-TARGET_KERNEL_EXT_MODULE_ROOT := kernel/nvidia
-TARGET_KERNEL_EXT_MODULES := \
-    exfat:kbuild \
-    nvgpu/drivers/gpu/nvgpu:kbuild
-include device/nvidia/quill/modules.mk
-
-ifneq ($(TARGET_PREBUILT_KERNEL),)
-MODDIR := $(dir $(TARGET_PREBUILT_KERNEL))
-BOARD_VENDOR_KERNEL_MODULES := $(wildcard $(MODDIR)/*.ko)
-BOARD_VENDOR_RAMDISK_KERNEL_MODULES := $(addprefix $(MODDIR)/,$(BOOT_KERNEL_MODULES))
-BOARD_RECOVERY_KERNEL_MODULES := $(addprefix $(MODDIR)/,$(RECOVERY_KERNEL_MODULES))
-endif
-else
 ifeq ($(TARGET_PREBUILT_KERNEL),)
 TARGET_KERNEL_PLATFORM_TARGET := tegra
 TARGET_KERNEL_SOURCE          := vendor/nvidia/$(TARGET_KERNEL_PLATFORM_TARGET)
 BOARD_KERNEL_IMAGE_NAME       := Image
 endif
+
 BOARD_KERNEL_CMDLINE          := firmware_class.path=/vendor/firmware cpufreq.default_governor=performance nouveau.atomic=1 cma=512MB
-include device/nvidia/quill/modules-ack.mk
-endif
+include device/nvidia/quill/modules.mk
 
 # Recovery
 TARGET_RECOVERY_FSTAB    := device/nvidia/quill/initfiles/fstab.quill

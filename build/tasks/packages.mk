@@ -15,7 +15,7 @@
 ifeq ($(TARGET_REFERENCE_DEVICE), quill)
 TEGRAFLASH_PATH := $(BUILD_TOP)/vendor/nvidia/common/r32/tegraflash
 T186_BL         := $(BUILD_TOP)/vendor/nvidia/t186/r32/bootloader
-T186_FW         := $(BUILD_TOP)/vendor/nvidia/t186/r32/firmware
+T186_FW         := $(BUILD_TOP)/external/linux-firmware-mainline/firmware
 QUILL_BL        := $(BUILD_TOP)/vendor/nvidia/quill/r32/bootloader
 QUILL_BCT       := $(BUILD_TOP)/vendor/nvidia/quill/r32/BCT
 QUILL_FLASH     := $(BUILD_TOP)/device/nvidia/quill/flash_package
@@ -28,7 +28,7 @@ INSTALLED_BMP_BLOB_TARGET      := $(PRODUCT_OUT)/bmp.blob
 INSTALLED_CBOOT_TARGET         := $(PRODUCT_OUT)/cboot.bin
 INSTALLED_KERNEL_TARGET        := $(PRODUCT_OUT)/kernel
 INSTALLED_RECOVERYIMAGE_TARGET := $(PRODUCT_OUT)/recovery.img
-INSTALLED_TOS_TARGET           := $(PRODUCT_OUT)/tos-$(if $(filter-out software,$(TARGET_TEGRA_TOS)),$(TARGET_TEGRA_TOS),mon-only).img
+INSTALLED_TOS_TARGET           := $(PRODUCT_OUT)/tos-$(if $(filter-out default,$(TARGET_SECURITY_KEYMINT_HAL)),$(TARGET_SECURITY_KEYMINT_HAL),mon-only).img
 
 TOYBOX_HOST  := $(HOST_OUT_EXECUTABLES)/toybox
 AWK_HOST     := $(HOST_OUT_EXECUTABLES)/one-true-awk
@@ -39,12 +39,6 @@ ifneq ($(TARGET_PREBUILT_KERNEL),)
 DTB_PATH := $(dir $(TARGET_PREBUILT_KERNEL))
 else ifneq ($(TARGET_KERNEL_PLATFORM_TARGET),)
 DTB_PATH := $(abspath $(KERNEL_OUT))
-else ifneq ($(filter 4.9, $(TARGET_KERNEL_VERSION)),)
-DTB_PATH := $(abspath $(KERNEL_OUT)/arch/arm64/boot/dts)
-else ifneq ($(findstring dtstree,$(TARGET_KERNEL_ADDITIONAL_FLAGS)),)
-DTB_PATH := $(abspath $(KERNEL_OUT)/../lineage-oot/device-tree/platform/generic-dts/t18x/lineage)
-else
-DTB_PATH := $(abspath $(KERNEL_OUT)/arch/arm64/boot/dts/nvidia)
 endif
 
 _p2771_package_archive := $(call intermediates-dir-for,ETC,p2771_flash_package)/p2771_flash_package.txz
@@ -61,7 +55,7 @@ $(_p2771_package_archive): $(INSTALLED_BMP_BLOB_TARGET) $(INSTALLED_CBOOT_TARGET
 	@cp $(T186_BL)/* $(dir $@)/
 	@rm $(dir $@)/tos-mon-only.img
 	@cp $(INSTALLED_TOS_TARGET) $(dir $@)/tos.img
-	@cp $(T186_FW)/xusb/tegra18x_xusb_firmware $(dir $@)/xusb_sil_rel_fw
+	@cp $(T186_FW)/nvidia/tegra186/xusb.bin $(dir $@)/xusb_sil_rel_fw
 	@python3 $(TNSPEC_PY) nct new p2771-0000-devkit-c03 -o $(dir $@)/p2771-0000-devkit-c03.bin --spec $(QUILL_TNSPEC)
 	@python3 $(TNSPEC_PY) nct new p2771-0000-devkit-c04 -o $(dir $@)/p2771-0000-devkit-c04.bin --spec $(QUILL_TNSPEC)
 	@cp $(INSTALLED_BMP_BLOB_TARGET) $(dir $@)/
@@ -99,7 +93,7 @@ $(_p3636-p3509_package_archive): $(INSTALLED_BMP_BLOB_TARGET) $(INSTALLED_CBOOT_
 	@cp $(T186_BL)/* $(dir $@)/
 	@rm $(dir $@)/tos-mon-only.img
 	@cp $(INSTALLED_TOS_TARGET) $(dir $@)/tos.img
-	@cp $(T186_FW)/xusb/tegra18x_xusb_firmware $(dir $@)/xusb_sil_rel_fw
+	@cp $(T186_FW)/nvidia/tegra186/xusb.bin $(dir $@)/xusb_sil_rel_fw
 	@python3 $(TNSPEC_PY) nct new p3636-0001-p3509 -o $(dir $@)/p3636-0001-p3509.bin --spec $(QUILL_TNSPEC)
 	@python3 $(TNSPEC_PY) nct new p3636-0001-p3509-nvme -o $(dir $@)/p3636-0001-p3509-nvme.bin --spec $(QUILL_TNSPEC)
 	@cp $(INSTALLED_BMP_BLOB_TARGET) $(dir $@)/

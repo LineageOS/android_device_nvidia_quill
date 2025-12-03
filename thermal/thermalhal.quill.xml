@@ -19,20 +19,20 @@ Attributes for cpu-usages
 <thermalhal>
 	<thermal_devices>
 		<thermal_device>
-			<thermal-prop name="BCPU" type="DEVICE_TEMPERATURE_CPU" sensor-label="BCPU-therm" multiplier='0.001' />
+			<thermal-prop name="BCPU" type="DEVICE_TEMPERATURE_CPU" sensor-label="cpu-thermal" multiplier='0.001' />
 			<thermal-prop cores='4' />
 		</thermal_device>
 		<thermal_device>
-			<thermal-prop name="MCPU" type="DEVICE_TEMPERATURE_CPU" sensor-label="MCPU-therm" multiplier='0.001' />
+			<thermal-prop name="MCPU" type="DEVICE_TEMPERATURE_CPU" sensor-label="aux-thermal" multiplier='0.001' />
 			<thermal-prop cores='2' />
 		</thermal_device>
 		<thermal_device>
-			<thermal-prop name="GPU" type="DEVICE_TEMPERATURE_GPU" sensor-label="GPU-therm" multiplier='0.001' />
+			<thermal-prop name="GPU" type="DEVICE_TEMPERATURE_GPU" sensor-label="gpu-thermal" multiplier='0.001' />
 		</thermal_device>
 	</thermal_devices>
 	<cooling_devices>
 		<cooling_device>
-			<cooling-prop name="FAN" type="FAN_RPM" cooling-path="/sys/devices/pwm-fan/rpm_measured" />
+			<cooling-prop name="FAN" type="FAN_RPM" cooling-path="/sys/class/hwmon/hwmon1/rpm" />
 		</cooling_device>
 	</cooling_devices>
 	<cpu_usages cpus="6" />

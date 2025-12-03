@@ -24,17 +24,12 @@ TARGET_TEGRA_VARIANT    ?= common
 
 TARGET_TEGRA_MODELS := $(shell awk -F, '/tegra_init::devices/{ f = 1; next } /};/{ f = 0 } f{ gsub(/"/, "", $$3); gsub(/ /, "", $$3); print $$3 }' device/nvidia/$(TARGET_REFERENCE_DEVICE)/init/init_$(TARGET_REFERENCE_DEVICE).cpp |sort |uniq)
 
-TARGET_KERNEL_VERSION ?= 4.9
-TARGET_TEGRA_BOOTCTRL ?= smd
-TARGET_TEGRA_BT       ?= bcm btlinux
-TARGET_TEGRA_CAMERA   ?= rel-shield-r
-TARGET_TEGRA_HEALTH   ?= nobattery
-TARGET_TEGRA_TOS      ?= software
-TARGET_TEGRA_LIGHT    ?= lineage
-TARGET_TEGRA_PMODEL   ?= r36
-TARGET_TEGRA_THERMAL  ?= lineage
-TARGET_TEGRA_WIDEVINE ?= rel-shield-r
-TARGET_TEGRA_WIFI     ?= bcm
+TARGET_KERNEL_VERSION ?= 6.12
+TARGET_BOOT_HAL       ?= smd
+TARGET_LIGHT_HAL      ?= tegra
+TARGET_THERMAL_HAL    ?= tegra
+
+TARGET_HAS_BATTERY    ?= false
 
 include device/nvidia/t186-common/t186.mk
 
@@ -44,8 +39,6 @@ include device/nvidia/quill/system_prop.mk
 PRODUCT_CHARACTERISTICS   := tv
 PRODUCT_AAPT_PREBUILT_DPI := xxhdpi xhdpi hdpi mdpi hdpi tvdpi
 PRODUCT_AAPT_PREF_CONFIG  := xhdpi
-
-PRODUCT_OTA_ENFORCE_VINTF_KERNEL_REQUIREMENTS ?= true
 
 $(call inherit-product, frameworks/native/build/tablet-10in-xhdpi-2048-dalvik-heap.mk)
 
@@ -76,95 +69,29 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.audio.low_latency.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.audio.low_latency.xml \
     frameworks/native/data/etc/android.hardware.ethernet.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.ethernet.xml
 
-# Audio
-ifneq ($(TARGET_TEGRA_AUDIO),)
-PRODUCT_PACKAGES += \
-    audio_effects.xml
-
-ifeq ($(TARGET_TEGRA_AUDIO),tinyhal)
-PRODUCT_PACKAGES += \
-    audio.lanai.xml \
-    audio.quill.xml
-PRODUCT_COPY_FILES += \
-    device/nvidia/quill/media/audio_policy_configuration_tinyhal.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy_configuration.xml
-
-else ifneq ($(filter rel-shield-r, $(TARGET_TEGRA_AUDIO)),)
-PRODUCT_PACKAGES += \
-    nvaudio_conf.xml \
-    nvaudio_fx.xml
-PRODUCT_COPY_FILES += \
-    device/nvidia/quill/media/audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy_configuration.xml
-endif
-endif
-
-# Bluetooth
-ifneq ($(filter bcm, $(TARGET_TEGRA_BT)),)
-$(call soong_config_set,brcm_libbt,custom_bt_config,//device/nvidia/quill:vnd_quill.txt)
-endif
-
 # Fingerprint
 PRODUCT_BUILD_PROP_OVERRIDES += \
     BuildFingerprint=NVIDIA/quill/quill:11/RQ1A.210105.003/13961456_3871.0251:user/release-keys
-
-# Kernel
-ifneq ($(TARGET_PREBUILT_KERNEL),)
-TARGET_FORCE_PREBUILT_KERNEL := true
-endif
 
 # Loadable kernel modules
 PRODUCT_PACKAGES += \
     lkm_loader
 PRODUCT_COPY_FILES += \
-    device/nvidia/tegra-common/initfiles/init.lkm.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.lkm.rc
-ifneq ($(filter 4.9, $(TARGET_KERNEL_VERSION)),)
-PRODUCT_PACKAGES += \
-    lkm_loader_target
-else
-PRODUCT_COPY_FILES += \
+    device/nvidia/tegra-common/initfiles/init.lkm.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.lkm.rc \
     device/nvidia/quill/initfiles/lkm.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/lkm.rc
-endif
-
-# Media config
-ifneq ($(filter rel-shield-r, $(TARGET_TEGRA_OMX)),)
-PRODUCT_PACKAGES += \
-    media_codecs.xml \
-    media_codecs_performance.xml \
-    media_profiles_V1_0.xml \
-    enctune.conf
-endif
-
-# NvPModel
-ifneq ($(TARGET_TEGRA_PMODEL),)
-PRODUCT_COPY_FILES += \
-    device/nvidia/quill/nvpmodel/nvpmodel_t186.conf:$(TARGET_COPY_OUT_ODM)/etc/nvpmodel_t186.conf \
-    device/nvidia/quill/nvpmodel/nvpmodel_t186_p3636.conf:$(TARGET_COPY_OUT_ODM)/etc/nvpmodel_t186_p3636.conf
-endif
-
-# PHS
-ifneq ($(TARGET_TEGRA_PHS),)
-PRODUCT_COPY_FILES += \
-    device/nvidia/quill/nvphs/nvphsd.conf.t186:$(TARGET_COPY_OUT_ODM)/etc/nvphsd.conf
-endif
 
 # Shipping API
-ifneq ($(filter 4.9 5.10, $(TARGET_KERNEL_VERSION)),)
-$(call inherit-product, $(SRC_TARGET_DIR)/product/product_launched_with_p.mk)
-else
 PRODUCT_SHIPPING_API_LEVEL := 36
 PRODUCT_VIRTUAL_AB_COW_VERSION := 2
-endif
 
 # Thermal
-ifneq ($(TARGET_TEGRA_THERMAL),)
-ifeq ($(filter 4.9 5.10, $(TARGET_KERNEL_VERSION)),)
-TARGET_TEGRA_THERMAL_SUFFIX ?= .ack
-endif
+ifeq ($(TARGET_THERMAL_HAL),tegra)
 PRODUCT_COPY_FILES += \
-    $(foreach model,$(TARGET_TEGRA_MODELS),device/nvidia/quill/thermal/thermalhal.quill$(TARGET_TEGRA_THERMAL_SUFFIX).xml:$(TARGET_COPY_OUT_VENDOR)/etc/thermalhal.$(model).xml)
+    $(foreach model,$(TARGET_TEGRA_MODELS),device/nvidia/quill/thermal/thermalhal.quill.xml:$(TARGET_COPY_OUT_VENDOR)/etc/thermalhal.$(model).xml)
 endif
 
 # Updater
-ifneq ($(TARGET_TEGRA_BOOTCTRL),)
+ifneq ($(TARGET_BOOT_HAL),)
 AB_OTA_PARTITIONS += \
     boot \
     recovery \
@@ -172,7 +99,7 @@ AB_OTA_PARTITIONS += \
     vbmeta \
     vendor \
     odm
-ifeq ($(TARGET_TEGRA_BOOTCTRL),smd)
+ifeq ($(TARGET_BOOT_HAL),smd)
 AB_OTA_POSTINSTALL_CONFIG += \
     FILESYSTEM_TYPE_system=ext4 \
     POSTINSTALL_OPTIONAL_system=true \

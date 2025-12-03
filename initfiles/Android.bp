@@ -15,13 +15,6 @@
 //
 
 sh_binary {
-    name: "lkm_loader_target",
-    filename: "lkm_loader_target.sh",
-    src: "lkm_loader_target.sh",
-    soc_specific: true,
-}
-
-sh_binary {
     name: "symlink_data",
     filename: "symlink_data.sh",
     src: "symlink_data.sh",
