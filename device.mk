@@ -106,6 +106,9 @@ PRODUCT_COPY_FILES += \
     $(foreach model,$(TARGET_TEGRA_MODELS),device/nvidia/quill/thermal/thermalhal.quill.xml:$(TARGET_COPY_OUT_VENDOR)/etc/thermalhal.$(model).xml)
 endif
 
+# Trusted firmware
+ATF_PATH ?= hardware/nvidia/t210/arm-trusted-firmware
+
 # Updater
 ifneq ($(TARGET_BOOT_HAL),)
 AB_OTA_PARTITIONS += \
