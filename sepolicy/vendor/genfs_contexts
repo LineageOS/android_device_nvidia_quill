@@ -1,0 +1,2 @@
+genfscon sysfs /devices/platform/gpio-keys/wakeup	u:object_r:sysfs_wakeup:s0
+genfscon sysfs /devices/platform/c2a0000.rtc/wakeup	u:object_r:sysfs_wakeup:s0
