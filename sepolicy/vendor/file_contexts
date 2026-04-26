@@ -32,3 +32,8 @@
 # Jetson TX2 otg port
 /sys/devices/platform/3520000.padctl/usb2-0/3520000.padctl:ports:usb2-0:connector/power_supply/usb-charger-0/type	u:object_r:sysfs_power_supply:s0
 /sys/devices/platform/3520000.padctl/usb2-0/3520000.padctl:ports:usb2-0:connector/power_supply/usb-charger-0/online	u:object_r:sysfs_power_supply:s0
+
+# Wakeup
+/sys/devices/platform/c2a0000\.rtc/rtc/rtc[0-9]/alarmtimer\.[0-9].auto/wakeup(/.*)?										u:object_r:sysfs_wakeup:s0
+/sys/devices/platform/3520000\.padctl/usb[2-3]-[0-9]/3520000\.padctl\:ports\:usb[2-3]-[0-9]\:connector/power_supply/usb-charger-[0-9]/wakeup[0-9]*(/.*)?	u:object_r:sysfs_wakeup:s0
+/sys/devices/platform/3530000\.usb(/.*)?/wakeup(/.*)?														u:object_r:sysfs_wakeup:s0
