@@ -6,6 +6,7 @@
 # specify MF_CHECK, and must come before any filesystems that do specify MF_CHECK
 
 /dev/block/by-name/system        /system             ext4      ro,noatime                                                          wait,avb,slotselect,first_stage_mount
+/dev/block/by-name/system_dlkm   /system_dlkm        ext4      ro,noatime                                                          wait,avb,slotselect,first_stage_mount
 /dev/block/by-name/vendor        /vendor             ext4      ro,noatime                                                          wait,avb,slotselect,first_stage_mount
 /dev/block/by-name/odm           /odm                ext4      ro,noatime                                                          wait,avb,slotselect,first_stage_mount
 /dev/block/by-name/boot          /boot               emmc      defaults                                                            defaults,slotselect
