@@ -8,6 +8,7 @@
 /dev/block/platform/34[06]0000\.mmc/by-name/odm(_[ab])? 	u:object_r:system_block_device:s0
 /dev/block/platform/34[06]0000\.mmc/by-name/recovery(_[ab])? 	u:object_r:recovery_block_device:s0
 /dev/block/platform/34[06]0000\.mmc/by-name/system(_[ab])? 	u:object_r:system_block_device:s0
+/dev/block/platform/34[06]0000\.mmc/by-name/system_dlkm(_[ab])? u:object_r:system_block_device:s0
 /dev/block/platform/34[06]0000\.mmc/by-name/vbmeta(_[ab])? 	u:object_r:system_block_device:s0
 /dev/block/platform/34[06]0000\.mmc/by-name/vendor(_[ab])? 	u:object_r:system_block_device:s0
 /dev/block/platform/34[06]0000\.mmc/by-name/userdata		u:object_r:userdata_block_device:s0
