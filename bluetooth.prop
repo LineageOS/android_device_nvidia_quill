@@ -1,1 +1,2 @@
 bluetooth.device.default_name=Jetson TX2
+bluetooth.btm.sec.delay_auth_ms.value=50
