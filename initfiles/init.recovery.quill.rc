@@ -12,8 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import init.recovery.usb.rc
-
 service symlink_data /system/bin/symlink_data.sh
     class main
     user root
